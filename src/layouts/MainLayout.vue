@@ -12,14 +12,16 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          <TlenovoLogo />
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
+    
 
-    <q-drawer
+    
+
+  <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -43,11 +45,13 @@
       <router-view />
     </q-page-container>
   </q-layout>
+
 </template>
 
 <script setup>
+import EssentialLink from 'src/components/EssentialLink.vue'
+import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue'
 import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {

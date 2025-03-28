@@ -20,6 +20,17 @@ export default defineConfig((/* ctx */) => {
       'app.scss'
     ],
 
+    // TODO: Theme not working with sass loader at first try
+    // cssAddon: {
+    //   sass: {
+    //     additionalData: `
+    //       $primary   : #1B75BC;
+    //       $secondary : #0E3B5A;
+    //       $accent    : #F2F4F6;
+    //     `
+    //   }
+    // },
+
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       // 'ionicons-v4',

@@ -1,11 +1,9 @@
 <template>
-    <div class="tlenovo-logo">
-        <q-img
-            class="tlenovo-logo"
-            src="./tlenovo.png"
-            spinner-color="white"
-        />
-    </div>
+    <q-img
+        class="TlenovoLogo"
+        src="src/assets/logo.png"
+        spinner-color="white"
+    />
 </template>
 
 <script setup>
@@ -13,8 +11,13 @@
 </script>
 
 <style scoped>
-.tlenovo-logo {
-    width: 80px;
-    height: 80px;
+.TlenovoLogo {
+    width: 220px;
+    height: 100%;
+    margin-left: 48px;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 </style>

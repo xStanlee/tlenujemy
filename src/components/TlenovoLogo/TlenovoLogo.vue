@@ -1,23 +1,31 @@
 <template>
     <q-img
-        class="TlenovoLogo"
+        :class="{
+        'TlenovoLogo': true,
+        'TlenovoLogo--small': isMobile
+        }"
         src="src/assets/logo.png"
         spinner-color="white"
     />
 </template>
 
 <script setup>
-
+defineProps({
+    isMobile: Boolean,
+})
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .TlenovoLogo {
     width: 220px;
     height: 100%;
-    margin-left: 48px;
 
     &:hover {
         cursor: pointer;
+    }
+
+    &--small {
+        width: 180px;
     }
 }
 </style>

@@ -1,15 +1,20 @@
 <template>
   <q-layout view="hHr lpR fFf" class="main-layout">
     <q-header class="main-layout__header" elevated>
-      <q-toolbar class="main-layout__toolbar" >
+      <q-toolbar class="main-layout__toolbar">
+        <!-- Prev step mobile -->
+        <q-btn class="main-layout__headerBtn--prev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
+        <!-- Gap -->
+        <q-space v-if="isMobile && tab !== 'tab1'" />
         <!-- Logo -->
-        <TlenovoLogo class="main-layout__toolbar-logo" @click="toggleLeftDrawer" />
-
+        <TlenovoLogo class="main-layout__toolbar-logo" :isMobile="isMobile"/>
         <!-- Gap -->
         <q-space />
+        <!-- Next step mobile -->
+        <q-btn class="main-layout__headerBtn--next" v-if="isMobile" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
 
-        <!-- Links -->
-        <q-tabs class="main-layout__toolbar-tabs" v-model="tab" >
+        <!-- Links desktop -->
+        <q-tabs v-else class="main-layout__toolbar-tabs" v-model="tab">
           <q-tab class="main-layout__toolbar-tab" name="tab1" label="Strona główna" />
           <q-tab class="main-layout__toolbar-tab" name="tab2" label="Zastosowania" />
           <q-tab class="main-layout__toolbar-tab" name="tab3" label="Przeciwwskazania" />
@@ -18,64 +23,38 @@
         </q-tabs>
       </q-toolbar>
     </q-header>
-    
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      side="right"
-      class="main-layout__drawer"
-    >
-      <q-list class="main-layout__list">
-        <q-item-label
-          header
-          class="main-layout__list-header"
-        >
-          Awatar / logo
-        </q-item-label>
 
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-          class="main-layout__list-item"
-        />
-      </q-list>
-    </q-drawer>
 
-    <!-- TODO: Do i need router? -->
-    <!-- <router-view /> -->
+    <!-- Views -->
+    <q-tab-panels class="main-layout__page-container" v-model="tab" animated>
+      <q-tab-panel class="main-layout__page-section" name="tab1">
+        <TlenovoMainView />
+      </q-tab-panel>
 
-      <q-tab-panels class="main-layout__page-container" v-model="tab" animated>
-        <q-tab-panel class="main-layout__page-section" name="tab1">
-          <TlenovoFireflies />
-          <TlenovoMainView />
-        </q-tab-panel>
+      <q-tab-panel class="main-layout__page-section" name="tab2">
+        <TlenovoInfoView />
+      </q-tab-panel>
 
-          <q-tab-panel class="main-layout__page-section" name="tab2">
-            <TlenovoInfoView />
-          </q-tab-panel>
+      <q-tab-panel class="main-layout__page-section" name="tab3">
+        <TlenovoContraView />
+      </q-tab-panel>
 
-          <q-tab-panel class="main-layout__page-section" name="tab3">
-            <TlenovoContraView />
-          </q-tab-panel>
+      <q-tab-panel class="main-layout__page-section" name="tab4">
+        <TlenovoOfferView />
+      </q-tab-panel>
 
-          <q-tab-panel class="main-layout__page-section" name="tab4">
-            <TlenovoOfferView />
-          </q-tab-panel>
-
-          <q-tab-panel class="main-layout__page-section" name="tab5">
-            <TlenovoContactView />
-          </q-tab-panel>
-        </q-tab-panels>
+      <q-tab-panel class="main-layout__page-section" name="tab5">
+        <TlenovoContactView />
+      </q-tab-panel>
+    </q-tab-panels>
   </q-layout>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { useQuasar } from 'quasar';
+import { computed, ref } from 'vue';
 
 // Components
-import EssentialLink from 'src/components/EssentialLink.vue';
-import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
 // Views
 import TlenovoContactView from 'src/views/TlenovoContactView.vue';
@@ -84,100 +63,78 @@ import TlenovoInfoView from 'src/views/TlenovoInfoView.vue';
 import TlenovoMainView from 'src/views/TlenovoMainView.vue';
 import TlenovoOfferView from 'src/views/TlenovoOfferView.vue';
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+const $q = useQuasar();
+// Example usage: Check if the screen is mobile
+const isMobile = computed(() => $q.screen.lt.md);
 
 const tab = ref('tab1');
-const leftDrawerOpen = ref(false);
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
+function onMobileNext() {
+  const tabs = ['tab1', 'tab2', 'tab3', 'tab4', 'tab5'];
+  const currentIndex = tabs.indexOf(tab.value);
+  const nextIndex = currentIndex + 1 >= tabs.length ? 0 : currentIndex + 1;
+  tab.value = tabs[nextIndex];
+}
+
+function onMobilePrev() {
+  const tabs = ['tab1', 'tab2', 'tab3', 'tab4', 'tab5'];
+  const currentIndex = tabs.indexOf(tab.value);
+  const prevIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
+  tab.value = tabs[prevIndex];
 }
 </script>
 
 <style lang="scss">
 @import 'src/css/quasar.variables.scss'; // Ensure this path is correct based on your project structure
 
-.main-layout__header {
-  height: 80px;
-}
+.main-layout {
 
-.main-layout__drawer {
-  background-color: $primary; /* Use the $primary variable */
-  color: $white;
-}
+  &__header {
+    height: 80px;
+  }
 
-.main-layout__list-header {
-  color: $white;
-}
+  &__list-header {
+    color: $white;
+  }
 
-.main-layout__toolbar {
-  padding: 0;
-  height: 100%;
-}
+  &__headerBtn {
+    &--prev {
+      margin-left: 12px;
+      border: 1px solid $white;
+    }
 
-.main-layout__toolbar-logo {
-  height: 100%;
-}
+    &--next {
+      margin-right: 12px;
+      border: 1px solid $white;
+    }
+  }
 
-.main-layout__toolbar-tabs {
-  height: 100%;
-}
+  &__toolbar {
+    padding: 0;
+    height: 100%;
+  }
 
-.main-layout__toolbar-tab {
-  height: 100%;
-}
+  &__toolbar-logo {
+    height: 100%;
+  }
 
-.main-layout__page-container {
-  width: 100%;
-  height: 100%;
-}
+  &__toolbar-tabs {
+    height: 100%;
+  }
 
-.main-layout__page-section {
-  width: 100%;
-  height: 100%;
-  padding: 0px;
+  &__toolbar-tab {
+    height: 100%;
+  }
+
+  &__page-container {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  &__page-section {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+  }
 }
 </style>

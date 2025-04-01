@@ -47,6 +47,8 @@
         <TlenovoContactView />
       </q-tab-panel>
     </q-tab-panels>
+
+    <TlenovoSnackbar />
   </q-layout>
 </template>
 
@@ -56,6 +58,7 @@ import { computed, ref } from 'vue';
 
 // Components
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
+import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
 // Views
 import TlenovoContactView from 'src/views/TlenovoContactView.vue';
 import TlenovoContraView from 'src/views/TlenovoContraView.vue';

@@ -1,7 +1,15 @@
 <template>
     <q-page-container class="MainView">
+        <!-- Form -->
+        <Transition name="FormTransition">
+            <TlenovoForm class="MainView__form" v-if="isFormVisible" @cancel="onCancelClickHandler" @submit="onSubmitHandler"/>
+        </Transition>
+            
         <!-- Initial Section -->
-        <section class="MainView__sectionInitial">
+        <section :class="{
+            'MainView__sectionInitial': true,
+            'MainView__sectionInitial--blur': isFormVisible
+        }">
             <TlenovoFireflies :isMobile="isMobile" />
             <q-btn
                 :class="{
@@ -13,6 +21,7 @@
                 color="primary"
                 size="xl"
                 padding="12px 20px"
+                @click="onBookClickHandler"
             />
         </section>
         
@@ -43,19 +52,41 @@ import { computed, ref } from 'vue';
 
 // Components
 import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.vue';
+import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
 
 const $q = useQuasar();
 // Example usage: Check if the screen is mobile
 const isMobile = computed(() => $q.screen.lt.md);
 
-// Opis na stronie głównej
+// Form visibility state
+const isFormVisible = ref(false);
+
+// Page description
 const span = ref('Złap oddech zdrowia!');
 const header = ref('Komora Hiperbaryczna');
 const paragraph = ref('Oczyść organizm, odzyskaj energię i przyspiesz regenerację dzięki terapii w komorze hiperbarycznej. Zanurz się w skoncentrowanym tlenie i poczuj, jak znika stres, zmęczenie i miejski smog. Oddychaj pełnią życia!');
+
+function onSubmitHandler(payload) {
+    // Handle form submission logic here
+    console.log('Form submitted!', payload);
+    isFormVisible.value = false;
+}
+
+function onCancelClickHandler() {
+    isFormVisible.value = false;
+}
+
+function onBookClickHandler() {
+    isFormVisible.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
 @import 'src/css/quasar.variables.scss';
+
+// Variables
+$slide-duration: 0.25s;
+$slide-easing: ease-out;
 
 // Extract to separate file
 @keyframes slideInLeft {
@@ -80,16 +111,33 @@ const paragraph = ref('Oczyść organizm, odzyskaj energię i przyspiesz regener
     }
 }
 
-
 $font: 'Kanit';
 @import url('//fonts.googleapis.com/css2?family=#{$font}');
+
+.FormTransition-enter-active {
+    animation: slideInBottom $slide-duration $slide-easing;
+}
+
+.FormTransition-leave-active {
+    animation: slideInBottom $slide-duration $slide-easing reverse;
+}
+
 .MainView {
     position: relative;
     font-family: $font;
     background-color: $primary;
+    max-width: 100%;
 
     // Overwrite quasar inline-styles
     padding-top: 0 !important;
+
+    &__form {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+    }
 
     &__sectionInitial {
         position: relative;
@@ -100,6 +148,11 @@ $font: 'Kanit';
                     url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png') no-repeat center center;
         background-size: cover;
         clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 86%);
+
+        &--blur {
+            opacity: 0.8;
+            filter: blur(5px);
+        }
     }
 
     &__sectionInitialBtn {
@@ -148,6 +201,19 @@ $font: 'Kanit';
         background-color: $primary;
     }
 
+    &__sectionMain {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 0px;
+        background-color: $primary;
+        color: $white;
+
+        &--blur {
+            filter: blur(5px);
+        }
+    }
+
     // Media Queries for Responsiveness
     @media (max-width: 768px) {
         &__sectionInitial {
@@ -193,13 +259,13 @@ $font: 'Kanit';
             height: calc(500px - 60px);
             width: 80%;
             text-align: center;
-            margin-top: 80px;
+            margin-top: 120px;
             padding-bottom: 15vw;
             animation: slideInBottom .6s ease-in;
 
 
             h1 {
-                margin-top: 160px;
+                margin-top: 100px;
                 font-size: 40px;
                 line-height: 3rem;
             }

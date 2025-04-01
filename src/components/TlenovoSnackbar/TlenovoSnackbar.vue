@@ -1,54 +1,20 @@
 <template>
     <Transition name="snackbar-slide">
-        <q-card v-if="false" class="TlenovoSnackbar" flat bordered dark>
+        <q-card v-if="visible" class="TlenovoSnackbar" flat bordered dark>
             <div class="TlenovoSnackbar__content">          
-                <span class="TlenovoSnackbar__message">Message bedzie brany ze storea</span>
-                <q-icon class="TlenovoSnackbar__icon" name="check_circle_outline" :color="color" size="lg" />
+                <span class="TlenovoSnackbar__message">{{ message }}</span>
+                <q-icon class="TlenovoSnackbar__icon" :name="icon" :color="color" :size="iconSize" />
             </div>
         </q-card>
     </Transition>
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useSnackbarStore } from 'src/stores/snackbar-store.js';
 
-const props = defineProps({
-    color: {
-        type: String,
-        default: 'positive',
-        validator: (value) => ['positive', 'negative', 'primary', 'secondary'].includes(value)
-    },
-    timeout: {
-        type: Number,
-        default: 3000
-    },
-    dismissible: {
-        type: Boolean,
-        default: true
-    },
-    modelValue: {
-        type: Boolean,
-        default: false
-    }
-});
-
-// TODO: Use pinia to manage snackbar state
-const visible = ref(false);
-
-onMounted(() => {
-    setTimeout(() => {
-        visible.value = true;
-    }, 3000);
-});
-
-watch(() => props.modelValue, (newValue) => {
-    visible.value = newValue;
-    if (newValue && props.timeout > 0) {
-        setTimeout(() => {
-            close();
-        }, props.timeout);
-    }
-});
+const useSnackbar = useSnackbarStore();
+const { visible, message, color, icon, iconSize } = storeToRefs(useSnackbar);
 </script>
 
 <style lang="scss" scoped>

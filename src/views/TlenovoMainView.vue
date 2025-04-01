@@ -48,6 +48,7 @@
 
 <script setup>
 import { useQuasar } from 'quasar';
+import { useSnackbarStore } from 'src/stores/snackbar-store.js';
 import { computed, ref } from 'vue';
 
 // Components
@@ -55,6 +56,7 @@ import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.v
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
 
 const $q = useQuasar();
+const useSnackbar = useSnackbarStore();
 // Example usage: Check if the screen is mobile
 const isMobile = computed(() => $q.screen.lt.md);
 
@@ -70,6 +72,10 @@ function onSubmitHandler(payload) {
     // Handle form submission logic here
     console.log('Form submitted!', payload);
     isFormVisible.value = false;
+    useSnackbar.showSnackbar('Zarezerowowano termin. Do zobaczenia na miejscu!', {
+        color: 'positive',
+        timeout: 3000,
+    });
 }
 
 function onCancelClickHandler() {

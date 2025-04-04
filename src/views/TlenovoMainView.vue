@@ -26,18 +26,25 @@
         </section>
         
         <div class="MainView__header">
-            <span >{{ span }}</span>
-            <h1>{{ header }}</h1>
-            <p>{{ paragraph }}</p>
-        </div>
-
-        <div class="MainView__separator">
-
+            <span >Złap oddech zdrowia!</span>
+            <h1>Komora Hiperbaryczna</h1>
+            <p>Oczyść organizm, odzyskaj energię i przyspiesz regenerację dzięki terapii w komorze hiperbarycznej. Zanurz się w skoncentrowanym tlenie i poczuj, jak znika stres, zmęczenie i miejski smog. Oddychaj pełnią życia!</p>
         </div>
 
         <!-- Main info Section -->
-        <section class="MainView__sectionMain">
-            <p>dupa</p>
+        <section class="MainView__sectionMain" :class="{ 'MainView__sectionMain--blur': isFormVisible }">
+                <div class="MainView__sectionMainBackground"></div>
+                <h2 class="MainView__sectionMainTitle">Zobacz jak działa komora hiperbaryczna</h2>
+                
+                <div class="MainView__sectionMainVideo">
+                    <iframe 
+                        src="https://www.youtube.com/embed/zdlYjo-5b1k" 
+                        title="Tlenovo - Komora Hiperbaryczna" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
         </section>
 
         <footer class="MainView__footer">
@@ -62,11 +69,6 @@ const isMobile = computed(() => $q.screen.lt.md);
 
 // Form visibility state
 const isFormVisible = ref(false);
-
-// Page description
-const span = ref('Złap oddech zdrowia!');
-const header = ref('Komora Hiperbaryczna');
-const paragraph = ref('Oczyść organizm, odzyskaj energię i przyspiesz regenerację dzięki terapii w komorze hiperbarycznej. Zanurz się w skoncentrowanym tlenie i poczuj, jak znika stres, zmęczenie i miejski smog. Oddychaj pełnią życia!');
 
 function onSubmitHandler(payload) {
     // Handle form submission logic here
@@ -114,6 +116,17 @@ $slide-easing: ease-out;
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -201,22 +214,58 @@ $font: 'Kanit';
         }
     }
 
-    &__separator {
-        width: 100%;
-        height: 100px;
-        background-color: $primary;
-    }
-
     &__sectionMain {
         position: relative;
         width: 100%;
-        height: 100%;
-        padding: 0px;
-        background-color: $primary;
-        color: $white;
+        min-height: 600px;
+        overflow: hidden;
 
         &--blur {
             filter: blur(5px);
+        }
+
+        &Background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: $accent;
+            opacity: .95;
+            clip-path: polygon(0 15%, 100% 0, 100% 60%, 0 75%);
+            z-index: 0;
+        }
+
+        &Title {
+            position: relative;
+            font-size: 32px;
+            font-weight: 600;
+            color: $primary;
+            text-align: center;
+            text-transform: uppercase;
+            margin: 0 0 20px 0;
+            z-index: 1;
+        }
+
+        &Video {
+            width: 100%;
+            padding: 0 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.5s;
+            
+            iframe {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                border: none;
+                display: block;
+            }
         }
     }
 
@@ -250,9 +299,13 @@ $font: 'Kanit';
             }
         }
 
-        &__separator {
-            top: 580px;
-            height: 400px;
+        &__sectionMain {
+            padding: 50px 0;
+        }
+        
+        &__sectionMainTitle {
+            font-size: 24px;
+            padding: 15px;
         }
     }
 
@@ -286,9 +339,14 @@ $font: 'Kanit';
             }
         }
 
-        &__separator {
-            top: 480px;
-            height: 300px;
+        &__sectionMain {
+            padding: 40px 0;
+        }
+        
+        &__sectionMainTitle {
+            font-size: 20px;
+            padding: 12px;
+            margin-bottom: 20px;
         }
     }
 }

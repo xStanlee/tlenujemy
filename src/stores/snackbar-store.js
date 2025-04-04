@@ -5,7 +5,7 @@ export const useSnackbarStore = defineStore('snackbarStore', {
     message: '',
     color: 'positive', //'positive', 'negative', 'primary', 'secondary'
     timeout: 3000,
-    icon: 'done_outline',
+    icon: 'check_circle_outline',
     iconSize: 'lg',
     position: 'bottom',
     visible: false,

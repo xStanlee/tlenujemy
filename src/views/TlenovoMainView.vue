@@ -33,18 +33,20 @@
 
         <!-- Main info Section -->
         <section class="MainView__sectionMain" :class="{ 'MainView__sectionMain--blur': isFormVisible }">
-                <div class="MainView__sectionMainBackground"></div>
-                <h2 class="MainView__sectionMainTitle">Zobacz jak działa komora hiperbaryczna</h2>
-                
-                <div class="MainView__sectionMainVideo">
-                    <iframe 
-                        src="https://www.youtube.com/embed/zdlYjo-5b1k" 
-                        title="Tlenovo - Komora Hiperbaryczna" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
+            <TlenovoVideo 
+                title="O co chodzi w terapii tlenowej?"
+                videoSrc="https://www.youtube.com/embed/2p5vz4YMdjs"
+                videoTitle="Tlenovo - Informacje ogólne"
+            />
+            
+            <TlenovoVideo
+                title="Zobacz działanie komory hiperbaryczna"
+                videoSrc="https://www.youtube.com/embed/zdlYjo-5b1k"
+                videoTitle="Tlenovo - Komora Hiperbaryczna"
+                is-reversed
+             />
+ 
+            <TlenovoVideo />
         </section>
 
         <footer class="MainView__footer">
@@ -61,6 +63,7 @@ import { computed, ref } from 'vue';
 // Components
 import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.vue';
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
+import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
 
 const $q = useQuasar();
 const useSnackbar = useSnackbarStore();
@@ -215,57 +218,11 @@ $font: 'Kanit';
     }
 
     &__sectionMain {
-        position: relative;
         width: 100%;
-        min-height: 600px;
-        overflow: hidden;
+        
 
         &--blur {
             filter: blur(5px);
-        }
-
-        &Background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background-color: $accent;
-            opacity: .95;
-            clip-path: polygon(0 15%, 100% 0, 100% 60%, 0 75%);
-            z-index: 0;
-        }
-
-        &Title {
-            position: relative;
-            font-size: 32px;
-            font-weight: 600;
-            color: $primary;
-            text-align: center;
-            text-transform: uppercase;
-            margin: 0 0 20px 0;
-            z-index: 1;
-        }
-
-        &Video {
-            width: 100%;
-            padding: 0 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-            transform: translateY(50px);
-            opacity: 0;
-            animation: fadeInUp 1s ease-out forwards;
-            animation-delay: 0.5s;
-            
-            iframe {
-                width: 100%;
-                aspect-ratio: 16 / 9;
-                border: none;
-                display: block;
-            }
         }
     }
 
@@ -302,11 +259,6 @@ $font: 'Kanit';
         &__sectionMain {
             padding: 50px 0;
         }
-        
-        &__sectionMainTitle {
-            font-size: 24px;
-            padding: 15px;
-        }
     }
 
     @media (max-width: 480px) {
@@ -341,12 +293,6 @@ $font: 'Kanit';
 
         &__sectionMain {
             padding: 40px 0;
-        }
-        
-        &__sectionMainTitle {
-            font-size: 20px;
-            padding: 12px;
-            margin-bottom: 20px;
         }
     }
 }

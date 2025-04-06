@@ -59,7 +59,7 @@ defineProps({
 .TlenovoVideo {
     position: relative;
     width: 100%;
-    min-height: 450px;
+    min-height: 420px;
     overflow: hidden;
     
     &__background {

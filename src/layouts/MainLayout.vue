@@ -48,6 +48,11 @@
       </q-tab-panel>
     </q-tab-panels>
 
+    <!-- Footer -->
+     <div class="main-layout__footer">
+      <TlenovoFooter />
+     </div>
+    <!-- Snackbar -->
     <TlenovoSnackbar />
   </q-layout>
 </template>
@@ -57,6 +62,7 @@ import { useQuasar } from 'quasar';
 import { computed, ref } from 'vue';
 
 // Components
+import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
 import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
 // Views
@@ -132,6 +138,17 @@ function onMobilePrev() {
   &__page-container {
     width: 100vw;
     height: 100vh;
+    z-index: 2;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-color: transparent;
+    z-index: 5;
   }
 
   &__page-section {

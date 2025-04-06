@@ -48,10 +48,6 @@
  
             <TlenovoVideo />
         </section>
-
-        <footer class="MainView__footer">
-
-        </footer>
     </q-page-container>
 </template>
 

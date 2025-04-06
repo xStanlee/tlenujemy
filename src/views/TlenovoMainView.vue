@@ -155,6 +155,7 @@ $font: 'Kanit';
         left: 0;
         width: 100%;
         height: 80%;
+        z-index: 6;
     }
 
     &__sectionInitial {
@@ -262,8 +263,12 @@ $font: 'Kanit';
             height: 800px;
         }
 
+        &__sectionInitialBtn {
+            top: 75%;
+        }
+
         &__header {
-            height: calc(500px - 60px);
+            height: calc(500px - 100px);
             width: 80%;
             text-align: center;
             margin-top: 120px;
@@ -272,7 +277,7 @@ $font: 'Kanit';
 
 
             h1 {
-                margin-top: 100px;
+                margin-top: 60px;
                 font-size: 40px;
                 line-height: 3rem;
             }

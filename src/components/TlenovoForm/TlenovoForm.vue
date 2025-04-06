@@ -232,7 +232,7 @@ function onPrevStepButtonHandler() {
     flex-direction: column;
     background-color: $primary;
     border-top: 1px solid $white;
-    z-index: 4;
+    z-index: 8;
     position: relative;
 
 

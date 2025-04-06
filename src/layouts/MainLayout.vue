@@ -29,6 +29,11 @@
     <q-tab-panels class="main-layout__page-container" v-model="tab" animated>
       <q-tab-panel class="main-layout__page-section" name="tab1">
         <TlenovoMainView />
+        <!-- TODO: Extract footer on top level of main-layout (issue with z-index) -->
+        <!-- Footer -->
+        <div class="main-layout__footer">
+          <TlenovoFooter />
+        </div>
       </q-tab-panel>
 
       <q-tab-panel class="main-layout__page-section" name="tab2">
@@ -47,11 +52,6 @@
         <TlenovoContactView />
       </q-tab-panel>
     </q-tab-panels>
-
-    <!-- Footer -->
-     <div class="main-layout__footer">
-      <TlenovoFooter />
-     </div>
     <!-- Snackbar -->
     <TlenovoSnackbar />
   </q-layout>
@@ -146,9 +146,9 @@ function onMobilePrev() {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 200px;
+    height: 140px;
     background-color: transparent;
-    z-index: 5;
+    z-index: 2;
   }
 
   &__page-section {

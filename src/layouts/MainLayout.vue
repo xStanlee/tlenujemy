@@ -25,11 +25,12 @@
     </q-header>
 
 
+    <!-- TODO: Extract footer on top level of main-layout (issue with z-index) -->
+
     <!-- Views -->
     <q-tab-panels class="main-layout__page-container" v-model="tab" animated>
       <q-tab-panel class="main-layout__page-section" name="tab1">
         <TlenovoMainView />
-        <!-- TODO: Extract footer on top level of main-layout (issue with z-index) -->
         <!-- Footer -->
         <div class="main-layout__footer">
           <TlenovoFooter />
@@ -38,6 +39,10 @@
 
       <q-tab-panel class="main-layout__page-section" name="tab2">
         <TlenovoInfoView />
+        <!-- Footer -->
+        <div class="main-layout__footer">
+          <TlenovoFooter />
+        </div>
       </q-tab-panel>
 
       <q-tab-panel class="main-layout__page-section" name="tab3">

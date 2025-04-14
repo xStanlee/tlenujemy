@@ -1,74 +1,98 @@
 <template>
-    <div :class="['TlenovoFact', 'TlenovoFact--animate', 'TlenovoFact--pop', { 'TlenovoFact--open': isOpen }]" @click="toggleOpen">
-        <div class="TlenovoFact__overlay">
-        <div class="TlenovoFact__overlay-content TlenovoFact--animate TlenovoFact--slide-left TlenovoFact--delay-2">
-            <h1 class="TlenovoFact--animate TlenovoFact--slide-left TlenovoFact--pop TlenovoFact--delay-4">{{ title }}</h1>
-            <p class="TlenovoFact--animate TlenovoFact--slide-left TlenovoFact--pop TlenovoFact--delay-5" style="color: white; margin-bottom: 2.5rem;">
-            {{ subtitle }}
-            </p>
-        </div>
-        <div
-            class="TlenovoFact__image-content TlenovoFact--animate TlenovoFact--slide TlenovoFact--delay-5"
-            :style="{ backgroundImage: `url(${image})` }"
-        ></div>
-        <div class="TlenovoFact__dots TlenovoFact--animate">
-            <div class="TlenovoFact__dot TlenovoFact--animate TlenovoFact--slide-up TlenovoFact--delay-6"></div>
-            <div class="TlenovoFact__dot TlenovoFact--animate TlenovoFact--slide-up TlenovoFact--delay-7"></div>
-            <div class="TlenovoFact__dot TlenovoFact--animate TlenovoFact--slide-up TlenovoFact--delay-8"></div>
-        </div>
-        </div>
-        <div class="TlenovoFact__text">
-        <p>
-            <img class="TlenovoFact__inset" :src="insetImage" alt="Inset" />
-            {{ content[0] }}
+  <div
+    :class="[
+      'TlenovoFact',
+      'TlenovoFact--animate',
+      'TlenovoFact--pop',
+      { 'TlenovoFact--open': isOpen },
+    ]"
+    @click="toggleOpen"
+  >
+    <div class="TlenovoFact__overlay">
+      <div
+        class="TlenovoFact__overlay-content TlenovoFact--animate TlenovoFact--slide-left TlenovoFact--delay-2"
+      >
+        <h1
+          v-if="!isOpen"
+          class="TlenovoFact__header TlenovoFact--animate TlenovoFact--slide-left TlenovoFact--pop TlenovoFact--delay-4"
+        >
+          {{ title }}
+        </h1>
+        <p
+          v-if="!isOpen"
+          class="TlenovoFact__paragraph TlenovoFact--animate TlenovoFact--slide-left TlenovoFact--pop TlenovoFact--delay-5"
+        >
+          {{ subtitle }}
         </p>
-        <p v-for="(paragraph, index) in content.slice(1)" :key="index">{{ paragraph }}</p>
-        </div>
+      </div>
+      <div
+        class="TlenovoFact__image-content TlenovoFact--animate TlenovoFact--slide TlenovoFact--delay-5"
+        :style="{ backgroundImage: `url(${image})` }"
+      ></div>
+      <div class="TlenovoFact__dots TlenovoFact--animate">
+        <div
+          class="TlenovoFact__dot TlenovoFact--animate TlenovoFact--slide-up TlenovoFact--delay-6"
+        ></div>
+        <div
+          class="TlenovoFact__dot TlenovoFact--animate TlenovoFact--slide-up TlenovoFact--delay-7"
+        ></div>
+        <div
+          class="TlenovoFact__dot TlenovoFact--animate TlenovoFact--slide-up TlenovoFact--delay-8"
+        ></div>
+      </div>
     </div>
+    <div class="TlenovoFact__text">
+      <p>
+        <img class="TlenovoFact__inset" :src="insetImage" alt="Inset" />
+        {{ content[0] }}
+      </p>
+      <p v-for="(paragraph, index) in content.slice(1)" :key="index">
+        {{ paragraph }}
+      </p>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { useQuasar } from 'quasar';
-import { computed, ref } from 'vue';
+import { useQuasar } from 'quasar'
+import { computed, ref } from 'vue'
 
 defineProps({
-    title: {
-        type: String,
-        required: true
-    },
-    subtitle: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String,
-        default: ''
-    },
-    insetImage: {
-        type: String,
-        default: ''
-    },
-    content: {
-        type: Array,
-        required: false
-    }
-});
+  title: {
+    type: String,
+    required: true,
+  },
+  subtitle: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    default: '',
+  },
+  insetImage: {
+    type: String,
+    default: '',
+  },
+  content: {
+    type: Array,
+    required: false,
+  },
+})
 
-
-const $q = useQuasar();
-const isMobile = computed(() => $q.screen.lt.md);
-const isOpen = ref(false);
+const $q = useQuasar()
+const isMobile = computed(() => $q.screen.lt.md)
+const isOpen = ref(false)
 
 function toggleOpen() {
-    console.log(isMobile.value);
-    // Guard for desktop
-    if(!isMobile.value) {
-        return;
-    }
+  console.log(isMobile.value)
+  // Guard for desktop
+  if (!isMobile.value) {
+    return
+  }
 
-    isOpen.value = !isOpen.value;
-};
-
+  isOpen.value = !isOpen.value
+}
 </script>
 
 <style lang="scss" scoped>
@@ -77,9 +101,9 @@ function toggleOpen() {
   flex-wrap: nowrap;
   justify-content: space-between;
   width: 85vmin;
-  height: 35vmin;
-  margin: 2rem auto;
-  border: 8px solid;
+  height: 80vmin;
+  margin: 0 auto;
+  border: 3px solid;
   border-image: linear-gradient(
       -50deg,
       $primary,
@@ -101,7 +125,7 @@ function toggleOpen() {
     }
 
     .TlenovoFact__image-content {
-      width: 30vmin;
+      width: 60vmin;
     }
 
     .TlenovoFact__overlay-content {
@@ -114,7 +138,7 @@ function toggleOpen() {
       transform: translateX(1rem);
 
       .TlenovoFact__dot {
-        background: white;
+        background: $white;
       }
     }
   }
@@ -138,22 +162,33 @@ function toggleOpen() {
     height: 100%;
     padding: 0.5rem 0 0 0.5rem;
     border: 3px solid;
-    border-image: linear-gradient(
-        to bottom,
-        $secondary 5%,
-        $primary 35% 65%,
-        $secondary 95%
-      )
-      0 0 0 100%;
+    border-image: linear-gradient(to bottom, $secondary 5%, $primary 35% 65%, $secondary 95%) 0 0 0
+      100%;
     transition: 0.3s ease-in-out 0.2s;
     z-index: 1;
+  }
+
+  &__header {
+    color: $white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  &__paragraph {
+    color: $white;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 2.5rem;
   }
 
   &__image-content {
     position: absolute;
     top: 0;
     right: 0;
-    width: 60vmin;
+    width: 50vmin;
     height: 100%;
     background-size: cover;
     transition: 0.3s ease-in-out;
@@ -182,7 +217,7 @@ function toggleOpen() {
   &__dot {
     width: 12px;
     height: 12px;
-    background: $secondary;
+    background: $white;
     border: 1px solid $primary;
     border-radius: 50%;
     transition: 0.3s ease-in-out 0.3s;
@@ -198,6 +233,14 @@ function toggleOpen() {
     background: $white;
     box-shadow: inset 1px 1px 15px 0 rgba(0 0 0 / 0.4);
     overflow-y: scroll;
+
+    p {
+      font-size: 1.4rem;
+      background: linear-gradient(45deg, var(--q-primary) 100%, var(--q-secondary) 0%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
   }
 
   &:hover &__overlay {

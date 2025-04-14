@@ -1,9 +1,13 @@
 <template>
     <div class="TlenovoFireflies">
-        <span v-for="firefly in firefliesAmount" :key="firefly" :class="{
-            'firefly': true,
-            'firefly--mobile': isMobile
-        }"></span>
+        <span
+            v-for="firefly in firefliesAmount"
+            :key="firefly"
+            :class="[
+                'firefly',
+                { 'firefly--mobile': isMobile }
+            ]"
+        ></span>
     </div>
 </template>
 

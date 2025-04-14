@@ -1,16 +1,21 @@
 <template>
     <div class="TlenovoVideo">
-        <div :class="{
-            'TlenovoVideo__background': true,
-            'TlenovoVideo__background--reversed': isReversed
-        }">
-            <p :class="{
-                'TlenovoVideo__title': true,
-                'TlenovoVideo__title--reversed': isReversed
-            }">
+        <div 
+            :class="[
+                'TlenovoVideo__background',
+                { 'TlenovoVideo__background--reversed': isReversed }
+            ]"
+        >
+            <p 
+                :class="[
+                    'TlenovoVideo__title',
+                    { 'TlenovoVideo__title--reversed': isReversed }
+                ]"
+            >
                 {{ title }}
             </p>
         </div>
+
         <div class="TlenovoVideo__content">
             <q-video
                 :ratio="16/9"

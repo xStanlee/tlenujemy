@@ -1,9 +1,9 @@
 <template>
     <q-img
-        :class="{
-        'TlenovoLogo': true,
-        'TlenovoLogo--small': isMobile
-        }"
+        :class="[
+            'TlenovoLogo',
+            { 'TlenovoLogo--small': isMobile }
+        ]"
         src="src/assets/logo.png"
         spinner-color="white"
     />

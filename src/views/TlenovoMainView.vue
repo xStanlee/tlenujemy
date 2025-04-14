@@ -2,14 +2,21 @@
     <q-page-container class="MainView">
         <!-- Form -->
         <Transition name="FormTransition">
-            <TlenovoForm class="MainView__form" v-if="isFormVisible" @cancel="onCancelClickHandler" @submit="onSubmitHandler"/>
+            <TlenovoForm 
+                class="MainView__form" 
+                v-if="isFormVisible" 
+                @cancel="onCancelClickHandler" 
+                @submit="onSubmitHandler"
+            />
         </Transition>
             
         <!-- Initial Section -->
-        <section :class="{
-            'MainView__sectionInitial': true,
-            'MainView__sectionInitial--blur': isFormVisible
-        }">
+        <section 
+            :class="{
+                'MainView__sectionInitial': true,
+                'MainView__sectionInitial--blur': isFormVisible
+            }"
+        >
             <TlenovoFireflies :isMobile="isMobile" />
             <q-btn
                 :class="{
@@ -25,28 +32,40 @@
             />
         </section>
         
-        <div class="MainView__header">
-            <span >Złap oddech zdrowia!</span>
+        <!-- Header Section -->
+        <header class="MainView__header">
+            <span>Złap oddech zdrowia!</span>
             <h1>Komora Hiperbaryczna</h1>
-            <p>Oczyść organizm, odzyskaj energię i przyspiesz regenerację dzięki terapii w komorze hiperbarycznej. Zanurz się w skoncentrowanym tlenie i poczuj, jak znika stres, zmęczenie i miejski smog. Oddychaj pełnią życia!</p>
-        </div>
+            <p>
+                Oczyść organizm, odzyskaj energię i przyspiesz regenerację dzięki terapii w komorze hiperbarycznej. 
+                Zanurz się w skoncentrowanym tlenie i poczuj, jak znika stres, zmęczenie i miejski smog. 
+                Oddychaj pełnią życia!
+            </p>
+        </header>
 
         <!-- Main info Section -->
-        <section class="MainView__sectionMain" :class="{ 'MainView__sectionMain--blur': isFormVisible }">
+        <section 
+            class="MainView__sectionMain" 
+            :class="{ 'MainView__sectionMain--blur': isFormVisible }"
+        >
             <TlenovoVideo 
+                class="MainView__sectionMainVideo"
                 title="O co chodzi w terapii tlenowej?"
                 videoSrc="https://www.youtube.com/embed/2p5vz4YMdjs"
                 videoTitle="Tlenovo - Informacje ogólne"
             />
             
             <TlenovoVideo
+                class="MainView__sectionMainVideo"
                 title="Zobacz działanie komory hiperbaryczna"
                 videoSrc="https://www.youtube.com/embed/zdlYjo-5b1k"
                 videoTitle="Tlenovo - Komora Hiperbaryczna"
                 is-reversed
-             />
+            />
  
-            <TlenovoVideo />
+            <TlenovoVideo 
+                class="MainView__sectionMainVideo"
+            />
         </section>
     </q-page-container>
 </template>
@@ -171,6 +190,13 @@ $font: 'Kanit';
         &--blur {
             opacity: 0.8;
             filter: blur(5px);
+        }
+    }
+
+
+    &__sectionMainVideo {
+        &:last-of-type {
+            margin-bottom: 120px;
         }
     }
 

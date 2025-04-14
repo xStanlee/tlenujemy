@@ -17,7 +17,7 @@
         <q-tabs v-else class="main-layout__toolbar-tabs" v-model="tab">
           <q-tab class="main-layout__toolbar-tab" name="tab1" label="Strona główna" />
           <q-tab class="main-layout__toolbar-tab" name="tab2" label="Zastosowania" />
-          <q-tab class="main-layout__toolbar-tab" name="tab3" label="Przeciwwskazania" />
+          <q-tab class="main-layout__toolbar-tab" name="tab3" label="Przeciwwskazania" />``
           <q-tab class="main-layout__toolbar-tab" name="tab4" label="Cennik" />
           <q-tab class="main-layout__toolbar-tab" name="tab5" label="Kontakt" />
         </q-tabs>

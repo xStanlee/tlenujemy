@@ -1,9 +1,22 @@
 <template>
     <Transition name="snackbar-slide">
-        <q-card v-if="visible" class="TlenovoSnackbar" flat bordered dark>
-            <div class="TlenovoSnackbar__content">          
-                <span class="TlenovoSnackbar__message">{{ message }}</span>
-                <q-icon class="TlenovoSnackbar__icon" :name="icon" :color="color" :size="iconSize" />
+        <q-card
+            v-if="visible"
+            class="TlenovoSnackbar"
+            flat
+            bordered
+            dark
+        >
+            <div class="TlenovoSnackbar__content">
+                <span class="TlenovoSnackbar__message">
+                    {{ message }}
+                </span>
+                <q-icon
+                    class="TlenovoSnackbar__icon"
+                    :name="icon"
+                    :color="color"
+                    :size="iconSize"
+                />
             </div>
         </q-card>
     </Transition>

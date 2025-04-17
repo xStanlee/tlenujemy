@@ -85,7 +85,6 @@ const isMobile = computed(() => $q.screen.lt.md)
 const isOpen = ref(false)
 
 function toggleOpen() {
-  console.log(isMobile.value)
   // Guard for desktop
   if (!isMobile.value) {
     return

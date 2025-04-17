@@ -47,6 +47,10 @@
 
       <q-tab-panel class="main-layout__page-section" name="tab3">
         <TlenovoContraView />
+        <!-- Footer -->
+        <div class="main-layout__footer">
+          <TlenovoFooter />
+        </div>
       </q-tab-panel>
 
       <q-tab-panel class="main-layout__page-section" name="tab4">

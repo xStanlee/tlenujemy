@@ -55,6 +55,10 @@
 
       <q-tab-panel class="main-layout__page-section" name="tab4">
         <TlenovoOfferView />
+        <!-- Footer -->
+        <div class="main-layout__footer">
+          <TlenovoFooter />
+        </div>
       </q-tab-panel>
 
       <q-tab-panel class="main-layout__page-section" name="tab5">

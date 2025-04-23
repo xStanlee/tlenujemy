@@ -41,14 +41,16 @@
         ></div>
       </div>
     </div>
-    <div class="TlenovoFact__text">
-      <p>
-        <img class="TlenovoFact__inset" :src="insetImage" alt="Inset" />
-        {{ content[0] }}
-      </p>
-      <p v-for="(paragraph, index) in content.slice(1)" :key="index">
-        {{ paragraph }}
-      </p>
+    <div class="TlenovoFact__video">
+      <!-- TODO: Replace paragraph with video -->
+      <iframe
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/YLdNU67kHgk"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+      />
     </div>
   </div>
 </template>
@@ -57,6 +59,7 @@
 import { useQuasar } from 'quasar'
 import { computed, ref } from 'vue'
 
+//TODO: Replace paragraph with video
 defineProps({
   title: {
     type: String,
@@ -222,13 +225,12 @@ function toggleOpen() {
     transition: 0.3s ease-in-out 0.3s;
   }
 
-  &__text {
+  &__video {
     position: absolute;
     top: 0;
     right: 0;
     width: 60vmin;
     height: 100%;
-    padding: 3vmin 4vmin;
     background: $white;
     box-shadow: inset 1px 1px 15px 0 rgba(0 0 0 / 0.4);
     overflow-y: scroll;

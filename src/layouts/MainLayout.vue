@@ -2,31 +2,24 @@
   <q-layout view="hHr lpR fFf" class="main-layout">
     <q-header class="main-layout__header" elevated>
       <q-toolbar class="main-layout__toolbar">
-        <!-- Prev step mobile -->
+        <!-- Links mobile -->
         <q-btn class="main-layout__headerBtn--prev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
-        <!-- Gap -->
         <q-space v-if="isMobile && tab !== 'tab1'" />
-        <!-- Logo -->
         <TlenovoLogo class="main-layout__toolbar-logo" :isMobile="isMobile"/>
-        <!-- Gap -->
-        <q-space />
-        <!-- Next step mobile -->
-        <q-btn class="main-layout__headerBtn--next" v-if="isMobile" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
+        <q-space v-if="(isMobile && tab !== 'tab4') || !isMobile" />
+        <q-btn class="main-layout__headerBtn--next" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
 
         <!-- Links desktop -->
-        <q-tabs v-else class="main-layout__toolbar-tabs" v-model="tab">
+        <q-tabs v-if="!isMobile" class="main-layout__toolbar-tabs" v-model="tab">
           <q-tab class="main-layout__toolbar-tab" name="tab1" label="Strona główna" />
           <q-tab class="main-layout__toolbar-tab" name="tab2" label="Zastosowania" />
-          <q-tab class="main-layout__toolbar-tab" name="tab3" label="Przeciwwskazania" />``
-          <q-tab class="main-layout__toolbar-tab" name="tab4" label="Cennik" />
-          <q-tab class="main-layout__toolbar-tab" name="tab5" label="Kontakt" />
+          <q-tab class="main-layout__toolbar-tab" name="tab3" label="Przeciwwskazania" />
+          <q-tab class="main-layout__toolbar-tab" name="tab4" label="Kontakt" />
         </q-tabs>
       </q-toolbar>
     </q-header>
-
-
+    
     <!-- TODO: Extract footer on top level of main-layout (issue with z-index) -->
-
     <!-- Views -->
     <q-tab-panels class="main-layout__page-container" v-model="tab" animated>
       <q-tab-panel class="main-layout__page-section" name="tab1">
@@ -60,10 +53,6 @@
           <TlenovoFooter />
         </div>
       </q-tab-panel>
-
-      <q-tab-panel class="main-layout__page-section" name="tab5">
-        <TlenovoContactView />
-      </q-tab-panel>
     </q-tab-panels>
     <!-- Snackbar -->
     <TlenovoSnackbar />
@@ -79,7 +68,6 @@ import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
 import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
 // Views
-import TlenovoContactView from 'src/views/TlenovoContactView.vue';
 import TlenovoContraView from 'src/views/TlenovoContraView.vue';
 import TlenovoInfoView from 'src/views/TlenovoInfoView.vue';
 import TlenovoMainView from 'src/views/TlenovoMainView.vue';
@@ -92,14 +80,14 @@ const isMobile = computed(() => $q.screen.lt.md);
 const tab = ref('tab1');
 
 function onMobileNext() {
-  const tabs = ['tab1', 'tab2', 'tab3', 'tab4', 'tab5'];
+  const tabs = ['tab1', 'tab2', 'tab3', 'tab4'];
   const currentIndex = tabs.indexOf(tab.value);
   const nextIndex = currentIndex + 1 >= tabs.length ? 0 : currentIndex + 1;
   tab.value = tabs[nextIndex];
 }
 
 function onMobilePrev() {
-  const tabs = ['tab1', 'tab2', 'tab3', 'tab4', 'tab5'];
+  const tabs = ['tab1', 'tab2', 'tab3', 'tab4'];
   const currentIndex = tabs.indexOf(tab.value);
   const prevIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
   tab.value = tabs[prevIndex];

@@ -7,6 +7,7 @@
                 v-if="isFormVisible" 
                 @cancel="onCancelClickHandler" 
                 @submit="onSubmitHandler"
+                @redirect="onRedirectHandler"
             />
         </Transition>
             
@@ -80,13 +81,14 @@ import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.v
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
 import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
 
+const emit = defineEmits(['redirect']);
+// Form visibility state
+const isFormVisible = ref(false);
+
 const $q = useQuasar();
 const useSnackbar = useSnackbarStore();
 // Example usage: Check if the screen is mobile
 const isMobile = computed(() => $q.screen.lt.md);
-
-// Form visibility state
-const isFormVisible = ref(false);
 
 function onSubmitHandler(payload) {
     // Handle form submission logic here
@@ -96,6 +98,10 @@ function onSubmitHandler(payload) {
         color: 'positive',
         timeout: 3000,
     });
+}
+
+function onRedirectHandler() {
+    emit('redirect');
 }
 
 function onCancelClickHandler() {
@@ -173,7 +179,7 @@ $font: 'Kanit';
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 80%;
+        height: calc(100% - 80px);
         z-index: 6;
     }
 

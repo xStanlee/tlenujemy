@@ -13,7 +13,7 @@ export const useSnackbarStore = defineStore('snackbarStore', {
   }),
 
   getters: {
-    doubleCount: (state) => state.counter * 2,
+    simpleGet: (state) => state.message,
   },
 
   actions: {

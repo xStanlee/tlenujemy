@@ -23,7 +23,7 @@
     <!-- Views -->
     <q-tab-panels class="main-layout__page-container" v-model="tab" animated>
       <q-tab-panel class="main-layout__page-section" name="tab1">
-        <TlenovoMainView />
+        <TlenovoMainView @redirect="onRedirectHandler" />
         <!-- Footer -->
         <div class="main-layout__footer">
           <TlenovoFooter />
@@ -91,6 +91,11 @@ function onMobilePrev() {
   const currentIndex = tabs.indexOf(tab.value);
   const prevIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
   tab.value = tabs[prevIndex];
+}
+
+function onRedirectHandler() {
+  console.log('redirect');
+  tab.value = 'tab3';
 }
 </script>
 

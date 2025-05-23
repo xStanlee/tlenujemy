@@ -9,6 +9,8 @@
             size="lg"
         />
 
+        <h4 class="TlenovoForm__formHeader">Rezerwacja terminu</h4>
+
         <div class="TlenovoForm__shape"></div>
 
         <form class="TlenovoForm__body" ref="formRef">
@@ -91,7 +93,7 @@
 
                     <q-card-section :class="{ 'TlenovoForm__successInfoText': isSubmitted }">
                         Upewnij się, że zapoznałeś się z regulaminem i przeciwwskazaniami dot. hiperbarii, które znajdziesz
-                        <span class="TlenovoForm__successInfoSpan">tutaj.</span>
+                        <span @click="onRedirectHandler" class="TlenovoForm__successInfoSpan">tutaj.</span>
                     </q-card-section>
 
                     <q-spinner-facebook
@@ -185,7 +187,7 @@ onMounted(() => {
 });
 
 // Emits definition
-const emit = defineEmits(['submit', 'cancel']);
+const emit = defineEmits(['submit', 'cancel', 'redirect']);
 
 // Refs
 const formRef = ref();
@@ -273,11 +275,15 @@ function onPhoneInputChangeHandler(payload) {
 }
 
 function onNextStepButtonHandler() {
-        stepper.value.next();
+    stepper.value.next();
 }
 
 function onPrevStepButtonHandler() {
     stepper.value.previous();
+}
+
+function onRedirectHandler() {
+    emit('redirect');
 }
 </script>
 
@@ -291,6 +297,15 @@ function onPrevStepButtonHandler() {
     z-index: 8;
     position: relative;
 
+    &__formHeader {
+        font-size: 1.8rem;
+        font-weight: 500;
+        line-height: 1rem;
+        text-decoration: underline;
+        margin: 20px auto 0 auto;
+        color: $white;
+        z-index: 7;
+    }
 
     &__closeBtn {
         margin-left: auto;

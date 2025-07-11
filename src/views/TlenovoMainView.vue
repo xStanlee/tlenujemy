@@ -77,6 +77,7 @@ import { useSnackbarStore } from 'src/stores/snackbar-store.js';
 import { computed, ref } from 'vue';
 
 // Services
+import { appointmentService } from 'src/services/appointment.service.js';
 import { notificationService } from 'src/services/notification.service';
 
 // Components
@@ -94,14 +95,29 @@ const useSnackbar = useSnackbarStore();
 const isMobile = computed(() => $q.screen.lt.md);
 
 async function onSubmitHandler(payload) {
+    await handleNotification(payload);
+    await handleDatastore(payload);
+    onCancelClickHandler();
+}
+
+async function handleDatastore(payload) {
+    try {
+        await appointmentService.addAppointment(payload);
+        useSnackbar.showSnackbar('Wizyta została pomyślnie umówiona. Zadzwonimy aby potwierdzić.', {
+            color: 'positive',
+            timeout: 3000,
+        });
+    } catch {
+        useSnackbar.showSnackbar('Wystąpił błąd podczas umawiania wizyty. Spróbuj ponownie.', {
+            color: 'negative',
+            timeout: 5000,
+        });
+    }
+}
+
+async function handleNotification(payload) {
     const reservationMessage = generateMessage(payload);
     await notificationService.sendReservationNotification(reservationMessage);
-    
-    isFormVisible.value = false;
-    useSnackbar.showSnackbar('Za moment zadzwonimy, żeby potwierdzić termin.', {
-        color: 'positive',
-        timeout: 3000,
-    });
 }
 
 function generateMessage(payload) {

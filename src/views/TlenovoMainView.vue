@@ -76,6 +76,9 @@ import { useQuasar } from 'quasar';
 import { useSnackbarStore } from 'src/stores/snackbar-store.js';
 import { computed, ref } from 'vue';
 
+// Services
+import { notificationService } from 'src/services/notification.service';
+
 // Components
 import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.vue';
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
@@ -90,14 +93,24 @@ const useSnackbar = useSnackbarStore();
 // Example usage: Check if the screen is mobile
 const isMobile = computed(() => $q.screen.lt.md);
 
-function onSubmitHandler(payload) {
-    // Handle form submission logic here
-    console.log('Form submitted!', payload);
+async function onSubmitHandler(payload) {
+    const reservationMessage = generateMessage(payload);
+    await notificationService.sendReservationNotification(reservationMessage);
+    
     isFormVisible.value = false;
-    useSnackbar.showSnackbar('Zarezerowowano termin. Do zobaczenia na miejscu!', {
+    useSnackbar.showSnackbar('Za moment zadzwonimy, żeby potwierdzić termin.', {
         color: 'positive',
         timeout: 3000,
     });
+}
+
+function generateMessage(payload) {
+    return `
+        Imię: ${payload.name}
+        Telefon: ${payload.phone}
+        Data wizyty: ${payload.date}
+        Godzina wizyty: ${payload.time}
+    `;
 }
 
 function onRedirectHandler() {

@@ -3,8 +3,8 @@
         <!-- Form -->
         <Transition name="FormTransition">
             <TlenovoForm 
+                v-if="isFormVisible"
                 class="MainView__form" 
-                v-if="isFormVisible" 
                 @cancel="onCancelClickHandler" 
                 @submit="onSubmitHandler"
                 @redirect="onRedirectHandler"

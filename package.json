@@ -13,14 +13,12 @@
     "dev": "quasar dev",
     "build": "quasar build -m spa",
     "postinstall": "quasar prepare",
-    "obfuscate": "javascript-obfuscator dist/spa --output dist/spa --config obfuscator-config.json",
-    "deploy": "npm run build && npm run obfuscate && gh-pages -d dist/spa"
+    "deploy": "npm run build && gh-pages -d dist/spa"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
     "axios": "^1.2.1",
     "firebase": "^11.10.0",
-    "javascript-obfuscator": "^4.1.1",
     "pinia": "^3.0.1",
     "quasar": "^2.16.0",
     "vue": "^3.4.18",

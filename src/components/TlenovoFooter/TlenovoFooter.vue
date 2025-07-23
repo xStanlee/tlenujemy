@@ -81,14 +81,14 @@
 
 .TlenovoFooter {
     width: 100%;
-    height: 180px;
+    height: 100%;
     position: relative;
     background-color: transparent;
 
     &__wrapper {
         background-color: transparent;
         position: absolute;
-        bottom: 0;
+        bottom: -10px; //TODO: fix it
         left: 0;
         width: 100%;
         height: 100%;
@@ -102,7 +102,7 @@
 
     &__info {
         position: absolute;
-        bottom: 20%;
+        bottom: 12px;
         left: 12px;
         color: $primary;
         display: flex;
@@ -145,7 +145,7 @@
 
     &__instagram {
         position: absolute;
-        bottom: 20%;
+        bottom: 0;
         left: 0;
         color: $primary;
         z-index: 1;

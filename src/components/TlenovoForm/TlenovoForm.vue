@@ -9,7 +9,7 @@
             size="lg"
         />
 
-        <h4 class="TlenovoForm__formHeader">Rezerwacja terminu</h4>
+        <h4 v-if="showHeader" class="TlenovoForm__formHeader">Rezerwacja terminu</h4>
 
         <div class="TlenovoForm__shape"></div>
 
@@ -200,6 +200,12 @@ const time = ref();
 const date = ref();
 const name = ref();
 const phone = ref();
+
+const showHeader = computed(() => {
+    return  (firstStep.value && !date.value) || 
+            (secondStep.value && date.value && !time.value) ||
+            (thirdStep.value && date.value && time.value && (!name.value || !phone.value))
+});
 
 // Computed properties
 const firstStep = computed(() => {

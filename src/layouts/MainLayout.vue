@@ -152,7 +152,7 @@ function onRedirectHandler() {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 140px;
+    height: 160px;
     background-color: transparent;
     z-index: 2;
   }

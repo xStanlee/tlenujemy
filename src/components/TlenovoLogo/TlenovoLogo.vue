@@ -4,7 +4,7 @@
             'TlenovoLogo',
             { 'TlenovoLogo--small': isMobile }
         ]"
-        src="src/assets/logo.png"
+        src="./logo.png"
         spinner-color="white"
     />
 </template>

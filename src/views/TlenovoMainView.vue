@@ -28,8 +28,10 @@
                 rounded
                 color="primary"
                 size="xl"
+                icon="calendar_month"
                 padding="12px 20px"
                 @click="onBookClickHandler"
+                
             />
         </section>
         
@@ -241,7 +243,7 @@ $font: 'Kanit';
 
         &--mobile {
             top: 80%;
-            left: calc(50% - 137px);
+            left: calc(50% - 160px);
         }
     }
 
@@ -331,7 +333,6 @@ $font: 'Kanit';
         &__header {
             height: calc(500px - 100px);
             width: 80%;
-            text-align: center;
             margin-top: 120px;
             padding-bottom: 15vw;
             animation: slideInBottom .6s ease-in;

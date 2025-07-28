@@ -24,3 +24,12 @@ $positive  : #21BA45;
 $negative  : #FF6B6B;
 $info      : #31CCEC;
 $warning   : #F2C037;
+
+
+// Dodatkowe zmienne
+$attention:  #00FF00;
+
+// Deklaruje w :root zmienną globalną do wykorzystania za posrednictwem getPropertyValue()
+:root {
+    --q-attention: #00FF00;
+}

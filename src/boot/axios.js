@@ -1,6 +1,8 @@
 import { defineBoot } from '#q-app/wrappers'
 import axios from 'axios'
 
+import logService from 'src/services/log.serivce'
+
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
 // If any client changes this (global) instance, it might be a
@@ -19,6 +21,8 @@ export default defineBoot(({ app }) => {
   app.config.globalProperties.$api = api
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
+
+  logService.info('Fontawsome v6 initialized.');
 })
 
 export { api }

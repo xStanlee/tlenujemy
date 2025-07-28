@@ -39,7 +39,7 @@
     </q-tab-panels>
     
     <!-- Footer -->
-    <TlenovoFooter v-if="!isFormVisible" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
+    <TlenovoFooter v-if="!isFormVisible && isMobile" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
     
     <!-- Snackbar -->
     <TlenovoSnackbar />
@@ -175,7 +175,7 @@ const tabConfigs = reactive([
   }
 
   &__footer {
-    position: absolute;
+    position: sticky;
     bottom: 0;
     left: 0;
     width: 100%;

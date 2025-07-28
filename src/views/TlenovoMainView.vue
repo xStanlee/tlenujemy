@@ -19,19 +19,6 @@
             }"
         >
             <TlenovoFireflies :isMobile="isMobile" />
-            <q-btn
-                :class="{
-                    'MainView__sectionInitialBtn': true,
-                    'MainView__sectionInitialBtn--mobile': isMobile
-                }"
-                label="Umów się na wizytę"
-                rounded
-                color="primary"
-                size="xl"
-                icon="calendar_month"
-                padding="12px 20px"
-                @click="onBookClickHandler"
-            />
         </section>
         
         <!-- Header Section -->
@@ -74,8 +61,9 @@
 
 <script setup>
 import { useQuasar } from 'quasar';
-import { useSnackbarStore } from 'src/stores/snackbar-store.js';
 import { computed } from 'vue';
+
+import { useSnackbarStore } from 'src/stores/snackbar-store.js';
 
 // Services
 import { appointmentService } from 'src/services/appointment.service.js';
@@ -98,8 +86,8 @@ const useSnackbar = useSnackbarStore();
 const isMobile = computed(() => $q.screen.lt.md);
 
 async function onSubmitHandler(payload) {
-    await handleNotification(payload);
     await handleDatastore(payload);
+    await handleNotification(payload);
     onCancelClickHandler();
 }
 
@@ -108,12 +96,12 @@ async function handleDatastore(payload) {
         await appointmentService.addAppointment(payload);
         useSnackbar.showSnackbar('Wizyta została pomyślnie umówiona. Zadzwonimy aby potwierdzić.', {
             color: 'positive',
-            timeout: 3000,
+            timeout: 4500,
         });
     } catch {
         useSnackbar.showSnackbar('Wystąpił błąd podczas umawiania wizyty. Spróbuj ponownie.', {
             color: 'negative',
-            timeout: 5000,
+            timeout: 6000,
         });
     }
 }
@@ -138,10 +126,6 @@ function onRedirectHandler() {
 
 function onCancelClickHandler() {
     emit('formToggle', false);
-}
-
-function onBookClickHandler() {
-    emit('formToggle', true);
 }
 </script>
 
@@ -239,7 +223,7 @@ $font: 'Kanit';
     }
 
     &__sectionInitialBtn {
-        top: 70%;
+        bottom: 70%;
         left: calc(50% - 117px);
 
         &--mobile {

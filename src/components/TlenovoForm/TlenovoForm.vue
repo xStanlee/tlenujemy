@@ -202,9 +202,7 @@ const name = ref();
 const phone = ref();
 
 const showHeader = computed(() => {
-    return  (firstStep.value && !date.value) || 
-            (secondStep.value && date.value && !time.value) ||
-            (thirdStep.value && date.value && time.value && (!name.value || !phone.value))
+    return firstStep.value && !date.value;
 });
 
 // Computed properties
@@ -251,16 +249,14 @@ function onCancelClickHandler() {
 function onReserveButtonHandler() {
     isSubmitted.value = true;
 
-    // Async call in future
     setTimeout(() => {
-            emit('submit', { 
-                date: date.value,
-                time: time.value, 
-                name: name.value,
-                // trim() not working
-                phone: phone.value.trim()
-            });
-            clearForm();
+        emit('submit', { 
+            date: date.value,
+            time: time.value, 
+            name: name.value,
+            phone: phone.value.trim()
+        });
+        clearForm();
     }, 2000);
 }
 

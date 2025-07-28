@@ -1,8 +1,8 @@
 {
-  "name": "tlenujemy",
-  "version": "0.0.1",
-  "description": "Tlenujemy aplikacja do zarzadzania terminami natleniania hiperbaria",
-  "productName": "Tlenujemy",
+  "name": "Tlenovo",
+  "version": "1.0.0",
+  "description": "Tlenovo aplikacja do zarzadzania terminami natleniania hiperbaria",
+  "productName": "Tlenovo",
   "author": "p.stachura <patryk.stachura@currenda.pl>",
   "type": "module",
   "private": true,

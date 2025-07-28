@@ -39,14 +39,12 @@ class AppointmentService {
                 throw new Error("AppointmentService is not initialized.");
             }
 
-            const ref = await addDoc(collection(this.#dataStore, "appointments"), {
+            await addDoc(collection(this.#dataStore, "appointments"), {
                 name: appointment.name,
                 phone: appointment.phone,
                 date: appointment.date,
                 time: appointment.time,                
             });
-
-            console.log(ref);
         } catch (err) {
             console.error("Błąd podczas dodawania wizyty:", err);
         } finally {

@@ -13,7 +13,7 @@
             </div>
 
             <!-- Decorative Wave Animation -->
-            <svg viewBox="0 0 120 180" aria-hidden="true">
+            <svg viewBox="0 0 90 180" aria-hidden="true">
                 <path 
                     id="wave" 
                     class="TlenovoFooter__wave" 

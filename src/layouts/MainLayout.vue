@@ -1,49 +1,55 @@
 <template>
   <q-layout view="hHr lpR fFf" class="MainLayout">
     <q-header class="MainLayout__header" elevated>
-      <q-toolbar class="MainLayout__toolbar">
-        <!-- Links mobile -->
-        <q-btn class="MainLayout__headerBtnPrev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
-        <q-space v-if="isMobile && tab !== 'tab1'" />
-        <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="isMobile"/>
-        <q-space v-if="(isMobile && tab !== 'tab4') || !isMobile" />
-        <q-btn class="MainLayout__headerBtnNext" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
+        <q-toolbar class="MainLayout__toolbar">
+          <!-- Links mobile -->
+          <q-btn class="MainLayout__headerBtnPrev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
+          <q-space v-if="isMobile && tab !== 'tab1'" />
+          <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="isMobile"/>
+          <q-space v-if="(isMobile && tab !== 'tab4') || !isMobile" />
+          <q-btn class="MainLayout__headerBtnNext" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
 
-        <!-- Links desktop -->
-        <q-tabs v-if="!isMobile" class="MainLayout__toolbarTabs" v-model="tab">
-          <q-tab
-            v-for="tabConfig in tabConfigs"
-            :key="tabConfig.name"
-            class="MainLayout__toolbarTab"
-            :name="tabConfig.name"
-            :label="tabConfig.label"
+          <!-- Links desktop -->
+          <q-tabs v-if="!isMobile" class="MainLayout__toolbarTabs" v-model="tab">
+            <q-tab
+              v-for="tabConfig in tabConfigs"
+              :key="tabConfig.name"
+              class="MainLayout__toolbarTab"
+              :name="tabConfig.name"
+              :label="tabConfig.label"
+            />
+          </q-tabs>
+        </q-toolbar>
+      </q-header>
+      
+      <!-- Views -->
+      <q-tab-panels class="MainLayout__pageContainer" v-model="tab" animated>
+        <q-tab-panel
+          v-for="tabConfig in tabConfigs"
+          :key="tabConfig.name"
+          class="MainLayout__pageSection"
+          :name="tabConfig.name"
+        >
+          <q-scroll-observer @scroll="onLayoutScroll" />
+          <component
+            :is="tabConfig.component"
+            v-bind="tabConfig.props"
+            v-on="tabConfig.events"
           />
-        </q-tabs>
-      </q-toolbar>
-    </q-header>
-    
-    <!-- Views -->
-    <q-tab-panels class="MainLayout__pageContainer" v-model="tab" animated>
-      <q-tab-panel
-        v-for="tabConfig in tabConfigs"
-        :key="tabConfig.name"
-        class="MainLayout__pageSection"
-        :name="tabConfig.name"
-      >
-        <component
-          :is="tabConfig.component"
-          v-bind="tabConfig.props"
-          v-on="tabConfig.events"
-        />
-      </q-tab-panel>
-    </q-tab-panels>
-    
-    <!-- Footer -->
-    <TlenovoFooter v-if="!isFormVisible && isMobile" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
-    
-    <!-- Snackbar -->
-    <TlenovoSnackbar />
-  </q-layout>
+        </q-tab-panel>
+      </q-tab-panels>
+
+      <!-- Booked Button -->
+      <transition name="bookBtnTransition" appear>
+        <TlenovoBookBtn v-if="isBookButtonVisible" @book="onBookClickHandler" />
+      </transition>
+      
+      <!-- Footer -->
+      <TlenovoFooter v-if="isFooterVisible" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
+      
+      <!-- Snackbar -->
+      <TlenovoSnackbar />
+</q-layout>
 </template>
 
 <script setup>
@@ -51,6 +57,7 @@ import { useQuasar } from 'quasar';
 import { computed, reactive, ref } from 'vue';
 
 // Components
+import TlenovoBookBtn from 'src/components/TlenovoBookBtn/TlenovoBookBtn.vue';
 import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
 import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
@@ -61,10 +68,19 @@ import TlenovoMainView from 'src/views/TlenovoMainView.vue';
 import TlenovoOfferView from 'src/views/TlenovoOfferView.vue';
 
 const $q = useQuasar();
-// Example usage: Check if the screen is mobile
 const isMobile = computed(() => $q.screen.lt.md);
+const offsetTop = ref(0);
 const isFormVisible = ref(false);
 const tab = ref('tab1');
+
+
+const isBookButtonVisible = computed(() => {
+  return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value < 300;
+});
+
+const isFooterVisible = computed(() => {
+  return !isFormVisible.value && isMobile.value;
+})
 
 function onMobileNext() {
   const tabs = tabConfigs.map(t => t.name);
@@ -90,6 +106,15 @@ function onLocationClickHandler() {
 
 function onFormToggleHandler(isToggled) {
   isFormVisible.value = isToggled;
+}
+
+function onBookClickHandler() {
+  isFormVisible.value = true;
+}
+
+function onLayoutScroll(payload) {
+  const { position: { top } } = payload;
+  offsetTop.value = top
 }
 
 const tabConfigs = reactive([
@@ -188,6 +213,30 @@ const tabConfigs = reactive([
     width: 100%;
     height: 100%;
     padding: 0px;
+  }
+}
+
+// Book button transition styles
+.bookBtnTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.4s ease;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  &-enter-to,
+  &-leave-from {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

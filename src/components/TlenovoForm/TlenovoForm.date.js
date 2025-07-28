@@ -1,3 +1,4 @@
+
 export const localeDate = {
     name: 'pl',
     months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
@@ -19,4 +20,4 @@ export const localeDate = {
 
 export const hourOptions = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
-export const minuteOptions = [0, 15, 30, 45];
+export const minuteOptions = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];

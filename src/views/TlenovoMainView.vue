@@ -31,7 +31,6 @@
                 icon="calendar_month"
                 padding="12px 20px"
                 @click="onBookClickHandler"
-                
             />
         </section>
         
@@ -76,7 +75,7 @@
 <script setup>
 import { useQuasar } from 'quasar';
 import { useSnackbarStore } from 'src/stores/snackbar-store.js';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 // Services
 import { appointmentService } from 'src/services/appointment.service.js';
@@ -87,9 +86,11 @@ import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.v
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
 import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
 
-const emit = defineEmits(['redirect']);
-// Form visibility state
-const isFormVisible = ref(false);
+defineProps({
+    isFormVisible: Boolean
+})
+
+const emit = defineEmits(['redirect', 'formToggle']);
 
 const $q = useQuasar();
 const useSnackbar = useSnackbarStore();
@@ -136,11 +137,11 @@ function onRedirectHandler() {
 }
 
 function onCancelClickHandler() {
-    isFormVisible.value = false;
+    emit('formToggle', false);
 }
 
 function onBookClickHandler() {
-    isFormVisible.value = true;
+    emit('formToggle', true);
 }
 </script>
 

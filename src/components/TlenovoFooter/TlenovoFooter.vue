@@ -1,36 +1,23 @@
 <template>
-    <div class="TlenovoFooter">
-        <footer class="TlenovoFooter__wrapper">
+    <footer class="TlenovoFooter">
             <!-- Contact Info Section -->
             <div class="TlenovoFooter__info">
-                <div class="TlenovoFooter__phone">
-                    <q-icon name="call" size="sm" />
-                    <p>(+48) 733 096 056</p>
-                </div>
-                <div class="TlenovoFooter__openHours">
-                    <q-icon name="access_time" size="sm" />
-                    <p>pn-niedz 8:00 - 20:00</p>
-                </div>
-            </div>
-
-            <!-- Social Media Icons -->
-            <div class="TlenovoFooter__social">
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 48 51" 
-                    class="TlenovoFooter__instagram"
-                    aria-label="Instagram icon"
-                >
-                    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9 114.9-51.3 114.9-114.9-51.3-114.9-114.9-114.9zm0 186.6c-39.6 0-71.7-32.1-71.7-71.7s32.1-71.7 71.7-71.7 71.7 32.1 71.7 71.7-32.1 71.7-71.7 71.7zm146.4-194.3c0 14.9-12 26.9-26.9 26.9s-26.9-12-26.9-26.9 12-26.9 26.9-26.9 26.9 12 26.9 26.9zm76.1 27.2c-1.7-35.7-9.9-67.3-36.2-93.5s-57.8-34.5-93.5-36.2c-37-2.1-148-2.1-185 0-35.7 1.7-67.3 9.9-93.5 36.2s-34.5 57.8-36.2 93.5c-2.1 37-2.1 148 0 185 1.7 35.7 9.9 67.3 36.2 93.5s57.8 34.5 93.5 36.2c37 2.1 148 2.1 185 0 35.7-1.7 67.3-9.9 93.5-36.2s34.5-57.8 36.2-93.5c2.1-37 2.1-148 0-185zm-48.2 224c-7.8 19.6-23 35.8-42.6 42.6-29.5 11.7-99.5 9-132.7 9s-103.2 2.6-132.7-9c-19.6-7.8-35.8-23-42.6-42.6-11.7-29.5-9-99.5-9-132.7s-2.6-103.2 9-132.7c7.8-19.6 23-35.8 42.6-42.6 29.5-11.7 99.5-9 132.7-9s103.2-2.6 132.7 9c19.6 7.8 35.8 23 42.6 42.6 11.7 29.5 9 99.5 9 132.7s2.6 103.2-9 132.7z"/>
-                </svg>
+                <a href="tel:+48733096056" class="TlenovoFooter__phone">
+                    <q-icon :class="{
+                        'TlenovoFooter__phoneIcon': ring
+                    }" name="call" size="xl" />
+                    
+                    <p>Zadzwoń</p>
+                </a>
+                <q-icon @click="onPlaceClickHandler" class="TlenovoFooter__placeIcon" name="place" size="xl"></q-icon>
             </div>
 
             <!-- Decorative Wave Animation -->
-            <svg viewBox="0 0 100 100" aria-hidden="true">
+            <svg viewBox="0 0 120 180" aria-hidden="true">
                 <path 
                     id="wave" 
                     class="TlenovoFooter__wave" 
-                    d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 28 h -240 z" 
+                    d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 40 h -240 z" 
                 />
                 <use 
                     id="wave2" 
@@ -47,13 +34,34 @@
                     y="0"
                 />
             </svg>
-        </footer>
-    </div>
+    </footer>
 </template>
 
 <script setup>
-// Composition API component logic goes here
+import { onMounted, onUnmounted, ref } from 'vue';
 
+const ring = ref(false);
+
+const emit = defineEmits('onLocation');
+
+let interval;
+onMounted(() => {
+    interval = setInterval(() => {
+        ring.value = true;
+
+        setTimeout(() => {
+            ring.value = false;
+        }, 4950);
+    }, 5000);
+});
+
+onUnmounted(() => {
+    clearInterval(interval);
+});
+
+function onPlaceClickHandler() {
+    emit('onLocation');
+}
 </script>
 
 <style lang="scss" scoped>
@@ -79,47 +87,39 @@
     }
 }
 
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-12deg); }
+  20%, 40%, 60%, 80% { transform: rotate(12deg); }
+  100% { transform: rotate(0deg); }
+}
+
 .TlenovoFooter {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background-color: transparent;
-
-    &__wrapper {
-        background-color: transparent;
-        position: absolute;
-        bottom: -10px; //TODO: fix it
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-
-        svg {
-            width: 100%;
-        }
-    }
-
+    min-width: 100%;
+    min-height: 160px;
+    overflow-x: hidden;
+    z-index: 3;
 
     &__info {
         position: absolute;
-        bottom: 12px;
-        left: 12px;
+        bottom: 2px;
+        width: 100%;
+        left: 8px;
         color: $primary;
         display: flex;
-        flex-direction: column;
-        z-index: 1;
+        justify-content: space-between ;
     }
     
     &__phone {
         display: flex;
         justify-content: flex-end;
-        gap: 10px;
+        margin: 12px;
         color: $primary;
-
+        text-decoration: none;
+        
         p {
-            font-size: 16px;
+            font-size: 32px;
             margin-right: auto;
-            text-decoration: underline;
         }
 
         q-icon {
@@ -127,31 +127,13 @@
         }
     }
 
-    &__openHours {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        color: $primary;
-
-        p {
-            font-size: 16px;
-            text-decoration: underline;
-        }
-
-        q-icon {
-            color: $primary;
-        }
+    &__phoneIcon {
+        margin-right: 16px;
+        animation: shake 1.2s linear;
     }
 
-    &__instagram {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        color: $primary;
-        z-index: 1;
-        width: 40px;
-        height: 40px;
-        fill: $primary;
+    &__placeIcon {
+        padding: 10px 48px 10px 10px;
     }
 
     &__wave {

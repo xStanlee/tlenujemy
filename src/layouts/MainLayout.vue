@@ -1,59 +1,46 @@
 <template>
-  <q-layout view="hHr lpR fFf" class="main-layout">
-    <q-header class="main-layout__header" elevated>
-      <q-toolbar class="main-layout__toolbar">
+  <q-layout view="hHr lpR fFf" class="MainLayout">
+    <q-header class="MainLayout__header" elevated>
+      <q-toolbar class="MainLayout__toolbar">
         <!-- Links mobile -->
-        <q-btn class="main-layout__headerBtn--prev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
+        <q-btn class="MainLayout__headerBtnPrev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
         <q-space v-if="isMobile && tab !== 'tab1'" />
-        <TlenovoLogo class="main-layout__toolbar-logo" :isMobile="isMobile"/>
+        <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="isMobile"/>
         <q-space v-if="(isMobile && tab !== 'tab4') || !isMobile" />
-        <q-btn class="main-layout__headerBtn--next" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
+        <q-btn class="MainLayout__headerBtnNext" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
 
         <!-- Links desktop -->
-        <q-tabs v-if="!isMobile" class="main-layout__toolbar-tabs" v-model="tab">
-          <q-tab class="main-layout__toolbar-tab" name="tab1" label="Strona główna" />
-          <q-tab class="main-layout__toolbar-tab" name="tab2" label="Zastosowania" />
-          <q-tab class="main-layout__toolbar-tab" name="tab3" label="Przeciwwskazania" />
-          <q-tab class="main-layout__toolbar-tab" name="tab4" label="Kontakt" />
+        <q-tabs v-if="!isMobile" class="MainLayout__toolbarTabs" v-model="tab">
+          <q-tab
+            v-for="tabConfig in tabConfigs"
+            :key="tabConfig.name"
+            class="MainLayout__toolbarTab"
+            :name="tabConfig.name"
+            :label="tabConfig.label"
+          />
         </q-tabs>
       </q-toolbar>
     </q-header>
     
-    <!-- TODO: Extract footer on top level of main-layout (issue with z-index) -->
     <!-- Views -->
-    <q-tab-panels class="main-layout__page-container" v-model="tab" animated>
-      <q-tab-panel class="main-layout__page-section" name="tab1">
-        <TlenovoMainView @redirect="onRedirectHandler" />
-        <!-- Footer -->
-        <div class="main-layout__footer">
-          <TlenovoFooter />
-        </div>
-      </q-tab-panel>
-
-      <q-tab-panel class="main-layout__page-section" name="tab2">
-        <TlenovoInfoView />
-        <!-- Footer -->
-        <div class="main-layout__footer">
-          <TlenovoFooter />
-        </div>
-      </q-tab-panel>
-
-      <q-tab-panel class="main-layout__page-section" name="tab3">
-        <TlenovoContraView />
-        <!-- Footer -->
-        <div class="main-layout__footer">
-          <TlenovoFooter />
-        </div>
-      </q-tab-panel>
-
-      <q-tab-panel class="main-layout__page-section" name="tab4">
-        <TlenovoOfferView />
-        <!-- Footer -->
-        <div class="main-layout__footer">
-          <TlenovoFooter />
-        </div>
+    <q-tab-panels class="MainLayout__pageContainer" v-model="tab" animated>
+      <q-tab-panel
+        v-for="tabConfig in tabConfigs"
+        :key="tabConfig.name"
+        class="MainLayout__pageSection"
+        :name="tabConfig.name"
+      >
+        <component
+          :is="tabConfig.component"
+          v-bind="tabConfig.props"
+          v-on="tabConfig.events"
+        />
       </q-tab-panel>
     </q-tab-panels>
+    
+    <!-- Footer -->
+    <TlenovoFooter v-if="!isFormVisible" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
+    
     <!-- Snackbar -->
     <TlenovoSnackbar />
   </q-layout>
@@ -61,7 +48,7 @@
 
 <script setup>
 import { useQuasar } from 'quasar';
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 // Components
 import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
@@ -76,52 +63,92 @@ import TlenovoOfferView from 'src/views/TlenovoOfferView.vue';
 const $q = useQuasar();
 // Example usage: Check if the screen is mobile
 const isMobile = computed(() => $q.screen.lt.md);
-
+const isFormVisible = ref(false);
 const tab = ref('tab1');
 
 function onMobileNext() {
-  const tabs = ['tab1', 'tab2', 'tab3', 'tab4'];
+  const tabs = tabConfigs.map(t => t.name);
   const currentIndex = tabs.indexOf(tab.value);
   const nextIndex = currentIndex + 1 >= tabs.length ? 0 : currentIndex + 1;
   tab.value = tabs[nextIndex];
 }
 
 function onMobilePrev() {
-  const tabs = ['tab1', 'tab2', 'tab3', 'tab4'];
+  const tabs = tabConfigs.map(t => t.name);
   const currentIndex = tabs.indexOf(tab.value);
   const prevIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
   tab.value = tabs[prevIndex];
 }
 
 function onRedirectHandler() {
-  console.log('redirect');
   tab.value = 'tab3';
 }
+
+function onLocationClickHandler() {
+  tab.value = 'tab4';
+}
+
+function onFormToggleHandler(isToggled) {
+  isFormVisible.value = isToggled;
+}
+
+const tabConfigs = reactive([
+  {
+    name: 'tab1',
+    label: 'Strona główna',
+    component: TlenovoMainView,
+    props: {
+      get isFormVisible() {
+        return isFormVisible.value;
+      }
+    },
+    events: { 
+      redirect: onRedirectHandler,
+      formToggle: onFormToggleHandler
+    }
+  },
+  {
+    name: 'tab2',
+    label: 'Zastosowania',
+    component: TlenovoInfoView,
+    props: {},
+    events: {}
+  },
+  {
+    name: 'tab3',
+    label: 'Przeciwwskazania',
+    component: TlenovoContraView,
+    props: {},
+    events: {}
+  },
+  {
+    name: 'tab4',
+    label: 'Kontakt',
+    component: TlenovoOfferView,
+    props: {},
+    events: {}
+  }
+]);
 </script>
 
 <style lang="scss">
 @import 'src/css/quasar.variables.scss'; // Ensure this path is correct based on your project structure
 
-.main-layout {
+.MainLayout {
+  position: relative;
 
   &__header {
     height: 80px;
   }
-
-  &__list-header {
-    color: $white;
+  
+  &__headerBtnPrev {
+    margin-left: 12px;
+    border: 1px solid $white;
   }
 
-  &__headerBtn {
-    &--prev {
-      margin-left: 12px;
-      border: 1px solid $white;
-    }
-
-    &--next {
-      margin-right: 12px;
-      border: 1px solid $white;
-    }
+  &__headerBtnNext {
+    margin-right: 12px;
+    border: 1px solid $white;
   }
 
   &__toolbar {
@@ -129,19 +156,19 @@ function onRedirectHandler() {
     height: 100%;
   }
 
-  &__toolbar-logo {
+  &__toolbarLogo {
     height: 100%;
   }
 
-  &__toolbar-tabs {
+  &__toolbarTabs {
     height: 100%;
   }
 
-  &__toolbar-tab {
+  &__toolbarTab {
     height: 100%;
   }
 
-  &__page-container {
+  &__pageContainer {
     width: 100vw;
     height: 100vh;
     z-index: 2;
@@ -157,7 +184,7 @@ function onRedirectHandler() {
     z-index: 2;
   }
 
-  &__page-section {
+  &__pageSection {
     width: 100%;
     height: 100%;
     padding: 0px;

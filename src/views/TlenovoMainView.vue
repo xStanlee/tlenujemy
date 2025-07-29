@@ -339,6 +339,7 @@ $font: 'Inter';
         font-size: 1rem;
         font-weight: 500;
         transition: all 0.3s ease;
+        margin-bottom: 0.4rem;
 
         &:hover {
             background: rgba(255, 255, 255, 0.12);

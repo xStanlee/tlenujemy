@@ -33,13 +33,13 @@ function onBookClick() {
 
 .TlenovoBookBtn {
   position: fixed;
-  bottom: 160px;
+  bottom: 80px;
   left: calc(50% - 117px);
   z-index: 3;
   z-index: 100;
-  -webkit-box-shadow: 2px 2px 31px 2px rgba(255, 255, 255, 0.7);
-  -moz-box-shadow: 2px 2px 31px 2px rgba(255, 255, 255, 0.7);
-  box-shadow: 2px 2px 31px 2px rgba(255, 255, 255, 0.7);
+  -webkit-box-shadow: 2px 2px 31px 2px rgba($white, 0.7);
+  -moz-box-shadow: 2px 2px 31px 2px rgba($white, 0.7);
+  box-shadow: 2px 2px 31px 2px rgba($white, 0.7);
 
   &--mobile {
     left: calc(50% - 160px);

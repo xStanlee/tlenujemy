@@ -2,16 +2,9 @@
     <footer class="TlenovoFooter">
             <!-- Contact Info Section -->
             <div class="TlenovoFooter__info">
-                <a href="tel:+48733096056" class="TlenovoFooter__phone">
-                    <q-icon :class="{
-                        'TlenovoFooter__phoneIcon': ring
-                    }" name="call" size="xl" />
-                    
-                    <p>Zadzwoń</p>
-                </a>
                 <q-icon @click="onPlaceClickHandler" class="TlenovoFooter__placeIcon" name="place" size="xl"></q-icon>
             </div>
-
+            
             <!-- Decorative Wave Animation -->
             <svg viewBox="0 0 90 180" aria-hidden="true">
                 <path 

@@ -41,11 +41,18 @@
 
       <!-- Booked Button -->
       <transition name="bookBtnTransition" appear>
-        <TlenovoBookBtn v-if="isBookButtonVisible" @book="onBookClickHandler" />
+        <TlenovoBookBtn v-if="isActionBtnVisible" @book="onBookClickHandler" />
+      </transition>
+
+      <!-- Telephone Anchor -->
+      <transition name="telephoneBtnTransition" appear>
+        <TlenovoPhoneAnchor v-if="isActionBtnVisible" />
       </transition>
       
       <!-- Footer -->
-      <TlenovoFooter v-if="isFooterVisible" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
+      <transition name="footerTransition" appear>
+        <TlenovoFooter v-if="isFooterVisible" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
+      </transition>
       
       <!-- Snackbar -->
       <TlenovoSnackbar />
@@ -60,6 +67,7 @@ import { computed, reactive, ref } from 'vue';
 import TlenovoBookBtn from 'src/components/TlenovoBookBtn/TlenovoBookBtn.vue';
 import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
+import TlenovoPhoneAnchor from 'src/components/TlenovoPhoneBtn/TlenovoPhoneAnchor.vue';
 import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
 // Views
 import TlenovoContraView from 'src/views/TlenovoContraView.vue';
@@ -74,13 +82,14 @@ const isFormVisible = ref(false);
 const tab = ref('tab1');
 
 
-const isBookButtonVisible = computed(() => {
+const isActionBtnVisible = computed(() => {
   return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value < 300;
 });
 
 const isFooterVisible = computed(() => {
-  return !isFormVisible.value && isMobile.value;
-})
+  return  (!isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value > 301) ||
+          (!isFormVisible.value && isMobile.value && tab.value !== 'tab1');
+});
 
 function onMobileNext() {
   const tabs = tabConfigs.map(t => t.name);
@@ -220,7 +229,7 @@ const tabConfigs = reactive([
 .bookBtnTransition {
   &-enter-active,
   &-leave-active {
-    transition: all 0.4s ease;
+    transition: all 0.5s ease;
   }
 
   &-enter-from {
@@ -231,6 +240,52 @@ const tabConfigs = reactive([
   &-leave-to {
     opacity: 0;
     transform: translateY(40px);
+  }
+
+  &-enter-to,
+  &-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.telephoneBtnTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+
+  &-enter-to,
+  &-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footerTransition {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.7s ease;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(100px);
   }
 
   &-enter-to,

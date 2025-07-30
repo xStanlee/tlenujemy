@@ -92,7 +92,7 @@ function onPlaceClickHandler() {
     min-height: 160px;
     overflow-x: hidden;
     z-index: 3;
-
+    
     &__info {
         position: absolute;
         bottom: 2px;

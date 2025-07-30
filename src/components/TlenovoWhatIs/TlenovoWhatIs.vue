@@ -86,6 +86,7 @@
     }
     
     &__header {
+        padding-top: 2rem;
         text-align: center;
         margin-bottom: 3rem;
         animation: fadeInUp 0.8s ease-out;
@@ -98,7 +99,7 @@
             font-size: 4rem;
             display: inline-block;
             padding: 1.5rem;
-            background: linear-gradient(135deg, rgba($white, 0.1), rgba($accent, 0.1));
+            background: linear-gradient(135deg, rgba($accent, 0.9), rgba($secondary, 0.3));
             border-radius: 50%;
             backdrop-filter: blur(10px);
             border: 2px solid rgba($accent, 0.2);
@@ -142,7 +143,7 @@
     }
     
     &__highlight {
-        background: linear-gradient(135deg, $white, $accent);
+        background: linear-gradient(135deg, $secondary, $primary);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -170,7 +171,6 @@
         background: rgba($primary, 0.7);
         
         &:hover {
-            background: rgba($white, 0.08);
             transform: translateX(5px);
             border-color: rgba($accent, 0.2);
         }

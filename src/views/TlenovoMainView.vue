@@ -62,7 +62,7 @@
                 videoTitle="Tlenovo - Informacje ogólne"
             /> -->
             <TlenovoWhatIs />
-            <!-- <TlenovoHowItWorks /> -->
+            <TlenovoHowItWorks />
             <!-- <TlenovoWhyChoose /> -->
         </section>
     </q-page-container>
@@ -81,7 +81,7 @@ import { notificationService } from 'src/services/notification.service';
 // Components
 import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.vue';
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
-// import TlenovoHowItWorks from 'src/components/TlenovoHowItWorks/TlenovoHowItWorks.vue';
+import TlenovoHowItWorks from 'src/components/TlenovoHowItWorks/TlenovoHowItWorks.vue';
 // import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
 import TlenovoWhatIs from 'src/components/TlenovoWhatIs/TlenovoWhatIs.vue';
 // import TlenovoWhyChoose from 'src/components/TlenovoWhyChoose/TlenovoWhyChoose.vue';

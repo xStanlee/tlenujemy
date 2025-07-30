@@ -102,6 +102,7 @@ const steps = ref([
 
 .TlenovoHowItWorks {
     padding: 100px 0;
+    clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 97%);
     background: linear-gradient(135deg, 
         rgba($secondary, 0.03) 0%,
         rgba($primary, 0.08) 50%,
@@ -140,7 +141,7 @@ const steps = ref([
             font-size: 4rem;
             display: inline-block;
             padding: 1.5rem;
-            background: linear-gradient(135deg, rgba($primary, 0.1), rgba($secondary, 0.1));
+            background: linear-gradient(135deg, rgba($white, 0.9), rgba($accent, 0.6));
             border-radius: 50%;
             backdrop-filter: blur(10px);
             border: 2px solid rgba($primary, 0.2);
@@ -149,6 +150,12 @@ const steps = ref([
     }
     
     &__title {
+        background: linear-gradient(135deg, rgba($white, 1), rgba($accent, 0.85));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        background-clip: text;
+        font-weight: 600;
         font-size: 3rem;
         font-weight: 700;
         color: $primary;
@@ -157,6 +164,11 @@ const steps = ref([
     }
     
     &__subtitle {
+        background: linear-gradient(135deg, rgba($white, 1), rgba($accent, 0.85));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+
         font-size: 1.3rem;
         color: $primary;
         line-height: 1.6;
@@ -205,8 +217,8 @@ const steps = ref([
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background: linear-gradient(135deg, $primary, $secondary);
-        color: white;
+        background: linear-gradient(135deg, rgba($white, 0.5), rgba($accent, 0.2));
+        color: $primary;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -247,9 +259,10 @@ const steps = ref([
     &__conclusion {
         text-align: center;
         padding: 2.5rem;
+        margin-bottom: 8rem;
         background: linear-gradient(135deg, rgba($secondary, 0.08), rgba($primary, 0.08));
         border-radius: 20px;
-        border: 2px solid rgba($secondary, 0.2);
+        border: 2px solid rgba($secondary, 0.4);
         animation: fadeInUp 0.8s ease-out 0.6s both;
     }
     
@@ -262,13 +275,13 @@ const steps = ref([
     &__conclusion p {
         font-size: 1.3rem;
         line-height: 1.6;
-        color: $primary;
+        color: $white;
         margin: 0;
         font-weight: 500;
     }
     
     &__highlight {
-        background: linear-gradient(135deg, $secondary, $primary);
+        background: linear-gradient(135deg, rgba($secondary, 0.8), rgba($white, 0.8));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;

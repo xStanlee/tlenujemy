@@ -168,7 +168,7 @@
         transition: all 0.3s ease;
         font-weight: 500;
         color: $white;
-        background: linear-gradient(135deg, $primary, color.adjust($primary, $lightness: -10%));
+        background: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 45%));
         
         &:hover {
             transform: translateX(5px);

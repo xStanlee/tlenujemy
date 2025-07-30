@@ -144,6 +144,7 @@ function onCancelClickHandler() {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
 @import 'src/css/quasar.variables.scss';
 
 // Variables
@@ -267,7 +268,7 @@ $font: 'Inter';
     }
 
     &__heroHighlight {
-        background: linear-gradient(135deg, $secondary, $primary);
+        background: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: -30%));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;

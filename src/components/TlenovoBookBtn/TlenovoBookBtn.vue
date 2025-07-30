@@ -3,8 +3,8 @@
     class="TlenovoBookBtn"
     label="Umów się na wizytę"
     rounded
-    color="primary"
     size="lg"
+    color="primary"
     icon="calendar_month"
     @click="onBookClick"
   />
@@ -19,6 +19,7 @@ function onBookClick() {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
 @import 'src/css/quasar.variables.scss';
 
 .TlenovoBookBtn {

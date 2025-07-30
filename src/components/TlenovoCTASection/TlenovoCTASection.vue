@@ -223,7 +223,7 @@ const stats = ref([
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: linear-gradient(135deg, $primary, color.adjust($primary, $lightness: 10%));
+        background: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 30%));
         color: white;
         padding: 0.5rem 1rem;
         border-radius: 50px;
@@ -246,7 +246,7 @@ const stats = ref([
     }
     
     &__titleHighlight {
-        background: linear-gradient(135deg, $secondary, $primary);
+        background: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 30%));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -255,7 +255,7 @@ const stats = ref([
     
     &__subtitle {
         font-size: 1rem;
-        color: color.adjust($primary, $lightness: -10%);
+        color: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 30%));
         margin: 0;
         opacity: 0.8;
         line-height: 1.5;
@@ -307,7 +307,7 @@ const stats = ref([
     
     &__featureDesc {
         font-size: 0.9rem;
-        color: color.adjust($primary, $lightness: -5%);
+        color: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 30%));
         margin: 0;
         line-height: 1.4;
         opacity: 0.8;
@@ -354,7 +354,7 @@ const stats = ref([
         justify-content: center;
         gap: 1rem;
         padding: 1.2rem;
-        background: linear-gradient(135deg, $primary, color.adjust($primary, $lightness: -10%));
+        background: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 45%));
         color: white;
         border-radius: 15px;
         cursor: pointer;

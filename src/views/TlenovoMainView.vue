@@ -427,7 +427,7 @@ $font: 'Inter';
         &__header {
             height: calc(500px - 100px);
             width: 90%;
-            margin: 120px auto 0;
+            margin-top: 40px;
             padding-bottom: 15vw;
             animation: slideInBottom .6s ease-in;
 

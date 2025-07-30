@@ -48,6 +48,7 @@
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
 @import 'src/css/quasar.variables.scss';
 
 @keyframes fadeInUp {
@@ -162,13 +163,12 @@
         align-items: center;
         gap: 1rem;
         padding: 1rem 1.5rem;
-        background: rgba($white, 0.03);
         border-radius: 15px;
         border: 1px solid rgba($accent, 0.1);
         transition: all 0.3s ease;
         font-weight: 500;
         color: $white;
-        background: rgba($primary, 0.7);
+        background: linear-gradient(135deg, $primary, color.adjust($primary, $lightness: -10%));
         
         &:hover {
             transform: translateX(5px);

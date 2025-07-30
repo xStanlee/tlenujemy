@@ -226,8 +226,8 @@ const benefits = ref([
     &__benefitIcon {
         font-size: 2.5rem;
         padding: 1rem;
-        background: linear-gradient(135deg, rgba($secondary, 0.1), rgba($primary, 0.1));
         border-radius: 15px;
+        box-shadow: 2px 2px 31px 2px rgba($primary, 0.15);
         flex-shrink: 0;
     }
     

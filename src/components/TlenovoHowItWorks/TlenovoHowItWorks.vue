@@ -192,7 +192,7 @@ const steps = ref([
         gap: 2rem;
         align-items: start;
         padding: 2rem;
-        background: rgba($white, 0.7);
+        background: linear-gradient(135deg, rgba($white, 1), rgba($accent, 0.9));
         border-radius: 20px;
         border: 1px solid rgba($primary, 0.1);
         box-shadow: 0 8px 32px rgba($primary, 0.1);
@@ -237,7 +237,6 @@ const steps = ref([
     &__stepIcon {
         font-size: 2.5rem;
         padding: 0.5rem;
-        background: rgba($secondary, 0.1);
         border-radius: 15px;
         display: flex;
         align-items: center;

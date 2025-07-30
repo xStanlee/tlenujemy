@@ -150,4 +150,33 @@ function onPlaceClickHandler() {
         }
     }
 }
+
+// Responsive Design dla mobile
+@media (max-width: 768px) {
+    .TlenovoFooter {
+        min-height: 140px;
+        
+        &__placeIcon {
+            padding: 8px 40px 8px 8px;
+        }
+        
+        &__phone p {
+            font-size: 28px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .TlenovoFooter {
+        min-height: 120px;
+        
+        &__placeIcon {
+            padding: 6px 32px 6px 6px;
+        }
+        
+        &__phone p {
+            font-size: 24px;
+        }
+    }
+}
 </style>

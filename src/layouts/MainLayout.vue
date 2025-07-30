@@ -1,5 +1,57 @@
 <template>
-  <q-layout view="hHr lpR fFf" class="MainLayout">
+  <!-- Desktop view z emulatorem telefonu -->
+  <PhoneEmulator v-if="!isMobile">
+    <q-layout view="hHr lpR fFf" class="MainLayout MainLayout--desktop-emulated">
+      <q-header class="MainLayout__header" elevated>
+          <q-toolbar class="MainLayout__toolbar">
+            <!-- Links mobile (zawsze używamy mobile UI w emulatorze) -->
+            <q-btn class="MainLayout__headerBtnPrev" v-if="tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
+            <q-space v-if="tab !== 'tab1'" />
+            <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="true"/>
+            <q-space v-if="tab !== 'tab4'" />
+            <q-btn class="MainLayout__headerBtnNext" v-if="tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
+          </q-toolbar>
+        </q-header>
+        
+        <!-- Views -->
+        <q-tab-panels class="MainLayout__pageContainer MainLayout__pageContainer--desktop" v-model="tab" animated>
+          <q-tab-panel
+            v-for="tabConfig in tabConfigs"
+            :key="tabConfig.name"
+            class="MainLayout__pageSection"
+            :name="tabConfig.name"
+          >
+            <q-scroll-observer @scroll="onLayoutScroll" />
+            <component
+              :is="tabConfig.component"
+              v-bind="tabConfig.props"
+              v-on="tabConfig.events"
+            />
+          </q-tab-panel>
+        </q-tab-panels>
+
+        <!-- Booked Button -->
+        <transition name="bookBtnTransition" appear>
+          <TlenovoBookBtn v-if="isActionBtnVisibleDesktop" @book="onBookClickHandler" />
+        </transition>
+
+        <!-- Telephone Anchor -->
+        <transition name="telephoneBtnTransition" appear>
+          <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
+        </transition>
+        
+        <!-- Footer -->
+        <transition name="footerTransition" appear>
+          <TlenovoFooter v-if="isFooterVisibleDesktop" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
+        </transition>
+        
+        <!-- Snackbar -->
+        <TlenovoSnackbar />
+    </q-layout>
+  </PhoneEmulator>
+
+  <!-- Mobile view (oryginalne zachowanie) -->
+  <q-layout v-else view="hHr lpR fFf" class="MainLayout">
     <q-header class="MainLayout__header" elevated>
         <q-toolbar class="MainLayout__toolbar">
           <!-- Links mobile -->
@@ -64,6 +116,7 @@ import { useQuasar } from 'quasar';
 import { computed, reactive, ref } from 'vue';
 
 // Components
+import PhoneEmulator from 'src/components/PhoneEmulator/PhoneEmulator.vue';
 import TlenovoBookBtn from 'src/components/TlenovoBookBtn/TlenovoBookBtn.vue';
 import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
@@ -81,7 +134,7 @@ const offsetTop = ref(0);
 const isFormVisible = ref(false);
 const tab = ref('tab1');
 
-
+// Logika dla mobile
 const isActionBtnVisible = computed(() => {
   return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value < 300;
 });
@@ -89,6 +142,16 @@ const isActionBtnVisible = computed(() => {
 const isFooterVisible = computed(() => {
   return  (!isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value > 301) ||
           (!isFormVisible.value && isMobile.value && tab.value !== 'tab1');
+});
+
+// Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
+const isActionBtnVisibleDesktop = computed(() => {
+  return !isFormVisible.value && tab.value === 'tab1' && offsetTop.value < 300;
+});
+
+const isFooterVisibleDesktop = computed(() => {
+  return  (!isFormVisible.value && tab.value === 'tab1' && offsetTop.value > 301) ||
+          (!isFormVisible.value && tab.value !== 'tab1');
 });
 
 function onMobileNext() {
@@ -170,6 +233,47 @@ const tabConfigs = reactive([
 
 .MainLayout {
   position: relative;
+
+  // Style dla wersji emulowanej w telefonie (desktop)
+  &--desktop-emulated {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    
+    .MainLayout__pageContainer {
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      
+      &--desktop {
+        overflow-x: hidden;
+      }
+    }
+
+    .MainLayout__header {
+      height: 80px;
+    }
+
+    .MainLayout__pageSection {
+      width: 100%;
+      height: 100%;
+      padding: 0px;
+      overflow-x: hidden;
+    }
+
+    .MainLayout__footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 160px;
+      background-color: transparent;
+      z-index: 2;
+      
+      // W emulatorze telefonu stosujemy style jak dla mobile 768px
+      height: 140px;
+    }
+  }
 
   &__header {
     height: 80px;

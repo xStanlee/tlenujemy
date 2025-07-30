@@ -19,16 +19,18 @@
                     <div class="TlenovoHowItWorks__stepNumber">
                         {{ index + 1 }}
                     </div>
-                    <div class="TlenovoHowItWorks__stepIcon">
-                        {{ step.icon }}
-                    </div>
-                    <div class="TlenovoHowItWorks__stepContent">
-                        <h3 class="TlenovoHowItWorks__stepTitle">
-                            {{ step.title }}
-                        </h3>
-                        <p class="TlenovoHowItWorks__stepDescription">
-                            {{ step.description }}
-                        </p>
+                    <div class="TlenovoHowItWorks__stepContentWrapper">
+                        <div class="TlenovoHowItWorks__stepIcon">
+                            {{ step.icon }}
+                        </div>
+                        <div class="TlenovoHowItWorks__stepContent">
+                            <h3 class="TlenovoHowItWorks__stepTitle">
+                                {{ step.title }}
+                            </h3>
+                            <p class="TlenovoHowItWorks__stepDescription">
+                                {{ step.description }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,7 +137,7 @@ const steps = ref([
     }
     
     &__icon {
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
         
         span {
             font-size: 4rem;
@@ -190,7 +192,7 @@ const steps = ref([
         gap: 2rem;
         align-items: start;
         padding: 2rem;
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba($white, 0.7);
         border-radius: 20px;
         border: 1px solid rgba($primary, 0.1);
         box-shadow: 0 8px 32px rgba($primary, 0.1);
@@ -224,7 +226,12 @@ const steps = ref([
         justify-content: center;
         font-size: 1.5rem;
         font-weight: 700;
-        box-shadow: 0 4px 15px rgba($primary, 0.3);
+        box-shadow: 2px 2px 31px 2px rgba($primary, 0.5)
+    }
+
+    &__stepContentWrapper {
+        // Very bad Patrick
+        margin-top: -50px;
     }
     
     &__stepIcon {
@@ -306,13 +313,9 @@ const steps = ref([
         
         &__step {
             grid-template-columns: 1fr;
-            gap: 1.5rem;
+            gap: .5rem;
             padding: 1.5rem;
             text-align: center;
-        }
-        
-        &__stepNumber {
-            justify-self: center;
         }
         
         &__stepIcon {

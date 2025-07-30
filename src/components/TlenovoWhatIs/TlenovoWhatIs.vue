@@ -154,7 +154,7 @@
         display: flex;
         flex-direction: column;
         gap: 1.2rem;
-        margin-bottom: 3rem;
+        margin-bottom: 5rem;
     }
     
     &__benefit {

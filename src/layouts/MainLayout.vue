@@ -209,7 +209,7 @@ const tabConfigs = reactive([
   }
 
   &__footer {
-    position: sticky;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;

@@ -63,7 +63,8 @@
             /> -->
             <TlenovoWhatIs />
             <TlenovoHowItWorks />
-            <!-- <TlenovoWhyChoose /> -->
+            <TlenovoWhyChoose />
+            <TlenovoCTASection />
         </section>
     </q-page-container>
 </template>
@@ -83,8 +84,9 @@ import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.v
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
 import TlenovoHowItWorks from 'src/components/TlenovoHowItWorks/TlenovoHowItWorks.vue';
 // import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
+import TlenovoCTASection from 'src/components/TlenovoCTASection/TlenovoCTASection.vue';
 import TlenovoWhatIs from 'src/components/TlenovoWhatIs/TlenovoWhatIs.vue';
-// import TlenovoWhyChoose from 'src/components/TlenovoWhyChoose/TlenovoWhyChoose.vue';
+import TlenovoWhyChoose from 'src/components/TlenovoWhyChoose/TlenovoWhyChoose.vue';
 
 defineProps({
     isFormVisible: Boolean

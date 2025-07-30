@@ -25,7 +25,7 @@ function onBookClick() {
   width: 300px;
   height: 70px;
   position: fixed;
-  bottom: 40px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;

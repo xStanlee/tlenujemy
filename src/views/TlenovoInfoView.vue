@@ -4,15 +4,17 @@
             <div class="TlenovoInfoView__shape TlenovoInfoView__shape--1"></div>
             <div class="TlenovoInfoView__shape TlenovoInfoView__shape--2"></div>
             <div class="TlenovoInfoView__shape TlenovoInfoView__shape--3"></div>
-            <div class="TlenovoInfoView__shape TlenovoInfoView__shape--4"></div>
+            <div class="TlenovoInfoView__shape TlenovoInfoView__shape--footer"></div>
         </div>
         
-        <div class="TlenovoInfoView__header">
+        <header class="TlenovoInfoView__header">
             <h1>Informacje o Tlenoterapii</h1>
-            <p>Poznaj korzyści i zastosowanie tlenoterapii hiperbarycznej</p>
-        </div>
+            <p class="TlenovoInfoView__headerTagline">
+                Poznaj korzyści i zastosowanie tlenoterapii hiperbarycznej
+            </p>
+        </header>
         
-        <div class="TlenovoInfoView__content">
+        <section class="TlenovoInfoView__content">
             <!-- First row - single fact -->
             <div class="TlenovoInfoView__row TlenovoInfoView__row--full">
                 <TlenovoFact
@@ -107,7 +109,7 @@
                     />
                 </div>
             </div>
-        </div>
+        </section>
     </q-page-container>
 </template>
 
@@ -116,12 +118,43 @@ import TlenovoFact from '../components/TlenovoFact/TlenovoFact.vue';
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
 @import 'src/css/quasar.variables.scss';
 
+// Font import - zgodność z innymi widokami
+$font: 'Inter';
+@import url('//fonts.googleapis.com/css2?family=#{$font}:wght@300;400;500;600;700;800&display=swap');
+
+// Animations - zgodność z innymi widokami
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 .TlenovoInfoView {
-    padding: 1rem;
-    background-color: $accent;
     position: relative;
+    font-family: $font;
+    background-color: $primary;
+    max-width: 100%;
+    padding: 2rem 1rem;
+    min-height: 100vh;
     overflow: hidden;
     
     &__background {
@@ -137,65 +170,76 @@ import TlenovoFact from '../components/TlenovoFact/TlenovoFact.vue';
     &__shape {
         position: absolute;
         border-radius: 50%;
-        opacity: 0.1;
+        opacity: 0.08;
         
         &--1 {
             width: 300px;
             height: 300px;
-            background-color: $primary;
+            background-color: $accent;
             top: -100px;
             left: -100px;
-            z-index: 1;
         }
         
         &--2 {
             width: 200px;
             height: 200px;
-            background-color: $secondary;
+            background-color: $accent;
             top: 20%;
-            right: -50px;
-            z-index: 1;
+            right: -80px;
         }
         
         &--3 {
             width: 250px;
             height: 250px;
-            background-color: $primary;
-            bottom: 10%;
-            left: 30%;
-            z-index: 1;
+            background-color: $accent;
+            bottom: 15%;
+            left: 15%;
         }
         
-        &--4 {
-            width: 150px;
-            height: 150px;
-            background-color: $secondary;
-            bottom: -50px;
-            right: 20%;
-            z-index: 1;
+        &--footer {
+            width: 100%;
+            height: 12vh;
+            bottom: 0;
+            left: 0;
+            background-color: $accent;
+            opacity: 0.15;
+            border-radius: 0;
+            clip-path: polygon(
+                0% 100%,
+                100% 100%,
+                100% 30%,
+                0% 0%
+            );
         }
     }
     
     &__header {
-        text-align: center;
-        margin-bottom: 1rem;
-        padding: 1rem;
         position: relative;
         z-index: 2;
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 1rem 1rem 1rem;
+        color: $white;
+        animation: fadeInUp 0.8s ease-out 0.2s both;
         
         h1 {
-            color: $primary;
-            font-size: 2rem;
-            letter-spacing: 2px;
-            line-height: 2;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
         }
-        
-        p {
-            color: $primary;
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
+    }
+
+    &__headerTagline {
+        font-size: 1rem;
+        font-weight: 400;
+        margin: 0;
+        opacity: 0.95;
+        line-height: 1.4;
+        color: $white;
     }
     
     &__content {
@@ -204,6 +248,9 @@ import TlenovoFact from '../components/TlenovoFact/TlenovoFact.vue';
         gap: 2rem;
         position: relative;
         z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto 7rem auto;
+        animation: slideInLeft 0.6s ease-out 0.4s both;
     }
     
     &__row {
@@ -220,20 +267,58 @@ import TlenovoFact from '../components/TlenovoFact/TlenovoFact.vue';
         width: 100%;
     }
     
-    // Tablet and desktop styles
-    @media (min-width: 768px) {
-        padding: 2rem;
+    // Media Queries - Mobile First zgodnie z innymi widokami
+    @media (min-width: 481px) {
+        padding: 3rem 2rem;
+
+        &__header h1 {
+            font-size: 2.8rem;
+        }
+
+        &__headerTagline {
+            font-size: 1.2rem;
+        }
+
+        &__shape {
+            &--1 {
+                width: 400px;
+                height: 400px;
+                top: -150px;
+                left: -150px;
+            }
+            
+            &--2 {
+                width: 300px;
+                height: 300px;
+                right: -100px;
+            }
+            
+            &--3 {
+                width: 350px;
+                height: 350px;
+                left: 20%;
+            }
+
+            &--footer {
+                height: 15vh;
+            }
+        }
+    }
+    
+    @media (min-width: 769px) {
+        padding: 4rem 3rem;
         
         &__header {
-            margin-bottom: 3rem;
-            
+            margin-bottom: 4rem;
+            padding: 3rem 2rem;
+
             h1 {
-                font-size: 2.5rem;
+                font-size: 3.5rem;
             }
-            
-            p {
-                font-size: 1.5rem;
-            }
+        }
+
+        &__headerTagline {
+            font-size: 1.3rem;
         }
         
         &__row {
@@ -248,53 +333,22 @@ import TlenovoFact from '../components/TlenovoFact/TlenovoFact.vue';
         
         &__col {
             width: 50%;
-            
-            &:last-of-type {
-                margin-bottom: 4rem;
-            }
-        }
-        
-        &__shape {
-            &--1 {
-                width: 400px;
-                height: 400px;
-                top: -150px;
-                left: -150px;
-            }
-            
-            &--2 {
-                width: 300px;
-                height: 300px;
-                top: 15%;
-                right: -100px;
-            }
-            
-            &--3 {
-                width: 350px;
-                height: 350px;
-                bottom: 5%;
-                left: 25%;
-            }
-            
-            &--4 {
-                width: 250px;
-                height: 250px;
-                bottom: -100px;
-                right: 15%;
-            }
         }
     }
     
-    // Large desktop styles
-    @media (min-width: 1200px) {
-        padding: 3rem;
+    @media (min-width: 1024px) {
+        padding: 5rem 4rem;
+
+        &__header h1 {
+            font-size: 4rem;
+        }
+
+        &__headerTagline {
+            font-size: 1.4rem;
+        }
         
-        &__header {
-            margin-bottom: 4rem;
-            
-            h1 {
-                font-size: 3rem;
-            }
+        &__content {
+            gap: 3rem;
         }
         
         &__shape {
@@ -317,13 +371,6 @@ import TlenovoFact from '../components/TlenovoFact/TlenovoFact.vue';
                 height: 450px;
                 bottom: 0;
                 left: 20%;
-            }
-            
-            &--4 {
-                width: 350px;
-                height: 350px;
-                bottom: -150px;
-                right: 10%;
             }
         }
     }

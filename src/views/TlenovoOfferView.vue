@@ -3,27 +3,37 @@
         <div class="TlenovoOfferView__background">
             <div class="TlenovoOfferView__shape TlenovoOfferView__shape--1"></div>
             <div class="TlenovoOfferView__shape TlenovoOfferView__shape--2"></div>
+            <div class="TlenovoOfferView__shape TlenovoOfferView__shape--3"></div>
+            <div class="TlenovoOfferView__shape TlenovoOfferView__shape--footer"></div>
         </div>
         
-        <div class="TlenovoOfferView__header">
+        <header class="TlenovoOfferView__header">
             <h1>Gdzie nas znajdziesz</h1>
-            <p>Nasza siedziba znajduje się w: Swiebodzicach, ul. Wodna 13</p>
-        </div>
+            <p class="TlenovoOfferView__headerTagline">
+                Nasza siedziba znajduje się w: Świebodzicach, ul. Wodna 13
+            </p>
+        </header>
         
-        <div class="TlenovoOfferView__content">
-            <!-- TODO: replace with google maps embed Telnovo -->
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d629.5387489643476!2d16.31261724396172!3d50.865330242434545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470e54c8321e622d%3A0xd73cbcfeb5aede3!2sSklep%20aqua-active%20%C5%9Awiebodzice!5e0!3m2!1spl!2spl!4v1745398640815!5m2!1spl!2spl" 
-                width="100%" 
-                height="400" 
-                style="border:0;" 
-                referrerpolicy="no-referrer-when-downgrade"
-            />
+        <section class="TlenovoOfferView__content">
+            <div class="TlenovoOfferView__mapContainer">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d629.5387489643476!2d16.31261724396172!3d50.865330242434545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470e54c8321e622d%3A0xd73cbcfeb5aede3!2sSklep%20aqua-active%20%C5%9Awiebodzice!5e0!3m2!1spl!2spl!4v1745398640815!5m2!1spl!2spl" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="TlenovoOfferView__map"
+                />
+            </div>
             
             <div class="TlenovoOfferView__contentItem">
-                <p>Nasz gabinet jest ustytuowany w budynku OSIR Swiebodzice na poziomie 0</p>
+                <h2 class="TlenovoOfferView__contentItemTitle">Informacje dodatkowe</h2>
+                <p class="TlenovoOfferView__contentItemText">
+                    Nasz gabinet jest usytuowany w budynku OSIR Świebodzice na poziomie 0. 
+                    Zapewniamy łatwy dostęp oraz komfortowe warunki dla wszystkich naszych pacjentów.
+                </p>
             </div>
-        </div>
+        </section>
     </q-page-container>
 </template>
 
@@ -31,10 +41,43 @@
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
+@import 'src/css/quasar.variables.scss';
+
+// Font import - zgodność z TlenovoMainView i TlenovoContraView
+$font: 'Inter';
+@import url('//fonts.googleapis.com/css2?family=#{$font}:wght@300;400;500;600;700;800&display=swap');
+
+// Animations - zgodność z innymi widokami
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 .TlenovoOfferView {
-    padding: 1rem;
-    background-color: $accent;
     position: relative;
+    font-family: $font;
+    background-color: $primary;
+    max-width: 100%;
+    padding: 2rem 1rem;
+    min-height: 100vh;
     overflow: hidden;
     
     &__background {
@@ -48,76 +91,251 @@
     }
 
     &__header {
-        text-align: center;
-        margin-bottom: 1rem;
-        padding: 1rem;
         position: relative;
         z-index: 2;
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 1rem 1rem 1rem;
+        color: $white;
+        animation: fadeInUp 0.8s ease-out 0.2s both;
         
         h1 {
-            color: $primary;
-            font-size: 2rem;
-            letter-spacing: 2px;
-            line-height: 2;
-            margin-bottom: 0.5rem;
-        }
-        
-        p {
-            color: $primary;
-            font-size: 1.2rem;
-            opacity: 0.8;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
         }
     }
-    
+
+    &__headerTagline {
+        font-size: 1rem;
+        font-weight: 400;
+        margin: 0;
+        opacity: 0.95;
+        line-height: 1.4;
+        color: $white;
+    }
+
     &__content {
         position: relative;
         z-index: 2;
+        max-width: 900px;
+        margin: 0 auto 7rem auto;
+        animation: slideInLeft 0.6s ease-out 0.4s both;
+    }
+
+    &__mapContainer {
+        margin-bottom: 3rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        overflow: hidden;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+    }
+
+    &__map {
+        border-radius: 15px;
+        width: 100%;
+        height: 300px;
+        filter: grayscale(20%) brightness(0.9);
+        transition: all 0.3s ease;
+
+        &:hover {
+            filter: grayscale(0%) brightness(1);
+        }
     }
 
     &__contentItem {
-        margin: 2rem 0 6rem 0;
-        color: $primary;
-        font-size: 1.2rem;
-        line-height: 1.2;
-        opacity: 0.8;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+    }
+
+    &__contentItemTitle {
+        color: $white;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    &__contentItemText {
+        color: $white;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6;
+        margin: 0;
+        opacity: 0.9;
     }
 
     &__shape {
         position: absolute;
         border-radius: 50%;
-        opacity: 0.1;
+        opacity: 0.08;
 
         &--1 {
-            width: 400px;
-            height: 400px;
-            top: -150px;
-            left: 150px;
-            background-color: $primary;
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            background-color: $accent;
         }
         
         &--2 {
-            width: 300px;
-            height: 300px;
-            top: 15%;
-            left: -100px;
-            background-color: $primary;
+            width: 200px;
+            height: 200px;
+            top: 20%;
+            right: -80px;
+            background-color: $accent;
+        }
+        
+        &--3 {
+            width: 250px;
+            height: 250px;
+            bottom: 15%;
+            left: 15%;
+            background-color: $accent;
+        }
+
+        &--footer {
+            width: 100%;
+            height: 12vh;
+            bottom: 0;
+            left: 0;
+            background-color: $accent;
+            opacity: 0.15;
+            border-radius: 0;
+            clip-path: polygon(
+                0% 100%,
+                100% 100%,
+                100% 30%,
+                0% 0%
+            );
         }
     }
 
-    // Tablet and desktop styles
-    @media (min-width: 768px) {
-        padding: 2rem;
-        
+    // Media Queries - Mobile First zgodnie z innymi widokami
+    @media (min-width: 481px) {
+        padding: 3rem 2rem;
+
+        &__header h1 {
+            font-size: 2.8rem;
+        }
+
+        &__headerTagline {
+            font-size: 1.2rem;
+        }
+
+        &__map {
+            height: 350px;
+        }
+
+        &__contentItemTitle {
+            font-size: 1.4rem;
+        }
+
+        &__contentItemText {
+            font-size: 1.1rem;
+        }
+
+        &__shape {
+            &--1 {
+                width: 400px;
+                height: 400px;
+                top: -150px;
+                left: -150px;
+            }
+            
+            &--2 {
+                width: 300px;
+                height: 300px;
+                right: -100px;
+            }
+            
+            &--3 {
+                width: 350px;
+                height: 350px;
+                left: 20%;
+            }
+
+            &--footer {
+                height: 15vh;
+            }
+        }
+    }
+
+    @media (min-width: 769px) {
+        padding: 4rem 3rem;
+
         &__header {
-            margin-bottom: 3rem;
-            
+            margin-bottom: 4rem;
+            padding: 3rem 2rem;
+
             h1 {
-                font-size: 2.5rem;
+                font-size: 3.5rem;
             }
-            
-            p {
-                font-size: 1.5rem;
-            }
+        }
+
+        &__headerTagline {
+            font-size: 1.3rem;
+        }
+
+        &__mapContainer {
+            padding: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        &__map {
+            height: 450px;
+        }
+
+        &__contentItem {
+            padding: 2rem 2.5rem;
+        }
+
+        &__contentItemTitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        &__contentItemText {
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        padding: 5rem 4rem;
+
+        &__header h1 {
+            font-size: 4rem;
+        }
+
+        &__headerTagline {
+            font-size: 1.4rem;
+        }
+
+        &__map {
+            height: 500px;
         }
     }
 }

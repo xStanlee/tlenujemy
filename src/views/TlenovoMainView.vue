@@ -23,23 +23,20 @@
                     Odkryj Moc<br>
                     <span class="MainView__heroHighlight">Czystego Tlenu</span>
                 </h2>
-                <p class="MainView__heroSubtitle">
-                    Naturalna regeneracja • Detoksykacja • Energia na nowo
-                </p>
                 <div class="MainView__headerBenefits">
-                <div class="MainView__benefitItem">
-                    <span class="MainView__benefitIcon">💪</span>
-                    <span>Przyspieszona regeneracja</span>
+                    <div class="MainView__benefitItem">
+                        <span class="MainView__benefitIcon">💪</span>
+                        <span>Naturalna regeneracja</span>
+                    </div>
+                    <div class="MainView__benefitItem">
+                        <span class="MainView__benefitIcon">🧠</span>
+                        <span>Lepsza koncentracja</span>
+                    </div>
+                    <div class="MainView__benefitItem">
+                        <span class="MainView__benefitIcon">⚡</span>
+                        <span>Wzrost energii</span>
+                    </div>
                 </div>
-                <div class="MainView__benefitItem">
-                    <span class="MainView__benefitIcon">🧠</span>
-                    <span>Lepsza koncentracja</span>
-                </div>
-                <div class="MainView__benefitItem">
-                    <span class="MainView__benefitIcon">⚡</span>
-                    <span>Wzrost energii</span>
-                </div>
-            </div>
             </div>
             <TlenovoFireflies :isMobile="isMobile" />
         </section>
@@ -58,24 +55,15 @@
             class="MainView__sectionMain" 
             :class="{ 'MainView__sectionMain--blur': isFormVisible }"
         >
-            <TlenovoVideo 
+            <!-- <TlenovoVideo 
                 class="MainView__sectionMainVideo"
                 title="O co chodzi w terapii tlenowej?"
                 videoSrc="https://www.youtube.com/embed/2p5vz4YMdjs"
                 videoTitle="Tlenovo - Informacje ogólne"
-            />
-            
-            <TlenovoVideo
-                class="MainView__sectionMainVideo"
-                title="Zobacz działanie komory hiperbaryczna"
-                videoSrc="https://www.youtube.com/embed/zdlYjo-5b1k"
-                videoTitle="Tlenovo - Komora Hiperbaryczna"
-                is-reversed
-            />
- 
-            <TlenovoVideo 
-                class="MainView__sectionMainVideo"
-            />
+            /> -->
+            <TlenovoWhatIs />
+            <!-- <TlenovoHowItWorks /> -->
+            <!-- <TlenovoWhyChoose /> -->
         </section>
     </q-page-container>
 </template>
@@ -93,7 +81,10 @@ import { notificationService } from 'src/services/notification.service';
 // Components
 import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.vue';
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
-import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
+// import TlenovoHowItWorks from 'src/components/TlenovoHowItWorks/TlenovoHowItWorks.vue';
+// import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
+import TlenovoWhatIs from 'src/components/TlenovoWhatIs/TlenovoWhatIs.vue';
+// import TlenovoWhyChoose from 'src/components/TlenovoWhyChoose/TlenovoWhyChoose.vue';
 
 defineProps({
     isFormVisible: Boolean
@@ -240,7 +231,7 @@ $font: 'Inter';
     &__heroContent {
         position: absolute;
         right: 10%;
-        top: 40%;
+        top: 48.5%;
         transform: translateY(-50%);
         text-align: center;
         z-index: 3;
@@ -293,7 +284,7 @@ $font: 'Inter';
     &__header {
         position: absolute;
         z-index: 2;
-        top: 0;
+        top: 1.5%;
         left: 0;
         margin: 7.5% 0 0 7.5%;
         width: 35%;

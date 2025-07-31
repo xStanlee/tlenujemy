@@ -391,87 +391,39 @@ const stats = ref([
     }
     
     // Tablet responsiveness
-    @media (min-width: 640px) {
-        padding: 80px 0;
+    // @media (min-width: 640px) {
+    //     padding: 80px 0;
         
-        &__container {
-            padding: 0 2rem;
-        }
+    //     &__container {
+    //         padding: 0 2rem;
+    //     }
         
-        &__card {
-            padding: 3rem 2.5rem;
-        }
+    //     &__card {
+    //         padding: 3rem 2.5rem;
+    //     }
         
-        &__title {
-            font-size: 2.2rem;
-        }
+    //     &__title {
+    //         font-size: 2.2rem;
+    //     }
         
-        &__subtitle {
-            font-size: 1.1rem;
-        }
+    //     &__subtitle {
+    //         font-size: 1.1rem;
+    //     }
         
-        &__features {
-            gap: 1.2rem;
-        }
+    //     &__features {
+    //         gap: 1.2rem;
+    //     }
         
-        &__feature {
-            flex-direction: row;
-            align-items: center;
-        }
+    //     &__feature {
+    //         flex-direction: row;
+    //         align-items: center;
+    //     }
         
-        &__contact {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-    }
-    
-    // Desktop responsiveness
-    @media (min-width: 1024px) {
-        padding: 100px 0;
-        
-        &__card {
-            padding: 4rem 3rem;
-        }
-        
-        &__title {
-            font-size: 2.8rem;
-        }
-        
-        &__subtitle {
-            font-size: 1.3rem;
-        }
-        
-        &__features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        &__stats {
-            margin: 3rem 0;
-        }
-        
-        &__statNumber {
-            font-size: 2.5rem;
-        }
-        
-        &__decorCircle {
-            &--1 {
-                width: 150px;
-                height: 150px;
-            }
-            
-            &--2 {
-                width: 100px;
-                height: 100px;
-            }
-            
-            &--3 {
-                width: 120px;
-                height: 120px;
-            }
-        }
-    }
+    //     &__contact {
+    //         max-width: 400px;
+    //         margin: 0 auto;
+    //     }
+    // }
 }
 
 @keyframes shimmer {

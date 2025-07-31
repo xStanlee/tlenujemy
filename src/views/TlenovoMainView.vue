@@ -55,15 +55,13 @@
             class="MainView__sectionMain" 
             :class="{ 'MainView__sectionMain--blur': isFormVisible }"
         >
-            <!-- <TlenovoVideo 
-                class="MainView__sectionMainVideo"
-                title="O co chodzi w terapii tlenowej?"
-                videoSrc="https://www.youtube.com/embed/2p5vz4YMdjs"
-                videoTitle="Tlenovo - Informacje ogólne"
-            /> -->
+            <!-- Czym jest tlenoterapia -->
             <TlenovoWhatIs />
+            <!-- Jak działa tlenoterapia -->
             <TlenovoHowItWorks />
+            <!-- Dlaczego warto wybrać tlenoterapię -->
             <TlenovoWhyChoose />
+            <!-- CTA Section -->
             <TlenovoCTASection />
         </section>
     </q-page-container>
@@ -214,16 +212,18 @@ $font: 'Inter';
 
     &__sectionInitial {
         position: relative;
-        height: 950px;
         width: 100%;
         z-index: 1;
-        background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)), 
-                    url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png') no-repeat center center;
-        background-size: cover;
-        clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 86%);
         display: flex;
         align-items: center;
         justify-content: center;
+
+        height: 700px;
+        background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)), 
+                    url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png') no-repeat center center;
+        background-size: cover;
+        background-position: 65% 20%;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 95%);
 
         &--blur {
             opacity: 0.8;
@@ -234,7 +234,7 @@ $font: 'Inter';
     &__heroContent {
         position: absolute;
         right: 10%;
-        top: 48.5%;
+        top: 45%;
         transform: translateY(-50%);
         text-align: center;
         z-index: 3;
@@ -243,7 +243,9 @@ $font: 'Inter';
     }
 
     &__heroBadge {
-        margin-bottom: 1.5rem;
+        font-size: 12px;
+        padding: 0.4rem 0.8rem;
+        // margin-bottom: 1.5rem;
         
         span {
             display: inline-block;
@@ -260,9 +262,9 @@ $font: 'Inter';
     }
 
     &__heroTitle {
-        font-size: 4.5rem;
+        font-size: 2.5rem;
         font-weight: 800;
-        line-height: 1.1;
+        line-height: 1.2;
         margin: 0 0 1rem 0;
         text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
@@ -277,7 +279,7 @@ $font: 'Inter';
     }
 
     &__heroSubtitle {
-        font-size: 1.3rem;
+        font-size: 1rem;
         font-weight: 400;
         opacity: 0.9;
         margin: 0;
@@ -287,31 +289,28 @@ $font: 'Inter';
     &__header {
         position: absolute;
         z-index: 2;
-        top: 1.5%;
-        left: 0;
-        margin: 7.5% 0 0 7.5%;
-        width: 35%;
+        top: 1.3%;
+        margin: 0 0 0 10%;
         color: $white;
         animation: slideInLeft .6s ease-in;
 
         h1 {
             text-transform: uppercase;
-            font-size: 4.5rem;
+            font-size: 2rem;
             font-weight: 800;
             letter-spacing: 1px;
             margin: 1rem 0;
             padding-top: 0;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            line-height: 1.1;
+            line-height: 1.2;
         }
     }
 
     &__headerTagline {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         font-weight: 400;
-        margin: 1.5rem 0 2rem 0;
         opacity: 0.95;
-        line-height: 1.4;
+        line-height: 1.2;
     }
 
     &__headerBenefits {
@@ -416,15 +415,6 @@ $font: 'Inter';
             padding: 0.4rem 0.8rem;
         }
 
-        &__heroTitle {
-            font-size: 2.5rem;
-            line-height: 1.2;
-        }
-
-        &__heroSubtitle {
-            font-size: 1rem;
-        }
-
         &__header {
             height: calc(500px - 100px);
             width: 90%;
@@ -437,11 +427,6 @@ $font: 'Inter';
                 font-size: 2.2rem;
                 line-height: 1.2;
             }
-        }
-
-        &__headerTagline {
-            font-size: 1.1rem;
-            margin: 1rem 0;
         }
 
         &__headerBenefits {

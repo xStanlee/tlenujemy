@@ -7,7 +7,7 @@
             <!-- Links mobile (zawsze używamy mobile UI w emulatorze) -->
             <q-btn class="MainLayout__headerBtnPrev" v-if="tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
             <q-space v-if="tab !== 'tab1'" />
-            <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="true"/>
+            <TlenovoLogo @click="onLogoClickHandler" class="MainLayout__toolbarLogo" :isMobile="true"/>
             <q-space v-if="tab !== 'tab4'" />
             <q-btn class="MainLayout__headerBtnNext" v-if="tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
           </q-toolbar>
@@ -170,6 +170,10 @@ function onMobilePrev() {
 
 function onRedirectHandler() {
   tab.value = 'tab3';
+}
+
+function onLogoClickHandler() {
+  tab.value = 'tab1';
 }
 
 function onLocationClickHandler() {

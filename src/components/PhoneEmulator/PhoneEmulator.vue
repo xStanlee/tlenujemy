@@ -22,16 +22,17 @@
 <style lang="scss" scoped>
 .PhoneEmulator {
   display: flex;
-  justify-content: center;
+  justify-content: center; // do usunięcia
   align-items: center;
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
+  // padding-left: 10%; // do dodania
 
   &__device {
     position: relative;
-    width: 430px;
-    height: 932px;
+    width: 393px;
+    height: 873px;
     background: #1a1a1a;
     border-radius: 40px;
     box-shadow: 
@@ -104,8 +105,8 @@
     z-index: 5;
     
     // Zapewniamy, że content idealnie się mieści
-    width: calc(430px - 16px);
-    height: calc(932px - 16px);
+    width: calc(393px - 16px);
+    height: calc(873px - 16px);
     
     // Tworzymy nowy stacking context dla fixed elementów
     transform: translateZ(0);

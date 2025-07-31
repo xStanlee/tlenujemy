@@ -103,7 +103,7 @@ const steps = ref([
 }
 
 .TlenovoHowItWorks {
-    padding: 100px 0;
+    padding: 40px 0;
     clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 97%);
     background: linear-gradient(135deg, 
         rgba($secondary, 0.03) 0%,
@@ -159,6 +159,8 @@ const steps = ref([
         background-clip: text;
         font-weight: 600;
         font-size: 3rem;
+        font-size: 1.8rem;
+
         font-weight: 700;
         color: $primary;
         margin: 0 0 1.5rem 0;
@@ -171,7 +173,7 @@ const steps = ref([
         -webkit-text-fill-color: transparent;
         background-clip: text;
 
-        font-size: 1.3rem;
+        font-size: 1rem;
         color: $primary;
         line-height: 1.6;
         max-width: 800px;
@@ -188,10 +190,9 @@ const steps = ref([
     
     &__step {
         display: grid;
-        grid-template-columns: auto auto 1fr;
-        gap: 2rem;
+        grid-template-columns: auto 1fr;
+        padding: .4rem;
         align-items: start;
-        padding: 2rem;
         background: linear-gradient(135deg, rgba($white, 1), rgba($accent, 0.9));
         border-radius: 20px;
         border: 1px solid rgba($primary, 0.1);
@@ -226,12 +227,7 @@ const steps = ref([
         justify-content: center;
         font-size: 1.5rem;
         font-weight: 700;
-        box-shadow: 2px 2px 31px 2px rgba($primary, 0.5)
-    }
-
-    &__stepContentWrapper {
-        // Very bad Patrick
-        margin-top: -50px;
+        box-shadow: 2px 2px 31px 2px rgba($primary, 0.5);
     }
     
     &__stepIcon {
@@ -248,18 +244,19 @@ const steps = ref([
     }
     
     &__stepTitle {
-        font-size: 1.6rem;
+        font-size: 1.2rem;
         font-weight: 600;
         color: $primary;
         margin: 0 0 1rem 0;
         line-height: 1.3;
+        margin: .8rem 1rem;
     }
     
     &__stepDescription {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
         line-height: 1.7;
         color: primary;
-        margin: 0;
+        margin: .8rem 1rem;
     }
     
     &__conclusion {
@@ -279,7 +276,7 @@ const steps = ref([
     }
     
     &__conclusion p {
-        font-size: 1.3rem;
+        font-size: 1rem;
         line-height: 1.6;
         color: $white;
         margin: 0;
@@ -292,79 +289,6 @@ const steps = ref([
         -webkit-text-fill-color: transparent;
         background-clip: text;
         font-weight: 600;
-    }
-    
-    // Responsive Design
-    @media (max-width: 768px) {
-        padding: 60px 0;
-        
-        &__container {
-            padding: 0 1rem;
-        }
-        
-        &__title {
-            font-size: 2.2rem;
-        }
-        
-        &__subtitle {
-            font-size: 1.1rem;
-        }
-        
-        &__step {
-            grid-template-columns: 1fr;
-            gap: .5rem;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        
-        &__stepIcon {
-            justify-self: center;
-            font-size: 2rem;
-        }
-        
-        &__stepTitle {
-            font-size: 1.4rem;
-        }
-        
-        &__stepDescription {
-            font-size: 1rem;
-        }
-        
-        &__conclusion {
-            padding: 2rem 1.5rem;
-        }
-        
-        &__conclusion p {
-            font-size: 1.1rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        padding: 40px 0;
-        
-        &__title {
-            font-size: 1.8rem;
-        }
-        
-        &__subtitle {
-            font-size: 1rem;
-        }
-        
-        &__step {
-            padding: 1.2rem;
-        }
-        
-        &__stepTitle {
-            font-size: 1.2rem;
-        }
-        
-        &__stepDescription {
-            font-size: 0.95rem;
-        }
-        
-        &__conclusion p {
-            font-size: 1rem;
-        }
     }
 }
 </style> 

@@ -74,7 +74,7 @@
 }
 
 .TlenovoWhatIs {
-    padding: 80px 0;
+    padding: 40px 0;
     
     &__container {
         max-width: 1200px;
@@ -92,7 +92,7 @@
         margin-bottom: 3rem;
         animation: fadeInUp 0.8s ease-out;
     }
-    
+
     &__icon {
         margin-bottom: 1.5rem;
         
@@ -109,7 +109,7 @@
     }
     
     &__title {
-        font-size: 2.8rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: $primary;
         margin: 0;
@@ -119,15 +119,15 @@
     
     &__content {
         display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 4rem;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
         align-items: start;
         animation: fadeInUp 0.8s ease-out 0.3s both;
     }
     
     &__description {
         p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             line-height: 1.7;
             color: $primary;
             margin-bottom: 1.5rem;
@@ -156,6 +156,8 @@
         flex-direction: column;
         gap: 1.2rem;
         margin-bottom: 5rem;
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
     }
     
     &__benefit {
@@ -177,7 +179,7 @@
     }
     
     &__benefitIcon {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         opacity: 0.8;
     }
     
@@ -193,11 +195,6 @@
             font-size: 2.2rem;
         }
         
-        &__content {
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-        }
-        
         &__description p {
             font-size: 1.1rem;
         }
@@ -205,27 +202,6 @@
         &__icon span {
             font-size: 3rem;
             padding: 1rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        padding: 40px 0;
-        
-        &__title {
-            font-size: 1.8rem;
-        }
-        
-        &__description p {
-            font-size: 1rem;
-        }
-        
-        &__benefit {
-            padding: 0.8rem 1.2rem;
-            font-size: 0.9rem;
-        }
-        
-        &__benefitIcon {
-            font-size: 1.3rem;
         }
     }
 }

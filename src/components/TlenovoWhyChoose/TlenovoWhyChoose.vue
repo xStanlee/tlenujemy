@@ -96,14 +96,14 @@ const benefits = ref([
 }
 
 .TlenovoWhyChoose {
-    padding: 100px 0;
+    padding: 40px 0;
     clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 97%);
     background: linear-gradient(135deg, 
         rgba($white, 1) 0%,
         rgba($accent, 0.75) 50%,
         rgba($white, 1) 100%);
     position: relative;
-    
+
     &::before {
         content: '';
         position: absolute;
@@ -119,7 +119,7 @@ const benefits = ref([
     &__container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 .5rem;
         position: relative;
         z-index: 2;
     }
@@ -147,7 +147,7 @@ const benefits = ref([
     }
     
     &__title {
-        font-size: 3rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: $primary;
         margin: 0;
@@ -166,13 +166,16 @@ const benefits = ref([
     }
     
     &__intro {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
         line-height: 1.6;
         color: $primary;
         margin: 0;
         font-weight: 500;
         max-width: 800px;
         margin: 0 auto;
+        flex-direction: column;
+        text-align: center;
+        padding: 1.2rem;
     }
     
     &__highlight {
@@ -232,11 +235,11 @@ const benefits = ref([
     }
     
     &__benefitTitle {
-        font-size: 1.3rem;
         font-weight: 600;
         color: $primary;
         margin: 0 0 0.8rem 0;
         line-height: 1.3;
+        font-size: 1.1rem;
     }
     
     &__benefitDescription {
@@ -244,58 +247,6 @@ const benefits = ref([
         line-height: 1.6;
         color: $primary;
         margin: 0;
-    }
-    
-    // Responsive Design
-    @media (max-width: 768px) {
-        padding: 60px 0;
-        
-        &__container {
-            padding: 0 1rem;
-        }
-        
-        &__title {
-            font-size: 2.2rem;
-        }
-        
-        &__intro {
-            font-size: 1.2rem;
-        }
-        
-        &__benefits {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        
-        &__benefit {
-            padding: 1.5rem;
-        }
-        
-        &__benefitTitle {
-            font-size: 1.2rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        padding: 40px 0;
-        
-        &__title {
-            font-size: 1.8rem;
-        }
-        
-        &__intro {
-            font-size: 1.1rem;
-        }
-        
-        &__benefit {
-            flex-direction: column;
-            text-align: center;
-            padding: 1.2rem;
-        }
-        
-        &__benefitTitle {
-            font-size: 1.1rem;
-        }
     }
 }
 </style> 

@@ -1,7 +1,7 @@
 <template>
   <q-btn
     class="TlenovoBookBtn"
-    label="Umów się na wizytę"
+    label="Zarezerwuj termin"
     rounded
     size="lg"
     color="primary"

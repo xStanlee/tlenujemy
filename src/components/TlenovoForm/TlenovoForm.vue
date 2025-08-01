@@ -300,11 +300,11 @@ function onRedirectHandler() {
     position: relative;
 
     &__formHeader {
-        font-size: 1.8rem;
-        font-weight: 500;
-        line-height: 1rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1.2;
         text-decoration: underline;
-        margin: 20px auto 0 auto;
+        margin: 1.5rem auto 0 auto;
         color: $white;
         z-index: 7;
     }
@@ -316,9 +316,9 @@ function onRedirectHandler() {
     }
 
     &__header {
-        font-size: 1.25rem;
-        font-weight: 500;
-        line-height: 1rem;
+        font-size: 1.3rem;
+        font-weight: 600;
+        line-height: 1.3;
     }
 
     &__shape {
@@ -327,7 +327,7 @@ function onRedirectHandler() {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: $secondary;
+        background: linear-gradient(135deg, $secondary 0%, lighten($secondary, 15%) 50%, $secondary 100%);
         opacity: 0.8;
         clip-path: polygon(0% 0, 50% 0, 60% 0%, 0 100%);
         z-index: 5;
@@ -340,15 +340,15 @@ function onRedirectHandler() {
     }
 
     &__timePicker {
-        margin-bottom: 20px;
+        margin-bottom: 1.5rem;
     }
 
     &__datePicker {
-        margin-bottom: 20px;
+        margin-bottom: 1.5rem;
     }
 
     &__input {
-        margin-bottom: 12px;
+        margin-bottom: 1rem;
 
         // Overwrite Quasar styles
         :deep(.q-icon) {
@@ -358,8 +358,8 @@ function onRedirectHandler() {
 
     &__successInfo {
         position: relative;
-        margin: 0 20px 20px 20px;
-        padding: 12px;
+        margin: 0 1.5rem 1.5rem 1.5rem;
+        padding: 1.5rem;
     }
 
     &__successInfoText {
@@ -368,16 +368,28 @@ function onRedirectHandler() {
     }
 
     &__successInfoSpan {
-        color: $secondary;
+        background: linear-gradient(45deg, $secondary, lighten($secondary, 20%));
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
         text-decoration: underline;
         cursor: pointer;
         
         &:visited {
-            color: $secondary;
+            background: linear-gradient(45deg, $secondary, lighten($secondary, 20%));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
         }
         
         &:hover {
-            color: $primary;
+            background: linear-gradient(45deg, $primary, lighten($primary, 15%));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
             text-decoration: none;
         }
     }

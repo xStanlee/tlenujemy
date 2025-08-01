@@ -289,7 +289,7 @@ $font: 'Inter';
     &__header {
         position: absolute;
         z-index: 2;
-        top: 1.3%;
+        top: 1.4%;
         margin: 0 0 0 10%;
         color: $white;
         animation: slideInLeft .6s ease-in;

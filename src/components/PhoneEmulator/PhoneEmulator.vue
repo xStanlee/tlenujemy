@@ -22,17 +22,32 @@
 <style lang="scss" scoped>
 .PhoneEmulator {
   display: flex;
-  justify-content: center; // do usunięcia
+  justify-content: flex-end; // do usunięcia
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: url('./desktopBackground.png') no-repeat center center;
+  background-size: cover;
   padding: 20px;
-  // padding-left: 10%; // do dodania
+  padding-right: 10%; // do dodania
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba($primary, 0.5) 0%, rgba($white, 0.15) 100%);
+    backdrop-filter: blur(4px);
+    z-index: 1;
+  }
 
   &__device {
     position: relative;
     width: 393px;
-    height: 873px;
+    z-index: 2;
+    height: 812px;
     background: #1a1a1a;
     border-radius: 40px;
     box-shadow: 
@@ -94,10 +109,10 @@
 
   &__screen {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
     background: #000;
     border-radius: 32px;
     overflow: hidden;
@@ -105,8 +120,8 @@
     z-index: 5;
     
     // Zapewniamy, że content idealnie się mieści
-    width: calc(393px - 16px);
-    height: calc(873px - 16px);
+    width: calc(393px - 12px);
+    height: calc(814px - 12px);
     
     // Tworzymy nowy stacking context dla fixed elementów
     transform: translateZ(0);

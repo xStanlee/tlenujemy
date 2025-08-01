@@ -153,10 +153,10 @@ $font: 'Inter';
     font-family: $font;
     background-color: $primary;
     max-width: 100%;
-    padding: 2rem 1rem;
+    padding: 3rem 2rem;
     min-height: 100vh;
     overflow: hidden;
-    
+
     &__background {
         position: absolute;
         top: 0;
@@ -217,6 +217,7 @@ $font: 'Inter';
         position: relative;
         z-index: 2;
         text-align: center;
+        font-size: 2.8rem;
         margin-bottom: 3rem;
         padding: 2rem 1rem 1rem 1rem;
         color: $white;
@@ -265,114 +266,6 @@ $font: 'Inter';
     
     &__col {
         width: 100%;
-    }
-    
-    // Media Queries - Mobile First zgodnie z innymi widokami
-    @media (min-width: 481px) {
-        padding: 3rem 2rem;
-
-        &__header h1 {
-            font-size: 2.8rem;
-        }
-
-        &__headerTagline {
-            font-size: 1.2rem;
-        }
-
-        &__shape {
-            &--1 {
-                width: 400px;
-                height: 400px;
-                top: -150px;
-                left: -150px;
-            }
-            
-            &--2 {
-                width: 300px;
-                height: 300px;
-                right: -100px;
-            }
-            
-            &--3 {
-                width: 350px;
-                height: 350px;
-                left: 20%;
-            }
-
-            &--footer {
-                height: 15vh;
-            }
-        }
-    }
-    
-    @media (min-width: 769px) {
-        padding: 4rem 3rem;
-        
-        &__header {
-            margin-bottom: 4rem;
-            padding: 3rem 2rem;
-
-            h1 {
-                font-size: 3.5rem;
-            }
-        }
-
-        &__headerTagline {
-            font-size: 1.3rem;
-        }
-        
-        &__row {
-            flex-direction: row;
-
-            &--full {
-                .TlenovoFact {
-                    width: 100%;
-                }
-            }
-        }
-        
-        &__col {
-            width: 50%;
-        }
-    }
-    
-    @media (min-width: 1024px) {
-        padding: 5rem 4rem;
-
-        &__header h1 {
-            font-size: 4rem;
-        }
-
-        &__headerTagline {
-            font-size: 1.4rem;
-        }
-        
-        &__content {
-            gap: 3rem;
-        }
-        
-        &__shape {
-            &--1 {
-                width: 500px;
-                height: 500px;
-                top: -200px;
-                left: -200px;
-            }
-            
-            &--2 {
-                width: 400px;
-                height: 400px;
-                top: 10%;
-                right: -150px;
-            }
-            
-            &--3 {
-                width: 450px;
-                height: 450px;
-                bottom: 0;
-                left: 20%;
-            }
-        }
     }
 }
 </style>

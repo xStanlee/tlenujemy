@@ -126,13 +126,13 @@ $font: 'Inter';
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  width: 85vmin;
-  height: 80vmin;
+  width: 100%;
+  // Fixed height might need upgrade
+  height: 450px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
   font-family: $font;
-  
   // Advanced glassmorphism with multiple layers
   background: 
     linear-gradient(135deg, rgba($primary, 0.15), rgba($accent, 0.1)),
@@ -224,8 +224,8 @@ $font: 'Inter';
     position: relative;
     display: flex;
     width: 100%;
+    padding: 1rem 0.8rem;
     height: 100%;
-    padding: 1.5rem 1rem;
     background: linear-gradient(135deg, 
       rgba($primary, 0.95), 
       rgba($primary, 0.85),
@@ -241,10 +241,10 @@ $font: 'Inter';
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 15vmin;
     height: 100%;
-    padding: 1rem 0 0 1rem;
     position: relative;
+    width: 100%;
+    padding: 0.8rem 0 0 0.8rem;
     
     // Modern border with gradient
     &::before {
@@ -291,7 +291,7 @@ $font: 'Inter';
 
   &__header {
     color: $white;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 0.8rem;
@@ -309,7 +309,7 @@ $font: 'Inter';
 
   &__paragraph {
     color: rgba($white, 0.9);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     margin-bottom: 2rem;
@@ -369,7 +369,7 @@ $font: 'Inter';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1rem;
     background: linear-gradient(135deg, 
       rgba($primary, 0.05), 
       rgba($accent, 0.03)
@@ -479,52 +479,6 @@ $font: 'Inter';
 
   &--slide-up {
     animation-name: slide-up;
-  }
-
-  // Media Queries - Mobile First
-  @media (max-width: 768px) {
-    width: 90vw;
-    height: 70vh;
-    
-    &__header {
-      font-size: 1.3rem;
-    }
-
-    &__paragraph {
-      font-size: 1rem;
-    }
-
-    &__overlay {
-      padding: 1rem 0.8rem;
-    }
-
-    &__overlay-content {
-      width: 20vmin;
-      padding: 0.8rem 0 0 0.8rem;
-    }
-
-    &__video-header {
-      padding: 0.8rem 1rem;
-    }
-
-    &__video-title {
-      font-size: 0.8rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    &__header {
-      font-size: 1.9rem;
-      font-weight: 900;
-    }
-
-    &__paragraph {
-      font-size: 1.2rem;
-    }
-
-    &:hover {
-      transform: translateY(-12px) scale(1.03);
-    }
   }
 }
 

@@ -5,7 +5,7 @@
       <div class="PhoneEmulator__notch"></div>
       
       <!-- Główny ekran telefonu -->
-      <div class="PhoneEmulator__screen">
+      <div class="PhoneEmulator__screen" ref="screenRef">
         <slot />
       </div>
       
@@ -16,7 +16,118 @@
 </template>
 
 <script setup>
-// Nie potrzebuje żadnej logiki, tylko renderuje slot
+import { onMounted, onUnmounted, ref } from 'vue'
+
+const screenRef = ref(null)
+let isScrolling = false
+let startY = 0
+let scrollTop = 0
+let velocity = 0
+let amplitude = 0
+let frame = 0
+let scrollableElement = null
+
+// Find the actual scrollable element inside the screen
+const findScrollableElement = () => {
+  if (!screenRef.value) return null
+  
+  // Look for common scrollable elements inside the phone screen
+  const candidates = [
+    screenRef.value.querySelector('.q-tab-panels'),
+    screenRef.value.querySelector('.q-tab-panel'),
+    screenRef.value.querySelector('.MainLayout__pageContainer'),
+    screenRef.value.querySelector('[class*="scroll"]'),
+    screenRef.value
+  ]
+  
+  for (const element of candidates) {
+    if (element && element.scrollHeight > element.clientHeight) {
+      return element
+    }
+  }
+  
+  return screenRef.value
+}
+
+// Touch scroll simulation
+const handleTouchStart = (e) => {
+  scrollableElement = findScrollableElement()
+  if (!scrollableElement) return
+  
+  isScrolling = true
+  startY = e.touches ? e.touches[0].clientY : e.clientY
+  scrollTop = scrollableElement.scrollTop
+  velocity = 0
+  amplitude = 0
+  frame = 0
+  
+  e.preventDefault()
+}
+
+const handleTouchMove = (e) => {
+  if (!isScrolling || !scrollableElement) return
+  
+  const currentY = e.touches ? e.touches[0].clientY : e.clientY
+  const deltaY = currentY - startY
+  const newScrollTop = scrollTop - deltaY
+  
+  scrollableElement.scrollTop = Math.max(0, Math.min(scrollableElement.scrollHeight - scrollableElement.clientHeight, newScrollTop))
+  
+  // Calculate velocity for momentum (based on movement delta)
+  velocity = (startY - currentY) * 0.8
+  
+  e.preventDefault()
+}
+
+const handleTouchEnd = (e) => {
+  if (!isScrolling || !scrollableElement) return
+  
+  isScrolling = false
+  
+  // Momentum scrolling
+  if (Math.abs(velocity) > 1) {
+    amplitude = 0.8 * velocity
+    const timestamp = Date.now()
+    
+    const momentumScroll = () => {
+      const elapsed = Date.now() - timestamp
+      const delta = amplitude * Math.exp(-elapsed / 325) // Decay factor
+      
+      if (Math.abs(delta) > 0.5) {
+        const newScrollTop = scrollableElement.scrollTop + delta
+        scrollableElement.scrollTop = Math.max(0, Math.min(scrollableElement.scrollHeight - scrollableElement.clientHeight, newScrollTop))
+        frame = requestAnimationFrame(momentumScroll)
+      } else {
+        cancelAnimationFrame(frame)
+      }
+    }
+    
+    momentumScroll()
+  }
+  
+  e.preventDefault()
+}
+
+onMounted(() => {
+  if (screenRef.value) {
+    // Add touch event listeners
+    screenRef.value.addEventListener('touchstart', handleTouchStart, { passive: false })
+    screenRef.value.addEventListener('touchmove', handleTouchMove, { passive: false })
+    screenRef.value.addEventListener('touchend', handleTouchEnd, { passive: false })
+    
+    // Add mouse event listeners for desktop simulation
+    screenRef.value.addEventListener('mousedown', handleTouchStart)
+    screenRef.value.addEventListener('mousemove', handleTouchMove)
+    screenRef.value.addEventListener('mouseup', handleTouchEnd)
+    screenRef.value.addEventListener('mouseleave', handleTouchEnd)
+  }
+})
+
+onUnmounted(() => {
+  if (frame) {
+    cancelAnimationFrame(frame)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -56,6 +167,7 @@
       0 20px 40px rgba(0, 0, 0, 0.4),
       0 40px 80px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    cursor: pointer;
     
     &::before {
       content: '';
@@ -125,6 +237,31 @@
     
     // Tworzymy nowy stacking context dla fixed elementów
     transform: translateZ(0);
+    
+    // Ukrywamy scrollbar
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    
+    &::-webkit-scrollbar {
+      display: none; /* WebKit */
+    }
+    
+    // Płynny scroll jak na telefonie
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
+    
+    // Touch scroll handling
+    touch-action: pan-y;
+    
+    // Ukrywamy scrollbary też w dzieciach
+    :deep(*) {
+      scrollbar-width: none !important; /* Firefox */
+      -ms-overflow-style: none !important; /* Internet Explorer 10+ */
+      
+      &::-webkit-scrollbar {
+        display: none !important; /* WebKit */
+      }
+    }
   }
 
   &__homeIndicator {

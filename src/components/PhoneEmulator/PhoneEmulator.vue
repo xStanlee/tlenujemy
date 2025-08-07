@@ -1,5 +1,10 @@
 <template>
   <div class="PhoneEmulator">
+    <!-- Wrapper na video -->
+    <div class="PhoneEmulator__videoWrapper">
+      <slot name="video" />
+    </div>
+    
     <div class="PhoneEmulator__device">
       <!-- Notch (wycięcie w ekranie) -->
       <div class="PhoneEmulator__notch"></div>
@@ -182,13 +187,14 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .PhoneEmulator {
   display: flex;
-  justify-content: flex-end; // do usunięcia
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
   min-height: 100vh;
   background: url('./desktopBackground.png') no-repeat center center;
   background-size: cover;
   padding: 20px;
-  padding-right: 10%; // do dodania
+  padding-left: 10%;
+  padding-right: 10%;
   position: relative;
   
   &::before {
@@ -201,6 +207,24 @@ onUnmounted(() => {
     background: linear-gradient(135deg, rgba($primary, 0.5) 0%, rgba($white, 0.15) 100%);
     backdrop-filter: blur(4px);
     z-index: 1;
+  }
+
+  &__videoWrapper {
+    position: relative;
+    z-index: 2;
+    width: 720px;
+    height: 405px; // 720px / 16 * 9 = 405px (proporcje 16:9)
+    background: #000;
+    border-radius: 12px;
+    box-shadow: 
+      0 10px 25px rgba(0, 0, 0, 0.3),
+      0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333;
+    margin-bottom: 5%;
   }
 
   &__device {
@@ -217,6 +241,7 @@ onUnmounted(() => {
       0 40px 80px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     cursor: pointer;
+    margin-bottom: 5%;
     
     &::before {
       content: '';

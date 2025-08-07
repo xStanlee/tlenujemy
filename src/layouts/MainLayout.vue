@@ -140,7 +140,8 @@ const isActionBtnVisible = computed(() => {
 });
 
 const isFooterVisible = computed(() => {
-  return  (!isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value > 301) ||
+  return  isMobile.value &&
+          (!isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value > 301) ||
           (!isFormVisible.value && isMobile.value && tab.value !== 'tab1');
 });
 

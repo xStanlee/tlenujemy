@@ -244,7 +244,6 @@ const tabConfigs = reactive([
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    padding-bottom: 260px;
     
     .MainLayout__pageContainer {
       width: 100%;

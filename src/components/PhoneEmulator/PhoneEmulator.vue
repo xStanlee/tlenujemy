@@ -1,10 +1,5 @@
 <template>
-  <div class="PhoneEmulator">
-    <!-- Wrapper na video -->
-    <div class="PhoneEmulator__videoWrapper">
-      <slot name="video" />
-    </div>
-    
+  <div class="PhoneEmulator">    
     <div class="PhoneEmulator__device">
       <!-- Notch (wycięcie w ekranie) -->
       <div class="PhoneEmulator__notch"></div>
@@ -16,6 +11,11 @@
       
       <!-- Home indicator (pasek u dołu) -->
       <div class="PhoneEmulator__homeIndicator"></div>
+    </div>
+
+    <!-- Wrapper na video -->
+    <div class="PhoneEmulator__videoWrapper">
+      <slot name="video" />
     </div>
   </div>
 </template>
@@ -193,8 +193,8 @@ onUnmounted(() => {
   background: url('./desktopBackground.png') no-repeat center center;
   background-size: cover;
   padding: 20px;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 12.5%;
+  padding-right: 7.5%;
   position: relative;
   
   &::before {
@@ -212,9 +212,9 @@ onUnmounted(() => {
   &__videoWrapper {
     position: relative;
     z-index: 2;
-    width: 720px;
-    height: 405px; // 720px / 16 * 9 = 405px (proporcje 16:9)
-    background: #000;
+    width: 800px;
+    height: 450px; // 720px / 16 * 9 = 405px (proporcje 16:9)
+    background: rgba(#000, 0.8);
     border-radius: 12px;
     box-shadow: 
       0 10px 25px rgba(0, 0, 0, 0.3),
@@ -231,7 +231,7 @@ onUnmounted(() => {
     position: relative;
     width: 393px;
     z-index: 2;
-    height: 812px;
+    height: 742px;
     background: #1a1a1a;
     border-radius: 40px;
     box-shadow: 
@@ -307,7 +307,7 @@ onUnmounted(() => {
     
     // Zapewniamy, że content idealnie się mieści
     width: calc(393px - 12px);
-    height: calc(814px - 12px);
+    height: calc(742px - 12px);
     
     // Tworzymy nowy stacking context dla fixed elementów
     transform: translateZ(0);

@@ -26,6 +26,31 @@ let velocity = 0
 let amplitude = 0
 let frame = 0
 let scrollableElement = null
+let debounceTimeout = null
+
+// Debounce function for performance optimization
+const debounce = (func, wait) => {
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(debounceTimeout)
+      func(...args)
+    }
+    clearTimeout(debounceTimeout)
+    debounceTimeout = setTimeout(later, wait)
+  }
+}
+
+// Throttle function for scroll move events
+let lastThrottleTime = 0
+const throttle = (func, limit) => {
+  return function(...args) {
+    const now = Date.now()
+    if (now - lastThrottleTime >= limit) {
+      lastThrottleTime = now
+      func.apply(this, args)
+    }
+  }
+}
 
 // Find the actual scrollable element inside the screen
 const findScrollableElement = () => {
@@ -37,15 +62,23 @@ const findScrollableElement = () => {
     screenRef.value.querySelector('.q-tab-panel'),
     screenRef.value.querySelector('.MainLayout__pageContainer'),
     screenRef.value.querySelector('[class*="scroll"]'),
+    screenRef.value.querySelector('.q-layout'),
     screenRef.value
   ]
   
   for (const element of candidates) {
     if (element && element.scrollHeight > element.clientHeight) {
+      console.log('Found scrollable element:', element.className || element.tagName, {
+        scrollHeight: element.scrollHeight,
+        clientHeight: element.clientHeight,
+        scrollTop: element.scrollTop
+      })
       return element
     }
   }
   
+  // Fallback - always return screenRef if nothing else found
+  console.log('Using fallback screenRef for scrolling')
   return screenRef.value
 }
 
@@ -64,46 +97,59 @@ const handleTouchStart = (e) => {
   e.preventDefault()
 }
 
-const handleTouchMove = (e) => {
+// Optimized touch move with throttling
+const handleTouchMoveCore = (e) => {
   if (!isScrolling || !scrollableElement) return
   
   const currentY = e.touches ? e.touches[0].clientY : e.clientY
   const deltaY = currentY - startY
   const newScrollTop = scrollTop - deltaY
   
-  scrollableElement.scrollTop = Math.max(0, Math.min(scrollableElement.scrollHeight - scrollableElement.clientHeight, newScrollTop))
+  const maxScroll = scrollableElement.scrollHeight - scrollableElement.clientHeight
+  const clampedScrollTop = Math.max(0, Math.min(maxScroll, newScrollTop))
+  
+  scrollableElement.scrollTop = clampedScrollTop
   
   // Calculate velocity for momentum (based on movement delta)
   velocity = (startY - currentY) * 0.8
-  
-  e.preventDefault()
 }
+
+// Throttled version for better performance
+const handleTouchMove = throttle((e) => {
+  handleTouchMoveCore(e)
+  e.preventDefault()
+}, 16) // ~60fps
 
 const handleTouchEnd = (e) => {
   if (!isScrolling || !scrollableElement) return
   
   isScrolling = false
   
-  // Momentum scrolling
-  if (Math.abs(velocity) > 1) {
-    amplitude = 0.8 * velocity
-    const timestamp = Date.now()
-    
-    const momentumScroll = () => {
-      const elapsed = Date.now() - timestamp
-      const delta = amplitude * Math.exp(-elapsed / 325) // Decay factor
+  // Debounced momentum scrolling for better performance
+  const startMomentumScroll = debounce(() => {
+    if (Math.abs(velocity) > 1) {
+      amplitude = 0.8 * velocity
+      const timestamp = Date.now()
       
-      if (Math.abs(delta) > 0.5) {
-        const newScrollTop = scrollableElement.scrollTop + delta
-        scrollableElement.scrollTop = Math.max(0, Math.min(scrollableElement.scrollHeight - scrollableElement.clientHeight, newScrollTop))
-        frame = requestAnimationFrame(momentumScroll)
-      } else {
-        cancelAnimationFrame(frame)
+      const momentumScroll = () => {
+        const elapsed = Date.now() - timestamp
+        const delta = amplitude * Math.exp(-elapsed / 325) // Decay factor
+        
+        if (Math.abs(delta) > 0.5) {
+          const maxScroll = scrollableElement.scrollHeight - scrollableElement.clientHeight
+          const newScrollTop = scrollableElement.scrollTop + delta
+          scrollableElement.scrollTop = Math.max(0, Math.min(maxScroll, newScrollTop))
+          frame = requestAnimationFrame(momentumScroll)
+        } else {
+          cancelAnimationFrame(frame)
+        }
       }
+      
+      momentumScroll()
     }
-    
-    momentumScroll()
-  }
+  }, 50) // 50ms debounce
+  
+  startMomentumScroll()
   
   e.preventDefault()
 }
@@ -126,6 +172,9 @@ onMounted(() => {
 onUnmounted(() => {
   if (frame) {
     cancelAnimationFrame(frame)
+  }
+  if (debounceTimeout) {
+    clearTimeout(debounceTimeout)
   }
 })
 </script>
@@ -227,7 +276,7 @@ onUnmounted(() => {
     bottom: 6px;
     background: #000;
     border-radius: 32px;
-    overflow: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
     z-index: 5;
     

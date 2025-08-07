@@ -243,6 +243,7 @@ const tabConfigs = reactive([
     width: 100%;
     height: 100%;
     overflow-x: hidden;
+    padding-bottom: 260px;
     
     .MainLayout__pageContainer {
       width: 100%;
@@ -262,6 +263,8 @@ const tabConfigs = reactive([
       width: 100%;
       height: 100%;
       padding: 0px;
+      // Dodajemy padding na dole żeby footer nie zakrywał contentu
+      padding-bottom: 160px;
       overflow-x: hidden;
     }
 

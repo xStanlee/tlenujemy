@@ -14,7 +14,7 @@
         </q-header>
         
         <!-- Views -->
-        <q-tab-panels class="MainLayout__pageContainer MainLayout__pageContainer--desktop" v-model="tab" animated>
+        <q-tab-panels class="MainLayout__pageContainer MainLayout__pageContainer--desktop" v-model="tab" animated @update:model-value="onTabUpdateHandler">
           <q-tab-panel
             v-for="tabConfig in tabConfigs"
             :key="tabConfig.name"
@@ -133,6 +133,7 @@ const isMobile = computed(() => $q.screen.lt.md);
 const offsetTop = ref(0);
 const isFormVisible = ref(false);
 const tab = ref('tab1');
+const targetBenefit = ref(null);
 
 // Logika dla mobile
 const isActionBtnVisible = computed(() => {
@@ -170,7 +171,26 @@ function onMobilePrev() {
 }
 
 function onRedirectHandler() {
-  tab.value = 'tab3';
+  tab.value = 'tab2';
+}
+
+function onBenefitClickHandler(benefitId) {
+  // Navigate to info tab
+  tab.value = 'tab2';
+  
+  // Only set targetBenefit for wzrost-energii
+  if (benefitId === 'wzrost-energii') {
+    targetBenefit.value = 'wzrost-energii';
+  } else if (benefitId === 'najlepsza-koncentracja') {
+    targetBenefit.value = 'najlepsza-koncentracja';
+  } else if (benefitId === 'naturalna-regeneracja') {
+    targetBenefit.value = 'naturalna-regeneracja';
+  }
+    
+  // Reset after scrolling
+  setTimeout(() => {
+    // targetBenefit.value = null;
+  }, 2000);
 }
 
 function onLogoClickHandler() {
@@ -194,6 +214,10 @@ function onLayoutScroll(payload) {
   offsetTop.value = top
 }
 
+function onTabUpdateHandler(payload) {
+  console.log('🔄 Tab updated:', payload);
+}
+
 const tabConfigs = reactive([
   {
     name: 'tab1',
@@ -206,14 +230,19 @@ const tabConfigs = reactive([
     },
     events: { 
       redirect: onRedirectHandler,
-      formToggle: onFormToggleHandler
+      formToggle: onFormToggleHandler,
+      benefitClick: onBenefitClickHandler
     }
   },
   {
     name: 'tab2',
     label: 'Zastosowania',
     component: TlenovoInfoView,
-    props: {},
+    props: {
+      get targetBenefit() {
+        return targetBenefit.value;
+      }
+    },
     events: {}
   },
   {
@@ -257,6 +286,9 @@ const tabConfigs = reactive([
 
     .MainLayout__header {
       height: 80px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .MainLayout__pageSection {
@@ -284,6 +316,9 @@ const tabConfigs = reactive([
 
   &__header {
     height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 100 !important;
   }
   
   &__headerBtnPrev {

@@ -16,13 +16,19 @@
         
         <section class="TlenovoInfoView__content">
             <!-- First row - single fact -->
-            <div class="TlenovoInfoView__row TlenovoInfoView__row--full">
+            <div class="TlenovoInfoView__row TlenovoInfoView__row--full" id="naturalna-regeneracja">
                 <TlenovoFact
-                    title="Tlenoterapia"
-                    subtitle="Terapia przyszłości"
-                    image="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                    insetImage="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                    title="Naturalna regeneracja"
+                    subtitle="Naturalna regeneracja dodatkowy opis dojebany"
+                    image="\img_1.png"
+                    insetImage="\img_1.png"
                     :content="[
+                        'Tlenoterapia hiperbaryczna to innowacyjna metoda leczenia, która wykorzystuje czysty tlen pod zwiększonym ciśnieniem.',
+                        'Terapia ta przyspiesza procesy regeneracyjne organizmu, poprawia krążenie krwi i dotlenienie tkanek.',
+                        'Wykorzystywana jest w leczeniu wielu schorzeń, od ran po udary mózgu i autyzm.',
+                        'Tlenoterapia hiperbaryczna to innowacyjna metoda leczenia, która wykorzystuje czysty tlen pod zwiększonym ciśnieniem.',
+                        'Terapia ta przyspiesza procesy regeneracyjne organizmu, poprawia krążenie krwi i dotlenienie tkanek.',
+                        'Wykorzystywana jest w leczeniu wielu schorzeń, od ran po udary mózgu i autyzm.',
                         'Tlenoterapia hiperbaryczna to innowacyjna metoda leczenia, która wykorzystuje czysty tlen pod zwiększonym ciśnieniem.',
                         'Terapia ta przyspiesza procesy regeneracyjne organizmu, poprawia krążenie krwi i dotlenienie tkanek.',
                         'Wykorzystywana jest w leczeniu wielu schorzeń, od ran po udary mózgu i autyzm.'
@@ -32,13 +38,17 @@
             
             <!-- Second row - two facts side by side -->
             <div class="TlenovoInfoView__row">
-                <div class="TlenovoInfoView__col">
+                <div class="TlenovoInfoView__col" id="najlepsza-koncentracja">
                     <TlenovoFact
-                        title="Korzyści"
-                        subtitle="Dla zdrowia"
+                        title="Lepsza koncentracja"
+                        subtitle="Lepsza koncentracja dodatkowy opis dojebany"
                         image="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
                         insetImage="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
                         :content="[
+                            'Tlenoterapia przyspiesza gojenie ran i oparzeń.',
+                            'Poprawia funkcje poznawcze i pamięć.',
+                            'Redukuje stany zapalne w organizmie.',
+                            'Wzmacnia układ odpornościowy.',
                             'Tlenoterapia przyspiesza gojenie ran i oparzeń.',
                             'Poprawia funkcje poznawcze i pamięć.',
                             'Redukuje stany zapalne w organizmie.',
@@ -46,13 +56,18 @@
                         ]"
                     />
                 </div>
-                <div class="TlenovoInfoView__col">
+                <div class="TlenovoInfoView__col" id="wzrost-energii">
                     <TlenovoFact
-                        title="Zastosowania"
-                        subtitle="W medycynie"
+                        ref="wzrostEnergii"
+                        title="Wzrost energii"
+                        subtitle="Wzrost energii dodatkowy opis dojebany"
                         image="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80"
                         insetImage="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80"
                         :content="[
+                            'Leczenie ran trudno gojących się i oparzeń.',
+                            'Terapia wspomagająca w leczeniu udarów mózgu.',
+                            'Wsparcie w leczeniu autyzmu i mózgowego porażenia dziecięcego.',
+                            'Przyspieszenie regeneracji po urazach sportowych.',
                             'Leczenie ran trudno gojących się i oparzeń.',
                             'Terapia wspomagająca w leczeniu udarów mózgu.',
                             'Wsparcie w leczeniu autyzmu i mózgowego porażenia dziecięcego.',
@@ -63,7 +78,7 @@
             </div>
             
             <!-- Third row - single fact -->
-            <div class="TlenovoInfoView__row TlenovoInfoView__row--full">
+            <div class="TlenovoInfoView__row TlenovoInfoView__row--full" id="proces-terapii">
                 <TlenovoFact
                     title="Proces terapii"
                     subtitle="Jak wygląda?"
@@ -80,7 +95,7 @@
             
             <!-- Fourth row - two facts side by side -->
             <div class="TlenovoInfoView__row">
-                <div class="TlenovoInfoView__col">
+                <div class="TlenovoInfoView__col" id="przeciwwskazania">
                     <TlenovoFact
                         title="Przeciwwskazania"
                         subtitle="Kiedy nie stosować"
@@ -94,7 +109,7 @@
                         ]"
                     />
                 </div>
-                <div class="TlenovoInfoView__col">
+                <div class="TlenovoInfoView__col" id="badania">
                     <TlenovoFact
                         title="Badania"
                         subtitle="Potwierdzone naukowo"
@@ -114,7 +129,31 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import TlenovoFact from '../components/TlenovoFact/TlenovoFact.vue';
+
+const props = defineProps({
+    targetBenefit: String
+});
+
+onMounted(() => {
+    if(!props.targetBenefit) {
+        return;
+    }
+
+    scrollToSection(props.targetBenefit);
+});
+
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest'
+        });
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -153,9 +192,9 @@ $font: 'Inter';
     font-family: $font;
     background-color: $primary;
     max-width: 100%;
-    padding: 3rem 2rem;
-    min-height: 100vh;
-    overflow: hidden;
+    padding: 1rem 2rem 3rem;
+    min-height: calc(730px - 80px);
+    overflow-x: hidden;
 
     &__background {
         position: absolute;
@@ -218,8 +257,8 @@ $font: 'Inter';
         z-index: 2;
         text-align: center;
         font-size: 2.8rem;
-        margin-bottom: 3rem;
-        padding: 2rem 1rem 1rem 1rem;
+        margin-bottom: 2rem;
+        padding: 1rem 1rem;
         color: $white;
         animation: fadeInUp 0.8s ease-out 0.2s both;
         

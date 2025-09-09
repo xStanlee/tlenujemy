@@ -17,6 +17,7 @@
     <div class="TlenovoFact__neon-border"></div>
 
     <div class="TlenovoFact__overlay">
+    <!-- 
       <div
         class="TlenovoFact__overlay-content TlenovoFact--animate TlenovoFact--slide-left TlenovoFact--delay-2"
       >
@@ -33,12 +34,13 @@
           {{ subtitle }}
         </p>
 
-        <!-- Progress bar -->
+       
         <div class="TlenovoFact__progress-bar">
           <div class="TlenovoFact__progress-fill"></div>
         </div>
       </div>
-      
+      -->
+
       <div
         class="TlenovoFact__image-content TlenovoFact--animate TlenovoFact--slide TlenovoFact--delay-5"
         :style="{ backgroundImage: `url(${image})` }"
@@ -51,14 +53,11 @@
     <div class="TlenovoFact__video">
       <!-- Modern video container with enhanced styling -->
       <div class="TlenovoFact__video-header">
-        <div class="TlenovoFact__video-controls">
-          <div class="TlenovoFact__control-dot TlenovoFact__control-dot--red"></div>
-          <div class="TlenovoFact__control-dot TlenovoFact__control-dot--yellow"></div>
-          <div class="TlenovoFact__control-dot TlenovoFact__control-dot--green"></div>
-        </div>
-        <div class="TlenovoFact__video-title">Tlenovo Experience</div>
+        <div class="TlenovoFact__video-title">{{ title }}</div>
       </div>
       
+      <!-- 
+      Tymczasowo pomysł wyłączony
       <iframe
           width="100%"
           height="100%"
@@ -67,7 +66,8 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
           class="TlenovoFact__iframe"
-      />
+      /> 
+      -->
     </div>
   </div>
 </template>

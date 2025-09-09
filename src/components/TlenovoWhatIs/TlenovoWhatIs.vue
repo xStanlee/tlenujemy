@@ -25,15 +25,15 @@
                 </div>
                 
                 <div class="TlenovoWhatIs__benefits">
-                    <div class="TlenovoWhatIs__benefit">
+                    <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('proces-terapii')">
                         <div class="TlenovoWhatIs__benefitIcon">⚡</div>
                         <span>Naturalny booster zdrowia</span>
                     </div>
-                    <div class="TlenovoWhatIs__benefit">
+                    <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('przeciwwskazania')">
                         <div class="TlenovoWhatIs__benefitIcon">🛡️</div>
                         <span>Bezpieczna metoda</span>
                     </div>
-                    <div class="TlenovoWhatIs__benefit">
+                    <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('badania')">
                         <div class="TlenovoWhatIs__benefitIcon">🎯</div>
                         <span>Nieinwazyjna terapia</span>
                     </div>
@@ -44,7 +44,28 @@
 </template>
 
 <script setup>
-// No props needed for this component
+import { useQuasar } from 'quasar';
+import { computed } from 'vue';
+
+const props = defineProps({
+    isMobile: Boolean
+})
+
+const emit = defineEmits(['benefitClick']);
+
+const $q = useQuasar();
+// Check if the screen is mobile - fallback if prop is not provided
+const isMobileComputed = computed(() => $q.screen.lt.md);
+
+function onBenefitClick(benefitId) {
+    const mobileCheck = typeof props.isMobile !== 'undefined' ? props.isMobile : isMobileComputed.value;
+    
+    if (!mobileCheck) {
+       return;
+    }
+    
+    emit('benefitClick', benefitId);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -171,6 +192,7 @@
         font-weight: 500;
         color: $white;
         background: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 45%));
+        cursor: pointer;
         
         &:hover {
             transform: translateX(5px);

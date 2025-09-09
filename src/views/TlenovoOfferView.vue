@@ -76,9 +76,9 @@ $font: 'Inter';
     font-family: $font;
     background-color: $primary;
     max-width: 100%;
-    padding: 2rem 1rem;
-    min-height: 100vh;
-    overflow: hidden;
+    padding: 1rem 1rem 3rem;
+    min-height: calc(730px - 80px);
+    overflow-x: hidden;
     
     &__background {
         position: absolute;
@@ -95,7 +95,7 @@ $font: 'Inter';
         z-index: 2;
         text-align: center;
         margin-bottom: 3rem;
-        padding: 2rem 1rem 1rem 1rem;
+        padding: 1rem 1rem;
         color: $white;
         animation: fadeInUp 0.8s ease-out 0.2s both;
         

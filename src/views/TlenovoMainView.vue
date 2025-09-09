@@ -24,15 +24,15 @@
                     <span class="MainView__heroHighlight">Czystego Tlenu</span>
                 </h2>
                 <div class="MainView__headerBenefits">
-                    <div class="MainView__benefitItem">
+                    <div class="MainView__benefitItem" @click="onBenefitClick('naturalna-regeneracja')">
                         <span class="MainView__benefitIcon">💪</span>
                         <span>Naturalna regeneracja</span>
                     </div>
-                    <div class="MainView__benefitItem">
+                    <div class="MainView__benefitItem" @click="onBenefitClick('najlepsza-koncentracja')">
                         <span class="MainView__benefitIcon">🧠</span>
                         <span>Lepsza koncentracja</span>
                     </div>
-                    <div class="MainView__benefitItem">
+                    <div class="MainView__benefitItem" @click="onBenefitClick('wzrost-energii')">
                         <span class="MainView__benefitIcon">⚡</span>
                         <span>Wzrost energii</span>
                     </div>
@@ -56,7 +56,7 @@
             :class="{ 'MainView__sectionMain--blur': isFormVisible }"
         >
             <!-- Czym jest tlenoterapia -->
-            <TlenovoWhatIs />
+            <TlenovoWhatIs :isMobile="isMobile" @benefitClick="onBenefitClick" />
             <!-- Jak działa tlenoterapia -->
             <TlenovoHowItWorks />
             <!-- Dlaczego warto wybrać tlenoterapię -->
@@ -90,7 +90,7 @@ defineProps({
     isFormVisible: Boolean
 })
 
-const emit = defineEmits(['redirect', 'formToggle']);
+const emit = defineEmits(['redirect', 'formToggle', 'benefitClick']);
 
 const $q = useQuasar();
 const useSnackbar = useSnackbarStore();
@@ -139,6 +139,14 @@ function onRedirectHandler() {
 function onCancelClickHandler() {
     emit('formToggle', false);
 }
+
+function onBenefitClick(benefitId) {
+    if (!isMobile.value) {
+       return;
+    }
+    
+    emit('benefitClick', benefitId);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -152,11 +160,11 @@ $slide-easing: ease-out;
 // Extract to separate file
 @keyframes slideInLeft {
     from {
-        transform: translateX(-100%);
+        transform: translateX(-200%);
         opacity: 0;
     }
     to {
-        transform: translateX(0);
+        transform: translateX(-100%);
         opacity: 1;
     }
 }
@@ -181,6 +189,17 @@ $slide-easing: ease-out;
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 $font: 'Inter';
@@ -292,7 +311,7 @@ $font: 'Inter';
         top: 1.4%;
         margin: 0 0 0 10%;
         color: $white;
-        animation: slideInLeft .6s ease-in;
+        animation: fadeIn .6s ease-in;
 
         h1 {
             text-transform: uppercase;
@@ -333,6 +352,7 @@ $font: 'Inter';
         font-weight: 500;
         transition: all 0.3s ease;
         margin-bottom: 0.4rem;
+        cursor: pointer;
 
         &:hover {
             background: rgba(255, 255, 255, 0.12);
@@ -377,7 +397,7 @@ $font: 'Inter';
             left: 50%;
             transform: translateX(-50%);
             padding-bottom: 10vw;
-            animation: slideInBottom .6s ease-in;
+            animation: fadeIn .6s ease-in;
 
             h1 {
                 font-size: 2.5rem;
@@ -420,7 +440,7 @@ $font: 'Inter';
             width: 90%;
             margin-top: 40px;
             padding-bottom: 15vw;
-            animation: slideInBottom .6s ease-in;
+            animation: fadeIn .9s ease-in;
 
             h1 {
                 margin-top: 1rem;

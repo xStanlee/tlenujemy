@@ -73,17 +73,11 @@ const findScrollableElement = () => {
   
   for (const element of candidates) {
     if (element && element.scrollHeight > element.clientHeight) {
-      console.log('Found scrollable element:', element.className || element.tagName, {
-        scrollHeight: element.scrollHeight,
-        clientHeight: element.clientHeight,
-        scrollTop: element.scrollTop
-      })
       return element
     }
   }
   
   // Fallback - always return screenRef if nothing else found
-  console.log('Using fallback screenRef for scrolling')
   return screenRef.value
 }
 

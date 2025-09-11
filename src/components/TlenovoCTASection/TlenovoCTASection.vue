@@ -17,10 +17,10 @@
                     </div>
                     <h3 class="TlenovoCTASection__title">
                         Jedyna taka komora<br>
-                        <span class="TlenovoCTASection__titleHighlight">w Świebodzicach</span>
+                        <span class="TlenovoCTASection__titleHighlight">w Wałbrzychu</span>
                     </h3>
                     <p class="TlenovoCTASection__subtitle">
-                        Nowoczesna komora 2.0 ATA z pełną obsługą medyczną
+                        Nowoczesna komora z <strong>zakresem 1.6 ATA - 2.0 ATA</strong> z pełną obsługą
                     </p>
                 </div>
 
@@ -69,11 +69,11 @@ const features = ref([
     {
         icon: '🏥',
         title: 'Profesjonalna opieka',
-        description: 'Wykwalifikowany personel medyczny podczas każdej sesji'
+        description: 'Wykwalifikowany personel podczas każdej sesji'
     },
     {
         icon: '⚡',
-        title: 'Nowoczesne komory 2.0 ATA',
+        title: 'Nowoczesna komora',
         description: 'Najnowsza technologia, jedyna taka w okolicy'
     },
     {
@@ -259,6 +259,7 @@ const stats = ref([
         margin: 0;
         opacity: 0.8;
         line-height: 1.5;
+        padding: 0 1rem;
     }
     
     &__features {
@@ -302,6 +303,7 @@ const stats = ref([
         font-size: 1.1rem;
         font-weight: 600;
         color: $primary;
+        line-height: 1.6rem;
         margin: 0 0 0.3rem 0;
     }
     

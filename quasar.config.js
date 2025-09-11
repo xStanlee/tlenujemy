@@ -12,6 +12,7 @@ export default defineConfig((/* ctx */) => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
+      'wait-styles',
       'axios',
       'pinia',
       'line-awsome'
@@ -32,20 +33,6 @@ export default defineConfig((/* ctx */) => {
     //     `
     //   }
     // },
-
-    // https://github.com/quasarframework/quasar/tree/dev/extras
-    extras: [
-      // 'ionicons-v4',
-      // 'mdi-v7',
-      // 'fontawesome-v6',
-      // 'eva-icons',
-      // 'themify',
-      'line-awesome',
-      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
-      'roboto-font', // optional, you are not bound to it
-      'material-icons', // optional, you are not bound to it
-    ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
@@ -83,6 +70,20 @@ export default defineConfig((/* ctx */) => {
       ]
     },
 
+    // https://github.com/quasarframework/quasar/tree/dev/extras
+    extras: [
+      // 'ionicons-v4',
+      // 'mdi-v7',
+      // 'fontawesome-v6',
+      // 'eva-icons',
+      // 'themify',
+      'line-awesome',
+      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
+
+      'roboto-font', // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it
+    ],
+
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
       // https: true,
@@ -104,7 +105,7 @@ export default defineConfig((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+        plugins: ['Loading']
     },
 
     // animations: 'all', // --- includes all animations
@@ -201,7 +202,7 @@ export default defineConfig((/* ctx */) => {
 
       builder: {
         // https://www.electron.build/configuration/configuration
-        appId: 'tlenujemy'
+        appId: 'tlenovo'
       }
     },
 

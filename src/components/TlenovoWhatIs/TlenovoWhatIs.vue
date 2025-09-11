@@ -2,25 +2,32 @@
     <section class="TlenovoWhatIs">
         <div class="TlenovoWhatIs__container">
             <div class="TlenovoWhatIs__header">
-                <div class="TlenovoWhatIs__icon">
-                    <span>🫁</span>
-                </div>
                 <h2 class="TlenovoWhatIs__title">
                     Czym Jest Tlenoterapia Hiperbaryczna?
                 </h2>
             </div>
-            
+                        
             <div class="TlenovoWhatIs__content">
                 <div class="TlenovoWhatIs__description">
                     <p>
-                        <strong>Tlenoterapia hiperbaryczna (HBOT)</strong> to bezpieczna i nieinwazyjna metoda leczenia, 
-                        polegająca na oddychaniu czystym tlenem w specjalnej komorze hiperbarycznej.
+                        HBOT to <strong>bezpieczna i nieinwazyjna</strong> metoda, w której oddychasz tlenem w komorze pod podwyższonym ciśnieniem. Dzięki temu
+                        <strong>więcej tlenu rozpuszcza się w osoczu</strong>, dociera głębiej do tkanek i <strong>wspiera naturalne procesy naprawcze</strong>, 
+                        równowagę stanów zapalnych oraz komfort po wysiłku i urazach.
                     </p>
                     <p>
-                        Komora ta symuluje warunki pod zwiększonym ciśnieniem atmosferycznym – zazwyczaj 
-                        <span class="TlenovoWhatIs__highlight">2-3 razy wyższym</span> niż normalne. 
-                        Dzięki temu Twój organizm otrzymuje dawkę tlenu, która działa jak 
-                        <span class="TlenovoWhatIs__highlight">naturalny booster dla zdrowia</span>.
+                        Podczas HBOT organizm dostaje więcej tlenu niż na co dzień. W części badań zauważono, że taki „tlenowy bodziec”
+                        <strong>pobudza uwalnianie własnych komórek naprawczych</strong> 
+                        <i> (tzw. komórek macierzytycznych)</i> ze szpiku do krwi.
+                        To właśnie te komórki pomagają 
+                        <strong>odnawiać i goić</strong> 
+                        różne tkanki. Najlepiej opisano ten efekt przy<strong> wyższym ciśnieniu, ok. 1.8 ATA</strong>.
+                        W doświadczeniach na zwierzętach obserwowano też 
+                        <strong>większą aktywność i podziały</strong> 
+                        tych komórek w niektórych narządach. To nie jest 
+                        <i>„magiczny włącznik”</i>, 
+                        ale
+                        <strong>naturalne wsparcie</strong> 
+                        procesów, które ciało i tak ma wbudowane.
                     </p>
                 </div>
                 
@@ -108,7 +115,7 @@ function onBenefitClick(benefitId) {
     }
     
     &__header {
-        padding-top: 2rem;
+        padding-top: 6rem;
         text-align: center;
         margin-bottom: 3rem;
         animation: fadeInUp 0.8s ease-out;
@@ -162,14 +169,6 @@ function onBenefitClick(benefitId) {
             color: $primary;
             font-weight: 600;
         }
-    }
-    
-    &__highlight {
-        background: linear-gradient(135deg, $secondary, $primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-weight: 600;
     }
     
     &__benefits {

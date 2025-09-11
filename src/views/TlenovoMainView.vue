@@ -47,7 +47,6 @@
             <p class="MainView__headerTagline">
                 Poczuj różnicę już po pierwszej sesji
             </p>
-
         </header>
 
         <!-- Main info Section -->
@@ -311,7 +310,7 @@ $font: 'Inter';
         top: 1.4%;
         margin: 0 0 0 10%;
         color: $white;
-        animation: fadeIn .6s ease-in;
+        // animation: fadeIn .6s ease-in;
 
         h1 {
             text-transform: uppercase;
@@ -397,7 +396,7 @@ $font: 'Inter';
             left: 50%;
             transform: translateX(-50%);
             padding-bottom: 10vw;
-            animation: fadeIn .6s ease-in;
+            // animation: fadeIn .6s ease-in;
 
             h1 {
                 font-size: 2.5rem;
@@ -440,7 +439,7 @@ $font: 'Inter';
             width: 90%;
             margin-top: 40px;
             padding-bottom: 15vw;
-            animation: fadeIn .9s ease-in;
+            // animation: fadeIn .9s ease-in;
 
             h1 {
                 margin-top: 1rem;

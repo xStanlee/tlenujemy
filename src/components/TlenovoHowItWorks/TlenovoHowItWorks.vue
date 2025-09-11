@@ -2,14 +2,11 @@
     <section class="TlenovoHowItWorks">
         <div class="TlenovoHowItWorks__container">
             <div class="TlenovoHowItWorks__header">
-                <div class="TlenovoHowItWorks__icon">
-                    <span>⚗️</span>
-                </div>
                 <h2 class="TlenovoHowItWorks__title">
                     Jak Działa Zabieg? Krok po Kroku
                 </h2>
                 <p class="TlenovoHowItWorks__subtitle">
-                    Zabieg jest prosty, relaksujący i trwa zwykle od 60 do 90 minut. 
+                    Zabieg jest prosty, relaksujący i trwa zwykle <strong>od 60 do 90 minut</strong>. 
                     Oto, co dzieje się w Twoim ciele podczas sesji:
                 </p>
             </div>
@@ -20,9 +17,6 @@
                         {{ index + 1 }}
                     </div>
                     <div class="TlenovoHowItWorks__stepContentWrapper">
-                        <div class="TlenovoHowItWorks__stepIcon">
-                            {{ step.icon }}
-                        </div>
                         <div class="TlenovoHowItWorks__stepContent">
                             <h3 class="TlenovoHowItWorks__stepTitle">
                                 {{ step.title }}
@@ -39,7 +33,7 @@
                 <div class="TlenovoHowItWorks__conclusionIcon">🌟</div>
                 <p>
                     Wyobraź sobie, jak tlen <span class="TlenovoHowItWorks__highlight">"budzi" Twoje komórki do życia</span>, 
-                    pomagając w walce z codziennymi dolegliwościami, takimi jak zmęczenie, problemy skórne czy powolne gojenie po urazach.
+                    pomagając w walce z codziennymi dolegliwościami, takimi jak zmęczenie, powolne gojenie po urazach czy problemy z koncentracją.
                 </p>
             </div>
         </div>
@@ -131,6 +125,7 @@ const steps = ref([
     }
     
     &__header {
+        padding-top: 3rem;
         text-align: center;
         margin-bottom: 4rem;
         animation: fadeInUp 0.8s ease-out;

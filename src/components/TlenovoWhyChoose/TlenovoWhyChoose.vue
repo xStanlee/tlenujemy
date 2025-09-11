@@ -2,9 +2,6 @@
     <section class="TlenovoWhyChoose">
         <div class="TlenovoWhyChoose__container">
             <div class="TlenovoWhyChoose__header">
-                <div class="TlenovoWhyChoose__icon">
-                    <span>💎</span>
-                </div>
                 <h2 class="TlenovoWhyChoose__title">
                     Dlaczego Warto Skorzystać?
                 </h2>
@@ -13,8 +10,8 @@
             <div class="TlenovoWhyChoose__content">
                 <div class="TlenovoWhyChoose__mainText">
                     <p class="TlenovoWhyChoose__intro">
-                        Tlenoterapia hiperbaryczna to nie tylko leczenie – to 
-                        <span class="TlenovoWhyChoose__highlight">inwestycja w Twoje zdrowie i dobre samopoczucie</span>.
+                        Tlenoterapia hiperbaryczna to nie tylko odświeżenie – to 
+                        <span class="TlenovoWhyChoose__highlight">inwestycja w Twoje zdrowie i pomoc w walce z codziennymi dolegliwościami</span>.
                     </p>
                 </div>
                 

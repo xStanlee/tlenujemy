@@ -1,5 +1,6 @@
-import { Loading, QSpinnerPuff } from 'quasar'
-import { boot } from 'quasar/wrappers'
+import { Loading } from 'quasar';
+import { boot } from 'quasar/wrappers';
+import TlenovoCustomLoader from 'src/components/TlenovoCustomLoader.vue';
 
 async function waitForCss() {
   const links = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
@@ -17,15 +18,14 @@ async function waitForCss() {
   // dodatkowa klatka renderu, by uniknąć FOUC
   const afterPaint = () =>
     new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r())))
-  const oneSecTimeout = new Promise(r => setTimeout(r, 1400))
+  const oneSecTimeout = new Promise(r => setTimeout(r, 3000))
   return Promise.all([...linkPromises, fontsReady, oneSecTimeout]).then(() => afterPaint())
 }
 
 export default boot(async () => {
   // Pokaż krótkie „ładowanie” (opcjonalne)
   Loading.show({
-    spinner: QSpinnerPuff,
-    message: 'Zapraszamy',
+    spinner: TlenovoCustomLoader,
     spinnerSize: 140,
     customClass: 'preloading'
   })

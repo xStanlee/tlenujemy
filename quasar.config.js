@@ -57,7 +57,10 @@ export default defineConfig((/* ctx */) => {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf (viteConf) {
+        // Konfiguracja base URL dla GitHub Pages
+        viteConf.base = '/tlenujemy/'
+      },
       // viteVuePluginOptions: {},
       
       vitePlugins: [

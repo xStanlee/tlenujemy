@@ -1,0 +1,1 @@
+import{g as o}from"./quasar-DEyg6dlk.js";import{a}from"./vendor-libs--wT08E6O.js";import{l as i}from"./log.serivce-CrcxVill.js";import"./vendor-D7R7-gKt.js";const s=a.create({baseURL:"https://api.example.com"}),e=o((({app:o})=>{o.config.globalProperties.$axios=a,o.config.globalProperties.$api=s,i.info("Fontawsome v6 initialized.")}));export{s as api,e as default};

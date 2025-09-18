@@ -61,36 +61,26 @@ export default defineConfig((/* ctx */) => {
         // Konfiguracja base URL dla GitHub Pages
         viteConf.base = '/tlenujemy/'
         
-        // Performance optimizations
+        // Performance optimizations - Simplified for stability  
         viteConf.build = {
           ...viteConf.build,
           rollupOptions: {
+            // Let Vite handle chunk splitting automatically to avoid dependency conflicts
             output: {
-              manualChunks: (id) => {
-                // Split vendor chunks for better caching
-                if (id.includes('node_modules')) {
-                  if (id.includes('vue') || id.includes('vue-router') || id.includes('pinia')) {
-                    return 'vendor';
-                  }
-                  if (id.includes('quasar')) {
-                    return 'quasar';
-                  }
-                  if (id.includes('firebase')) {
-                    return 'firebase';
-                  }
-                  return 'vendor-libs';
-                }
-              }
+              // Ensure proper initialization order
+              inlineDynamicImports: false,
+              preserveModules: false
             }
           },
-          chunkSizeWarningLimit: 600,
-          // Enable compression
-          minify: 'terser',
-          terserOptions: {
-            compress: {
-              drop_console: true,
-              drop_debugger: true
-            }
+          chunkSizeWarningLimit: 1000,
+          // Use esbuild instead of terser for more stable minification
+          minify: 'esbuild',
+          // Conservative esbuild settings
+          esbuildOptions: {
+            drop: ['console', 'debugger'],
+            keepNames: true, // Preserve function names to avoid conflicts
+            legalComments: 'none',
+            target: 'es2020' // Ensure compatibility
           }
         }
         

@@ -1,1 +1,0 @@
-import{x as o}from"./vendor-D7R7-gKt.js";import{f as s}from"./quasar-DEyg6dlk.js";import{l as i}from"./log.serivce-CrcxVill.js";const a=s((({app:s})=>{const a=o();s.use(a),i.info("Pinia initialized.")}));export{a as default};

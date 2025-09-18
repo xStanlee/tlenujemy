@@ -1,1 +1,0 @@
-import{F as s}from"./quasar-DEyg6dlk.js";import{t as a,v as e,I as t,C as l}from"./vendor-D7R7-gKt.js";const r={__name:"IndexPage",setup:r=>(r,o)=>(e(),a(s,{class:"flex flex-center"},{default:t((()=>o[0]||(o[0]=[l("img",{alt:"Quasar logo",src:"/tlenujemy/assets/quasar-logo-vertical-Dh1dpsZJ.svg",style:{width:"200px",height:"200px"}},null,-1)]))),_:1}))};export{r as default};

@@ -249,8 +249,10 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             right: 0;
             bottom: 0;
             background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)), 
-                        url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png')
-                        center/cover no-repeat;
+                        url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png');
+            background-size: cover;
+            background-position: 65% 20%;
+            background-repeat: no-repeat;
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: -1;

@@ -21,6 +21,8 @@
                 :ratio="16/9"
                 :src="videoSrc"
                 :title="videoTitle"
+                loading="lazy"
+                preload="none"
             />
         </div>
     </div>

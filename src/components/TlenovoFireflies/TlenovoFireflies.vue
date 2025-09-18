@@ -17,8 +17,8 @@ import { ref } from 'vue';
 defineProps({
     isMobile: Boolean,
 })
-// Fireflies amount
-const firefliesAmount = ref(10);
+// Reduced fireflies amount for better performance
+const firefliesAmount = ref(5);
 </script>
 
 <style scoped>

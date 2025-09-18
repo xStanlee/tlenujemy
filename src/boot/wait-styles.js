@@ -29,8 +29,8 @@ async function waitForCssAndFonts() {
   // Gotowość wszystkich fontów (w tym webfontów)
   const fontsReady = 'fonts' in document ? document.fonts.ready : Promise.resolve();
 
-  // Po pełnym renderze: dwie klatki
-  function afterPaintFrames(frames = 10) {
+  // Po pełnym renderze: zoptymalizowano do mniejszej liczby klatek
+  function afterPaintFrames(frames = 3) {
     return new Promise(resolve => {
       function nextFrame(n) {
         if (n <= 0) return resolve();

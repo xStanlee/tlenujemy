@@ -371,73 +371,76 @@ const tabConfigs = reactive([
   }
 }
 
-// Book button transition styles
+// Optimized book button transition styles
 .bookBtnTransition {
   &-enter-active,
   &-leave-active {
-    transition: all 0.5s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    will-change: transform, opacity;
   }
 
   &-enter-from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
   }
 
   &-leave-to {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
   }
 
   &-enter-to,
   &-leave-from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .telephoneBtnTransition {
   &-enter-active,
   &-leave-active {
-    transition: all 0.5s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    will-change: transform, opacity;
   }
 
   &-enter-from {
     opacity: 0;
-    transform: translateY(-40px);
+    transform: translate3d(0, -40px, 0);
   }
 
   &-leave-to {
     opacity: 0;
-    transform: translateY(-40px);
+    transform: translate3d(0, -40px, 0);
   }
 
   &-enter-to,
   &-leave-from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .footerTransition {
   &-enter-active,
   &-leave-active {
-    transition: all 0.7s ease;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    will-change: transform, opacity;
   }
 
   &-enter-from {
     opacity: 0;
-    transform: translateY(100px);
+    transform: translate3d(0, 100px, 0);
   }
 
   &-leave-to {
     opacity: 0;
-    transform: translateY(100px);
+    transform: translate3d(0, 100px, 0);
   }
 
   &-enter-to,
   &-leave-from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 </style>

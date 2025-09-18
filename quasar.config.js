@@ -6,7 +6,7 @@ import { defineConfig } from '#q-app/wrappers'
 export default defineConfig((/* ctx */) => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
-    // preFetch: true,
+    preFetch: false, // Disable prefetch for better performance
 
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -14,8 +14,8 @@ export default defineConfig((/* ctx */) => {
     boot: [
       'wait-styles',
       'axios',
-      'pinia',
-      'line-awsome'
+      'pinia'
+      // Removed line-awesome boot for performance
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
@@ -60,6 +60,45 @@ export default defineConfig((/* ctx */) => {
       extendViteConf (viteConf) {
         // Konfiguracja base URL dla GitHub Pages
         viteConf.base = '/tlenujemy/'
+        
+        // Performance optimizations
+        viteConf.build = {
+          ...viteConf.build,
+          rollupOptions: {
+            output: {
+              manualChunks: (id) => {
+                // Split vendor chunks for better caching
+                if (id.includes('node_modules')) {
+                  if (id.includes('vue') || id.includes('vue-router') || id.includes('pinia')) {
+                    return 'vendor';
+                  }
+                  if (id.includes('quasar')) {
+                    return 'quasar';
+                  }
+                  if (id.includes('firebase')) {
+                    return 'firebase';
+                  }
+                  return 'vendor-libs';
+                }
+              }
+            }
+          },
+          chunkSizeWarningLimit: 600,
+          // Enable compression
+          minify: 'terser',
+          terserOptions: {
+            compress: {
+              drop_console: true,
+              drop_debugger: true
+            }
+          }
+        }
+        
+        // Preload optimization
+        viteConf.server = {
+          ...viteConf.server,
+          preTransformRequests: false
+        }
       },
       // viteVuePluginOptions: {},
       
@@ -75,14 +114,7 @@ export default defineConfig((/* ctx */) => {
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
-      // 'ionicons-v4',
-      // 'mdi-v7',
-      // 'fontawesome-v6',
-      // 'eva-icons',
-      // 'themify',
-      'line-awesome',
-      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
+      // Removed line-awesome to reduce bundle size - keeping only material-icons
       'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
     ],

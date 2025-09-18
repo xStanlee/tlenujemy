@@ -68,7 +68,7 @@
 
 <script setup>
 import { useQuasar } from 'quasar';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { useSnackbarStore } from 'src/stores/snackbar-store.js';
 
@@ -95,6 +95,19 @@ const $q = useQuasar();
 const useSnackbar = useSnackbarStore();
 // Example usage: Check if the screen is mobile
 const isMobile = computed(() => $q.screen.lt.md);
+
+// Lazy loading for background image
+const backgroundLoaded = ref(false);
+
+onMounted(() => {
+  // Lazy load background image
+  const img = new Image();
+  img.onload = () => {
+    backgroundLoaded.value = true;
+    document.querySelector('.MainView__sectionInitial')?.classList.add('loaded');
+  };
+  img.src = 'https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png';
+});
 
 async function onSubmitHandler(payload) {
     await handleDatastore(payload);
@@ -157,24 +170,15 @@ $slide-duration: 0.25s;
 $slide-easing: ease-out;
 
 // Extract to separate file
-@keyframes slideInLeft {
-    from {
-        transform: translateX(-200%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(-100%);
-        opacity: 1;
-    }
-}
+// Removed unused slideInLeft animation
 
 @keyframes slideInBottom {
     from {
-        transform: translateY(100%);
+        transform: translate3d(0, 100%, 0);
         opacity: 0;
     }
     to {
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
         opacity: 1;
     }
 }
@@ -182,27 +186,18 @@ $slide-easing: ease-out;
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translate3d(0, 50px, 0);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+// Removed unused fadeIn animation
 
-$font: 'Inter';
-@import url('//fonts.googleapis.com/css2?family=#{$font}:wght@300;400;500;600;700;800&display=swap');
+// Using system fonts instead of external font for better performance
+$font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 
 .FormTransition-enter-active {
     animation: slideInBottom $slide-duration $slide-easing;
@@ -228,7 +223,7 @@ $font: 'Inter';
         z-index: 6;
     }
 
-    &__sectionInitial {
+        &__sectionInitial {
         position: relative;
         width: 100%;
         z-index: 1;
@@ -237,27 +232,45 @@ $font: 'Inter';
         justify-content: center;
 
         height: 700px;
-        background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)), 
-                    url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png') no-repeat center center;
-        background-size: cover;
-        background-position: 65% 20%;
+        // Optimized: use a smaller, compressed image and load lazily
+        background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23));
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 95%);
 
         &--blur {
             opacity: 0.8;
             filter: blur(5px);
         }
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)), 
+                        url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png')
+                        center/cover no-repeat;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        &.loaded::before {
+            opacity: 1;
+        }
     }
 
-    &__heroContent {
+        &__heroContent {
         position: absolute;
         right: 10%;
         top: 45%;
-        transform: translateY(-50%);
+        transform: translateY(-50%) translate3d(0, 0, 0);
         text-align: center;
         z-index: 3;
         color: $white;
-        animation: fadeInUp 0.8s ease-out 0.3s both;
+        will-change: transform, opacity;
+        animation: fadeInUp 0.6s ease-out 0.2s both;
     }
 
     &__heroBadge {
@@ -349,13 +362,15 @@ $font: 'Inter';
         border: 1px solid rgba(255, 255, 255, 0.1);
         font-size: 1rem;
         font-weight: 500;
-        transition: all 0.3s ease;
+        transition: transform 0.2s ease, background-color 0.2s ease;
         margin-bottom: 0.4rem;
         cursor: pointer;
+        will-change: transform;
+        transform: translate3d(0, 0, 0);
 
         &:hover {
             background: rgba(255, 255, 255, 0.12);
-            transform: translateX(5px);
+            transform: translate3d(5px, 0, 0);
         }
     }
 
@@ -368,10 +383,7 @@ $font: 'Inter';
     @media (max-width: 768px) {
         &__sectionInitial {
             height: 700px;
-            background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)), 
-                    url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png') no-repeat center center;
-            background-size: cover;
-            background-position: 65% 20%;
+            // Background image loaded lazily via CSS class
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 95%);
         }
 

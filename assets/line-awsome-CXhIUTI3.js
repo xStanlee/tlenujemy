@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/index-anw-vukQ.js","assets/index-CodpkWTb.css"])))=>i.map(i=>d[i]);
-import{_ as i}from"./index-anw-vukQ.js";import{b as t}from"./index-3fevySbJ.js";import{l as e}from"./log.serivce-Cy1HIKeW.js";const s=t(async()=>{await i(()=>import("./index-anw-vukQ.js").then(o=>o.at),__vite__mapDeps([0,1])),e.info("Line Awsome initialized.")});export{s as default};

@@ -1,1 +1,0 @@
-import{b as a}from"./index-anw-vukQ.js";import{b as t}from"./index-3fevySbJ.js";import{l as r}from"./log.serivce-Cy1HIKeW.js";const m=t(({app:i})=>{const o=a();i.use(o),r.info("Pinia initialized.")});export{m as default};

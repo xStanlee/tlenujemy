@@ -153,7 +153,6 @@ function onCancelClickHandler() {
 }
 
 function onBenefitClick(benefitId) {
-    console.log('onBenefitClick', benefitId);
     if (!isMobile.value) {
        return;
     }

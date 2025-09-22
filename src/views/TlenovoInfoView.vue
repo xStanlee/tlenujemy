@@ -188,7 +188,7 @@ $font: 'Inter';
     font-family: $font;
     background-color: $primary;
     max-width: 100%;
-    padding: 1rem 2rem 3rem;
+    padding: 1rem;
     min-height: calc(730px - 80px);
     overflow-x: hidden;
 

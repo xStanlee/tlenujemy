@@ -178,13 +178,26 @@ function onBenefitClickHandler(benefitId) {
   // Navigate to info tab
   tab.value = 'tab2';
   
-  // Only set targetBenefit for wzrost-energii
-  if (benefitId === 'wzrost-energii') {
-    targetBenefit.value = 'wzrost-energii';
-  } else if (benefitId === 'najlepsza-koncentracja') {
-    targetBenefit.value = 'najlepsza-koncentracja';
-  } else if (benefitId === 'naturalna-regeneracja') {
-    targetBenefit.value = 'naturalna-regeneracja';
+  // Set targetBenefit based on benefitId
+  switch (benefitId) {
+    case 'wzrost-energii':
+      targetBenefit.value = 'wzrost-energii';
+      break;
+    case 'najlepsza-koncentracja':
+      targetBenefit.value = 'najlepsza-koncentracja';
+      break;
+    case 'naturalna-regeneracja':
+      targetBenefit.value = 'naturalna-regeneracja';
+      break;
+    case 'proces-terapii':
+      targetBenefit.value = 'proces-terapii';
+      break;
+    case 'wzrost-odpornosci':
+      targetBenefit.value = 'wzrost-odpornosci';
+      break;
+    case 'wzrost-vo2max':
+      targetBenefit.value = 'wzrost-vo2max';
+      break;
   }
     
   // Reset after scrolling

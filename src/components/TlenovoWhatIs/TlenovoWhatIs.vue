@@ -33,16 +33,18 @@
                 
                 <div class="TlenovoWhatIs__benefits">
                     <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('proces-terapii')">
-                        <div class="TlenovoWhatIs__benefitIcon">⚡</div>
-                        <span>Naturalny booster zdrowia</span>
+                        <div class="TlenovoWhatIs__benefitIcon">⏳</div>
+                        <span>Sprawność po kontuzji</span>
                     </div>
-                    <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('przeciwwskazania')">
+
+                    <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('wzrost-odpornosci')">
                         <div class="TlenovoWhatIs__benefitIcon">🛡️</div>
-                        <span>Bezpieczna metoda</span>
+                        <span>Rewelacyjna odporność</span>
                     </div>
-                    <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('badania')">
-                        <div class="TlenovoWhatIs__benefitIcon">🎯</div>
-                        <span>Nieinwazyjna terapia</span>
+
+                    <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('wzrost-vo2max')">
+                        <div class="TlenovoWhatIs__benefitIcon">📈</div>
+                        <span>Wzrost VO₂ Max</span>
                     </div>
                 </div>
             </div>
@@ -51,26 +53,9 @@
 </template>
 
 <script setup>
-import { useQuasar } from 'quasar';
-import { computed } from 'vue';
-
-const props = defineProps({
-    isMobile: Boolean
-})
-
 const emit = defineEmits(['benefitClick']);
 
-const $q = useQuasar();
-// Check if the screen is mobile - fallback if prop is not provided
-const isMobileComputed = computed(() => $q.screen.lt.md);
-
-function onBenefitClick(benefitId) {
-    const mobileCheck = typeof props.isMobile !== 'undefined' ? props.isMobile : isMobileComputed.value;
-    
-    if (!mobileCheck) {
-       return;
-    }
-    
+function onBenefitClick(benefitId) {    
     emit('benefitClick', benefitId);
 }
 </script>

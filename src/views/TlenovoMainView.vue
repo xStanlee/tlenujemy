@@ -55,7 +55,7 @@
             :class="{ 'MainView__sectionMain--blur': isFormVisible }"
         >
             <!-- Czym jest tlenoterapia -->
-            <TlenovoWhatIs :isMobile="isMobile" @benefitClick="onBenefitClick" />
+            <TlenovoWhatIs @benefitClick="onBenefitClick" />
             <!-- Jak działa tlenoterapia -->
             <TlenovoHowItWorks />
             <!-- Dlaczego warto wybrać tlenoterapię -->
@@ -153,6 +153,7 @@ function onCancelClickHandler() {
 }
 
 function onBenefitClick(benefitId) {
+    console.log('onBenefitClick', benefitId);
     if (!isMobile.value) {
        return;
     }
@@ -350,7 +351,7 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        margin-top: 2rem;
+        padding-top: 1.8rem;
     }
 
     &__benefitItem {

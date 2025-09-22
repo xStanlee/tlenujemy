@@ -15,112 +15,65 @@
         </header>
         
         <section class="TlenovoInfoView__content">
-            <!-- First row - single fact -->
             <div class="TlenovoInfoView__row TlenovoInfoView__row--full" id="naturalna-regeneracja">
                 <TlenovoFact
-                    title="Naturalna regeneracja"
-                    subtitle="Naturalna regeneracja dodatkowy opis dojebany"
-                    image="\img_1.png"
-                    insetImage="\img_1.png"
-                    :content="[
-                        'Tlenoterapia hiperbaryczna to innowacyjna metoda leczenia, która wykorzystuje czysty tlen pod zwiększonym ciśnieniem.',
-                        'Terapia ta przyspiesza procesy regeneracyjne organizmu, poprawia krążenie krwi i dotlenienie tkanek.',
-                        'Wykorzystywana jest w leczeniu wielu schorzeń, od ran po udary mózgu i autyzm.',
-                        'Tlenoterapia hiperbaryczna to innowacyjna metoda leczenia, która wykorzystuje czysty tlen pod zwiększonym ciśnieniem.',
-                        'Terapia ta przyspiesza procesy regeneracyjne organizmu, poprawia krążenie krwi i dotlenienie tkanek.',
-                        'Wykorzystywana jest w leczeniu wielu schorzeń, od ran po udary mózgu i autyzm.',
-                        'Tlenoterapia hiperbaryczna to innowacyjna metoda leczenia, która wykorzystuje czysty tlen pod zwiększonym ciśnieniem.',
-                        'Terapia ta przyspiesza procesy regeneracyjne organizmu, poprawia krążenie krwi i dotlenienie tkanek.',
-                        'Wykorzystywana jest w leczeniu wielu schorzeń, od ran po udary mózgu i autyzm.'
-                    ]"
+                        ref="naturalnaRegeneracja"
+                        :text="naturalnaRegeneracja.text"
+                        :linkText="naturalnaRegeneracja.linkText"
+                        :link="naturalnaRegeneracja.link"
+                        :icon="naturalnaRegeneracja.icon"
                 />
             </div>
             
-            <!-- Second row - two facts side by side -->
             <div class="TlenovoInfoView__row">
                 <div class="TlenovoInfoView__col" id="najlepsza-koncentracja">
                     <TlenovoFact
-                        title="Lepsza koncentracja"
-                        subtitle="Lepsza koncentracja dodatkowy opis dojebany"
-                        image="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        insetImage="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        :content="[
-                            'Tlenoterapia przyspiesza gojenie ran i oparzeń.',
-                            'Poprawia funkcje poznawcze i pamięć.',
-                            'Redukuje stany zapalne w organizmie.',
-                            'Wzmacnia układ odpornościowy.',
-                            'Tlenoterapia przyspiesza gojenie ran i oparzeń.',
-                            'Poprawia funkcje poznawcze i pamięć.',
-                            'Redukuje stany zapalne w organizmie.',
-                            'Wzmacnia układ odpornościowy.'
-                        ]"
+                        ref="najlepszaKoncentracja"
+                        :text="najlepszaKoncentracja.text"
+                        :linkText="najlepszaKoncentracja.linkText"
+                        :link="najlepszaKoncentracja.link"
+                        :icon="najlepszaKoncentracja.icon"
                     />
-                </div>
-                <div class="TlenovoInfoView__col" id="wzrost-energii">
+            </div>
+
+            <div class="TlenovoInfoView__col" id="wzrost-energii">
                     <TlenovoFact
                         ref="wzrostEnergii"
-                        title="Wzrost energii"
-                        subtitle="Wzrost energii dodatkowy opis dojebany"
-                        image="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80"
-                        insetImage="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80"
-                        :content="[
-                            'Leczenie ran trudno gojących się i oparzeń.',
-                            'Terapia wspomagająca w leczeniu udarów mózgu.',
-                            'Wsparcie w leczeniu autyzmu i mózgowego porażenia dziecięcego.',
-                            'Przyspieszenie regeneracji po urazach sportowych.',
-                            'Leczenie ran trudno gojących się i oparzeń.',
-                            'Terapia wspomagająca w leczeniu udarów mózgu.',
-                            'Wsparcie w leczeniu autyzmu i mózgowego porażenia dziecięcego.',
-                            'Przyspieszenie regeneracji po urazach sportowych.'
-                        ]"
+                        :text="wzrostEnergii.text"
+                        :linkText="wzrostEnergii.linkText"
+                        :link="wzrostEnergii.link"
+                        :icon="wzrostEnergii.icon"
                     />
                 </div>
             </div>
             
-            <!-- Third row - single fact -->
             <div class="TlenovoInfoView__row TlenovoInfoView__row--full" id="proces-terapii">
                 <TlenovoFact
-                    title="Proces terapii"
-                    subtitle="Jak wygląda?"
-                    image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                    insetImage="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                    :content="[
-                        'Terapia odbywa się w specjalnej komorze hiperbarycznej, gdzie pacjent oddycha czystym tlenem pod zwiększonym ciśnieniem.',
-                        'Standardowa sesja trwa około 60-90 minut, podczas której pacjent może odpoczywać, czytać lub oglądać film.',
-                        'Liczba zalecanych sesji zależy od schorzenia i indywidualnych potrzeb pacjenta.',
-                        'Terapia jest bezbolesna i bezpieczna, choć wymaga konsultacji z lekarzem przed rozpoczęciem.'
-                    ]"
+                        ref="procesTerapii"
+                        :text="procesTerapii.text"
+                        :linkText="procesTerapii.linkText"
+                        :link="procesTerapii.link"
+                        :icon="procesTerapii.icon"
                 />
             </div>
             
-            <!-- Fourth row - two facts side by side -->
             <div class="TlenovoInfoView__row">
-                <div class="TlenovoInfoView__col" id="przeciwwskazania">
+                <div class="TlenovoInfoView__col" id="wzrost-odpornosci">
                     <TlenovoFact
-                        title="Przeciwwskazania"
-                        subtitle="Kiedy nie stosować"
-                        image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        insetImage="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        :content="[
-                            'Niekontrolowane napady drgawkowe.',
-                            'Nieleczona odma opłucnowa.',
-                            'Ciężka infekcja górnych dróg oddechowych.',
-                            'Ciąża (w niektórych przypadkach).'
-                        ]"
+                        ref="wzrostOdpornosci"
+                        :text="wzrostOdpornosci.text"
+                        :linkText="wzrostOdpornosci.linkText"
+                        :link="wzrostOdpornosci.link"
+                        :icon="wzrostOdpornosci.icon"
                     />
                 </div>
-                <div class="TlenovoInfoView__col" id="badania">
+                <div class="TlenovoInfoView__col" id="wzrost-vo2max">
                     <TlenovoFact
-                        title="Badania"
-                        subtitle="Potwierdzone naukowo"
-                        image="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        insetImage="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                        :content="[
-                            'Liczne badania kliniczne potwierdzają skuteczność tlenoterapii hiperbarycznej.',
-                            'Terapia jest zatwierdzona przez FDA do leczenia wielu schorzeń.',
-                            'Skuteczność potwierdzona w leczeniu ran trudno gojących się i oparzeń.',
-                            'Badania pokazują poprawę funkcji poznawczych u pacjentów po udarach.'
-                        ]"
+                        ref="wzrostVo2max"
+                        :text="wzrostVo2max.text"
+                        :linkText="wzrostVo2max.linkText"
+                        :link="wzrostVo2max.link"
+                        :icon="wzrostVo2max.icon"
                     />
                 </div>
             </div>
@@ -143,6 +96,49 @@ onMounted(() => {
 
     scrollToSection(props.targetBenefit);
 });
+
+const naturalnaRegeneracja = {
+    text: "Badania kliniczne na zdrowych dorosłych wykazały, że regularne sesje HBOT zwiększają ilość krążących komórek macierzystych (CD34+) aż o 800% po pełnym cyklu zabiegów (20–40 sesji), przekładając się na skokowy wzrost zdolności regeneracyjnych i odporności organizmu.",
+    linkText: "Department of Internal Medicine, University of Texas Southwestern Medical Center",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10318163",
+    icon: "💪"
+}
+
+const najlepszaKoncentracja = {
+    text: "Terapia ta nie tylko zwiększa natlenienie mózgu, ale także uruchamia procesy neuroregeneracji, co przekłada się na większą efektywność pracy, nauki i codziennych aktywności. Każda nawet drobna poprawa uwagi, szybkości reakcji czy sprawności umysłowej oznacza przewagę w pracy, sporcie i życiu.",
+    linkText: "Sackler School of Medicine, Tel-Aviv University, Tel-Aviv, Israel",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7377835",
+    icon: "🧠"
+}
+
+const wzrostEnergii = {
+    text: "Regularne sesje w komorze hiperbarycznej to sprawdzony sposób, by naturalnie podnieść poziom energii, zredukować chroniczne zmęczenie oraz odzyskać chęci do aktywnego życia szczególnie w okresie jesienno-zimowym.",
+    linkText: "Annals of Military and Health Sciences Research",
+    link: "https://brieflands.com/articles/amhsr-59684",
+    icon: "⚡"
+}
+
+const procesTerapii = {
+    text: "HBOT intensywnie natlenia tkanki, przyspiesza regenerację tkanek miękkich, skóry, ścięgien i kości po urazach, otwartych złamaniach czy operacjach — efekty potwierdzone w licznych badaniach klinicznych na zdrowych dorosłych i sportowcach: wzrost neowaskularyzacji, produkcji kolagenu i zmniejszenie stanów zapalnych.",
+    linkText: "Prince of Wales Hospital, Department of Anaesthesia, Barker Street, Randwick, NSW, Australia",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7387126",
+    icon: "⏳"
+}
+
+const wzrostOdpornosci = {
+    text: "Wysoki poziom komórek macierzystych po terapii HBOT przyspiesza gojenie się ran, regenerację skóry, narządów oraz tkanek, co wspiera szybką mobilizację układu immunologicznego podczas walki z infekcjami czy przewlekłymi schorzeniami.",
+    linkText: "Departamento de Biología, Universidad de Chile, Santiago, Chile",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6078002",
+    icon: "🛡️"
+}
+
+const wzrostVo2max = {
+    text: "Sesje w komorze hiperbarycznej to przełomowy sposób na naturalną poprawę VO₂Max, czyli maksymalnej zdolności organizmu do wykorzystania tlenu. Każda nawet niewielka poprawa VO₂Max przekłada się na dłuższe i intensywniejsze treningi, szybszą regenerację oraz wymierne efekty zarówno w profesjonalnym sporcie, jak i codziennej aktywności.",
+    linkText: "Physical Therapy Department, Shamir Medical Center, Zerifin, Israel",
+    link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8825926",
+    icon: "📈"
+}
+
 
 function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);

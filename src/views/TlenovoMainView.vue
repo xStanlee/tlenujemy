@@ -27,14 +27,17 @@
                     <div class="MainView__benefitItem" @click="onBenefitClick('naturalna-regeneracja')">
                         <span class="MainView__benefitIcon">💪</span>
                         <span>Naturalna regeneracja</span>
+                        <q-icon name="chevron_right" class="MainView__benefitArrow" />
                     </div>
                     <div class="MainView__benefitItem" @click="onBenefitClick('najlepsza-koncentracja')">
                         <span class="MainView__benefitIcon">🧠</span>
                         <span>Lepsza koncentracja</span>
+                        <q-icon name="chevron_right" class="MainView__benefitArrow" />
                     </div>
                     <div class="MainView__benefitItem" @click="onBenefitClick('wzrost-energii')">
                         <span class="MainView__benefitIcon">⚡</span>
                         <span>Wzrost energii</span>
+                        <q-icon name="chevron_right" class="MainView__benefitArrow" />
                     </div>
                 </div>
             </div>
@@ -381,6 +384,18 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         opacity: 0.9;
     }
 
+    &__benefitArrow {
+        margin-left: auto;
+        font-size: 1.2rem;
+        opacity: 0.6;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    &__benefitItem:hover &__benefitArrow {
+        opacity: 1;
+        transform: translateX(3px);
+    }
+
     // Media Queries for Responsiveness
     @media (max-width: 768px) {
         &__sectionInitial {
@@ -431,6 +446,10 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             padding: 0.6rem 1rem;
             font-size: 0.9rem;
         }
+
+        &__benefitArrow {
+            font-size: 1.1rem;
+        }
     }
 
     @media (max-width: 480px) {
@@ -474,6 +493,10 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         &__benefitIcon {
+            font-size: 1rem;
+        }
+
+        &__benefitArrow {
             font-size: 1rem;
         }
     }

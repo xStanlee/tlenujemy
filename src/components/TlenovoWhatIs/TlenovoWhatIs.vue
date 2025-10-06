@@ -21,7 +21,7 @@
                         To właśnie te komórki pomagają 
                         <strong>odnawiać i goić</strong> 
                         różne tkanki. Najlepiej opisano ten efekt przy<strong> wyższym ciśnieniu, ok. 1.8 ATA</strong>.
-                        W doświadczeniach na zwierzętach obserwowano też 
+                        W doświadczeniach na zwierzętach obserwowano też ``
                         <strong>większą aktywność i podziały</strong> 
                         tych komórek w niektórych narządach. To nie jest 
                         <i>„magiczny włącznik”</i>, 
@@ -35,16 +35,19 @@
                     <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('proces-terapii')">
                         <div class="TlenovoWhatIs__benefitIcon">⏳</div>
                         <span>Sprawność po kontuzji</span>
+                        <q-icon name="chevron_right" class="TlenovoWhatIs__benefitArrow" />
                     </div>
 
                     <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('wzrost-odpornosci')">
                         <div class="TlenovoWhatIs__benefitIcon">🛡️</div>
                         <span>Rewelacyjna odporność</span>
+                        <q-icon name="chevron_right" class="TlenovoWhatIs__benefitArrow" />
                     </div>
 
                     <div class="TlenovoWhatIs__benefit" @click="onBenefitClick('wzrost-vo2max')">
                         <div class="TlenovoWhatIs__benefitIcon">📈</div>
                         <span>Wzrost VO₂ Max</span>
+                        <q-icon name="chevron_right" class="TlenovoWhatIs__benefitArrow" />
                     </div>
                 </div>
             </div>
@@ -133,7 +136,7 @@ function onBenefitClick(benefitId) {
     &__content {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 1rem;
         align-items: start;
         animation: fadeInUp 0.8s ease-out 0.3s both;
     }
@@ -159,7 +162,7 @@ function onBenefitClick(benefitId) {
     &__benefits {
         display: flex;
         flex-direction: column;
-        gap: 1.2rem;
+        gap: 1.1rem;
         margin-bottom: 5rem;
         padding: 0.8rem 1.2rem;
         font-size: 0.9rem;
@@ -169,10 +172,11 @@ function onBenefitClick(benefitId) {
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 1rem 1.5rem;
+        padding: 0.8rem 1.2rem;
         border-radius: 15px;
         border: 1px solid rgba($accent, 0.1);
         transition: all 0.3s ease;
+        font-size: 1rem;
         font-weight: 500;
         color: $white;
         background: linear-gradient(135deg, $primary, color.adjust($secondary, $lightness: - 45%));
@@ -185,8 +189,20 @@ function onBenefitClick(benefitId) {
     }
     
     &__benefitIcon {
-        font-size: 1.3rem;
-        opacity: 0.8;
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    &__benefitArrow {
+        margin-left: auto;
+        font-size: 1.2rem;
+        opacity: 0.6;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    &__benefit:hover &__benefitArrow {
+        opacity: 1;
+        transform: translateX(3px);
     }
     
     // Responsive Design
@@ -208,6 +224,31 @@ function onBenefitClick(benefitId) {
         &__icon span {
             font-size: 3rem;
             padding: 1rem;
+        }
+
+        &__benefit {
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        &__benefitArrow {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        &__benefit {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.85rem;
+            gap: 0.8rem;
+        }
+
+        &__benefitIcon {
+            font-size: 1rem;
+        }
+
+        &__benefitArrow {
+            font-size: 1rem;
         }
     }
 }

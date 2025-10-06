@@ -14,7 +14,13 @@
         </q-header>
         
         <!-- Views -->
-        <q-tab-panels class="MainLayout__pageContainer MainLayout__pageContainer--desktop" v-model="tab" animated @update:model-value="onTabUpdateHandler">
+        <q-tab-panels 
+          ref="tabPanelsDesktop"
+          class="MainLayout__pageContainer MainLayout__pageContainer--desktop" 
+          v-model="tab" 
+          animated 
+          @update:model-value="onTabUpdateHandler"
+        >
           <q-tab-panel
             v-for="tabConfig in tabConfigs"
             :key="tabConfig.name"
@@ -75,7 +81,12 @@
       </q-header>
       
       <!-- Views -->
-      <q-tab-panels class="MainLayout__pageContainer" v-model="tab" animated>
+      <q-tab-panels 
+        ref="tabPanelsMobile"
+        class="MainLayout__pageContainer" 
+        v-model="tab" 
+        animated
+      >
         <q-tab-panel
           v-for="tabConfig in tabConfigs"
           :key="tabConfig.name"
@@ -113,7 +124,7 @@
 
 <script setup>
 import { useQuasar } from 'quasar';
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 
 // Components
 import PhoneEmulator from 'src/components/PhoneEmulator/PhoneEmulator.vue';
@@ -134,6 +145,10 @@ const offsetTop = ref(0);
 const isFormVisible = ref(false);
 const tab = ref('tab1');
 const targetBenefit = ref(null);
+
+// Refs for swipe functionality
+const tabPanelsDesktop = ref(null);
+const tabPanelsMobile = ref(null);
 
 // Logika dla mobile
 const isActionBtnVisible = computed(() => {
@@ -169,6 +184,82 @@ function onMobilePrev() {
   const prevIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
   tab.value = tabs[prevIndex];
 }
+
+// Swipe handling variables
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+const minSwipeDistance = 50; // Minimum distance in pixels to trigger swipe
+
+function handleTouchStart(e) {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}
+
+function handleTouchEnd(e) {
+  touchEndX = e.changedTouches[0].screenX;
+  touchEndY = e.changedTouches[0].screenY;
+  handleSwipeGesture();
+}
+
+function handleSwipeGesture() {
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+  
+  // Check if horizontal swipe is stronger than vertical
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    // Check if swipe distance is sufficient
+    if (Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX < 0) {
+        // Swipe left = następny tab
+        onMobileNext();
+      } else {
+        // Swipe right = poprzedni tab
+        onMobilePrev();
+      }
+    }
+  }
+}
+
+function setupSwipeListeners() {
+  const desktopEl = tabPanelsDesktop.value?.$el;
+  const mobileEl = tabPanelsMobile.value?.$el;
+  
+  if (desktopEl) {
+    desktopEl.addEventListener('touchstart', handleTouchStart, { passive: true });
+    desktopEl.addEventListener('touchend', handleTouchEnd, { passive: true });
+  }
+  
+  if (mobileEl) {
+    mobileEl.addEventListener('touchstart', handleTouchStart, { passive: true });
+    mobileEl.addEventListener('touchend', handleTouchEnd, { passive: true });
+  }
+}
+
+function removeSwipeListeners() {
+  const desktopEl = tabPanelsDesktop.value?.$el;
+  const mobileEl = tabPanelsMobile.value?.$el;
+  
+  if (desktopEl) {
+    desktopEl.removeEventListener('touchstart', handleTouchStart);
+    desktopEl.removeEventListener('touchend', handleTouchEnd);
+  }
+  
+  if (mobileEl) {
+    mobileEl.removeEventListener('touchstart', handleTouchStart);
+    mobileEl.removeEventListener('touchend', handleTouchEnd);
+  }
+}
+
+onMounted(() => {
+  setupSwipeListeners();
+});
+
+onUnmounted(() => {
+  removeSwipeListeners();
+});
 
 function onRedirectHandler() {
   tab.value = 'tab2';

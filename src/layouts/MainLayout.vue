@@ -104,12 +104,12 @@
 
       <!-- Booked Button -->
       <transition name="bookBtnTransition" appear>
-        <TlenovoBookBtn v-if="isActionBtnVisible" @book="onBookClickHandler" />
+        <TlenovoBookBtn v-if="isActionBtnOrderVisible" @book="onBookClickHandler" />
       </transition>
 
       <!-- Telephone Anchor -->
       <transition name="telephoneBtnTransition" appear>
-        <TlenovoPhoneAnchor v-if="isActionBtnVisible" />
+        <TlenovoPhoneAnchor v-if="isActionBtnPhoneVisible" />
       </transition>
       
       <!-- Footer -->
@@ -150,24 +150,35 @@ const targetBenefit = ref(null);
 const tabPanelsDesktop = ref(null);
 const tabPanelsMobile = ref(null);
 
+const ACTION_BTN_ACTIVATION_OFFSET = 500;
+const ACTION_BTN_PHONE_ACTIVATION_OFFSET = 2100;
+const FOOTER_ACTIVATION_OFFSET = {
+  tab1: 5850,
+  tab2: 3200,
+  tab3: 750,
+  // tab4: Infinity dla ostatniej strony
+  tab4: Infinity
+}
 // Logika dla mobile
-const isActionBtnVisible = computed(() => {
-  return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value < 300;
+const isActionBtnOrderVisible = computed(() => {
+  return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value <= ACTION_BTN_ACTIVATION_OFFSET;
+});
+
+const isActionBtnPhoneVisible = computed(() => {
+  return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value <= ACTION_BTN_PHONE_ACTIVATION_OFFSET;
 });
 
 const isFooterVisible = computed(() => {
-  return  isMobile.value &&
-          (!isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value > 301) ||
-          (!isFormVisible.value && isMobile.value && tab.value !== 'tab1');
+  return !isFormVisible.value && isMobile.value && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value];
 });
 
 // Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
 const isActionBtnVisibleDesktop = computed(() => {
-  return !isFormVisible.value && tab.value === 'tab1' && offsetTop.value < 300;
+  return !isFormVisible.value && tab.value === 'tab1' && offsetTop.value <= FOOTER_ACTIVATION_OFFSET[tab.value];
 });
 
 const isFooterVisibleDesktop = computed(() => {
-  return  (!isFormVisible.value && tab.value === 'tab1' && offsetTop.value > 301) ||
+  return  (!isFormVisible.value && tab.value === 'tab1' && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value]) ||
           (!isFormVisible.value && tab.value !== 'tab1');
 });
 

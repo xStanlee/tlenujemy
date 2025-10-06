@@ -2,7 +2,26 @@
     <footer class="TlenovoFooter">
             <!-- Contact Info Section -->
             <div class="TlenovoFooter__info">
-                <q-icon @click="onPlaceClickHandler" class="TlenovoFooter__placeIcon" name="place" size="xl"></q-icon>
+
+                <div class="TlenovoFooter__infoGroup">
+                    <span class="TlenovoFooter__infoItem">
+                        <p>Lokalizacja</p>
+                        <q-icon @click="onPlaceClickHandler" class="TlenovoFooter__placeIcon" name="place" size="sm"></q-icon>
+                    </span>
+    
+                    <span class="TlenovoFooter__infoItem">
+                        <p>Lokalizacja</p>
+                        <q-icon @click="onPlaceClickHandler" class="TlenovoFooter__placeIcon" name="place" size="sm"></q-icon>
+                    </span>
+                </div>
+
+                <div class="TlenovoFooter__infoGroup">
+                    <span class="TlenovoFooter__infoItem">
+                        <p>Lokalizacja</p>
+                        <q-icon @click="onPlaceClickHandler" class="TlenovoFooter__placeIcon" name="place" size="sm"></q-icon>
+                    </span>
+                </div>
+
             </div>
             
             <!-- Decorative Wave Animation -->
@@ -101,6 +120,21 @@ function onPlaceClickHandler() {
         color: $primary;
         display: flex;
         justify-content: space-between ;
+    }
+
+    &__infoGroup {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__infoItem {
+        display: inline-flex;
+        height: 36px;
+
+        p {
+            margin-top: 6px;
+            font-weight: 600;
+        }
     }
     
     &__phone {

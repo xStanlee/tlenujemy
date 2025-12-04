@@ -65,6 +65,8 @@
             <TlenovoWhyChoose />
             <!-- CTA Section -->
             <TlenovoCTASection />
+            <!-- Footer -->
+            <TlenovoFooter class="MainView__footer" @on-location="onLocationClickHandler"/>
         </section>
     </q-page-container>
 </template>
@@ -80,11 +82,11 @@ import { appointmentService } from 'src/services/appointment.service.js';
 import { notificationService } from 'src/services/notification.service';
 
 // Components
+import TlenovoCTASection from 'src/components/TlenovoCTASection/TlenovoCTASection.vue';
 import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.vue';
+import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
 import TlenovoHowItWorks from 'src/components/TlenovoHowItWorks/TlenovoHowItWorks.vue';
-// import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
-import TlenovoCTASection from 'src/components/TlenovoCTASection/TlenovoCTASection.vue';
 import TlenovoWhatIs from 'src/components/TlenovoWhatIs/TlenovoWhatIs.vue';
 import TlenovoWhyChoose from 'src/components/TlenovoWhyChoose/TlenovoWhyChoose.vue';
 

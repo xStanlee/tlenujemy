@@ -51,11 +51,11 @@ const { visible, message, color, icon, iconSize } = storeToRefs(useSnackbar);
 
 .TlenovoSnackbar {
     position: fixed;
-    bottom: 20px;
+    bottom: 36px;
     left: 50%;
     transform: translateX(-50%);
-    min-width: 320px;
-    padding: 16px;
+    min-width: calc(100% - 2rem);
+    padding: 1rem;
     z-index: 10;
 
     &__content {
@@ -74,8 +74,6 @@ const { visible, message, color, icon, iconSize } = storeToRefs(useSnackbar);
 // Responsive Design dla mobile
 @media (max-width: 768px) {
     .TlenovoSnackbar {
-        min-width: 280px;
-        padding: 14px;
         bottom: 15px;
         
         &__message {
@@ -87,8 +85,6 @@ const { visible, message, color, icon, iconSize } = storeToRefs(useSnackbar);
 
 @media (max-width: 480px) {
     .TlenovoSnackbar {
-        min-width: 250px;
-        padding: 12px;
         bottom: 10px;
         
         &__message {

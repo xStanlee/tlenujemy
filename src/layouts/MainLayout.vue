@@ -47,9 +47,7 @@
         </transition>
         
         <!-- Footer -->
-        <transition name="footerTransition" appear>
-          <TlenovoFooter v-if="isFooterVisibleDesktop" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
-        </transition>
+        <TlenovoFooter class="MainLayout__footer" @on-location="onLocationClickHandler"/>
         
         <!-- Snackbar -->
         <TlenovoSnackbar />
@@ -112,11 +110,6 @@
         <TlenovoPhoneAnchor v-if="isActionBtnPhoneVisible" />
       </transition>
       
-      <!-- Footer -->
-      <transition name="footerTransition" appear>
-        <TlenovoFooter v-if="isFooterVisible" class="MainLayout__footer" @on-location="onLocationClickHandler"/>
-      </transition>
-      
       <!-- Snackbar -->
       <TlenovoSnackbar />
 </q-layout>
@@ -129,7 +122,6 @@ import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 // Components
 import PhoneEmulator from 'src/components/PhoneEmulator/PhoneEmulator.vue';
 import TlenovoBookBtn from 'src/components/TlenovoBookBtn/TlenovoBookBtn.vue';
-import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
 import TlenovoPhoneAnchor from 'src/components/TlenovoPhoneBtn/TlenovoPhoneAnchor.vue';
 import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
@@ -168,19 +160,19 @@ const isActionBtnPhoneVisible = computed(() => {
   return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value <= ACTION_BTN_PHONE_ACTIVATION_OFFSET;
 });
 
-const isFooterVisible = computed(() => {
-  return !isFormVisible.value && isMobile.value && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value];
-});
+  // const isFooterVisible = computed(() => {
+  //   return !isFormVisible.value && isMobile.value && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value];
+  // });
 
 // Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
 const isActionBtnVisibleDesktop = computed(() => {
   return !isFormVisible.value && tab.value === 'tab1' && offsetTop.value <= FOOTER_ACTIVATION_OFFSET[tab.value];
 });
 
-const isFooterVisibleDesktop = computed(() => {
-  return  (!isFormVisible.value && tab.value === 'tab1' && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value]) ||
-          (!isFormVisible.value && tab.value !== 'tab1');
-});
+// const isFooterVisibleDesktop = computed(() => {
+//   return  (!isFormVisible.value && tab.value === 'tab1' && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value]) ||
+//           (!isFormVisible.value && tab.value !== 'tab1');
+// });
 
 function onMobileNext() {
   const tabs = tabConfigs.map(t => t.name);
@@ -416,16 +408,15 @@ const tabConfigs = reactive([
     }
 
     .MainLayout__footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 160px;
-      background-color: transparent;
-      z-index: 2;
+      // bottom: 0;
+      // left: 0;
+      // width: 100%;
+      // height: 160px;
+      // background-color: transparent;
+      // z-index: 2;
       
       // W emulatorze telefonu stosujemy style jak dla mobile 768px
-      height: 140px;
+      // height: 140px;
     }
   }
 

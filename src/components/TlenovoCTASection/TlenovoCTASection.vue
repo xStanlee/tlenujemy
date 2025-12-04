@@ -129,9 +129,10 @@ const stats = ref([
 
 .TlenovoCTASection {
     padding: 60px 0;
+    padding-bottom: 100px;
     position: relative;
     background: $primary;
-    clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 97%);
+    clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 100%);
     overflow: hidden;
     
     // Mobile First Design
@@ -196,7 +197,6 @@ const stats = ref([
         position: relative;
         overflow: hidden;
         animation: slideInMobile 0.8s ease-out;
-        margin-bottom: 7rem;
         
         &::before {
             content: '';

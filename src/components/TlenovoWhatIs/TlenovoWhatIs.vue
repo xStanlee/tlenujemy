@@ -164,7 +164,6 @@ function onBenefitClick(benefitId) {
         flex-direction: column;
         gap: 1.1rem;
         margin-bottom: 5rem;
-        padding: 0.8rem 1.2rem;
         font-size: 0.9rem;
     }
     

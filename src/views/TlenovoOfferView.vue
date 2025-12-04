@@ -10,14 +10,19 @@
         <header class="TlenovoOfferView__header">
             <h1>Gdzie nas znajdziesz</h1>
             <p class="TlenovoOfferView__headerTagline">
-                Nasza siedziba znajduje się w: Świebodzicach, ul. Wodna 13
+                Nasza siedziba znajduje się w:
+                <br/> <br/> 
+                Wałbrzychu, ul. Ratuszowa 6
+                <br/>
+                58-304 Wałbrzych
+                <br/>
             </p>
         </header>
         
         <section class="TlenovoOfferView__content">
             <div class="TlenovoOfferView__mapContainer">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d629.5387489643476!2d16.31261724396172!3d50.865330242434545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470e54c8321e622d%3A0xd73cbcfeb5aede3!2sSklep%20aqua-active%20%C5%9Awiebodzice!5e0!3m2!1spl!2spl!4v1745398640815!5m2!1spl!2spl" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2522.533882477003!2d16.249017677116132!3d50.78421367165772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470e5691a8945371%3A0x4d0245478485a0bd!2sAqua%20Zdr%C3%B3j!5e0!3m2!1spl!2spl!4v1764858276464!5m2!1spl!2spl" 
                     width="100%" 
                     height="400" 
                     style="border:0;" 
@@ -29,8 +34,8 @@
             <div class="TlenovoOfferView__contentItem">
                 <h2 class="TlenovoOfferView__contentItemTitle">Informacje dodatkowe</h2>
                 <p class="TlenovoOfferView__contentItemText">
-                    Nasz gabinet jest usytuowany w budynku OSIR Świebodzice na poziomie 0. 
-                    Zapewniamy łatwy dostęp oraz komfortowe warunki dla wszystkich naszych pacjentów.
+                    Nasz gabinet znajduje się w budynku głównym Aqua Zdrój w Wałbrzychu na poziomie 0. 
+                    Na wprost od głównego wejścia na basen.
                 </p>
             </div>
         </section>
@@ -76,7 +81,7 @@ $font: 'Inter';
     font-family: $font;
     background-color: $primary;
     max-width: 100%;
-    padding: 1rem 1rem 3rem;
+    padding: 3rem 1rem 3rem 1rem !important;
     min-height: calc(730px - 80px);
     overflow-x: hidden;
     
@@ -123,12 +128,12 @@ $font: 'Inter';
         position: relative;
         z-index: 2;
         max-width: 900px;
-        margin: 0 auto 7rem auto;
+        margin: 0 auto 5rem auto;
         animation: slideInLeft 0.6s ease-out 0.4s both;
     }
 
     &__mapContainer {
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
         padding: 1rem;
         background: rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(10px);

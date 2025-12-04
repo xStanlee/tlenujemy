@@ -1,17 +1,5 @@
 <template>
     <footer class="TlenovoFooter">
-        <!-- Gradient Transition Section -->
-        <div class="TlenovoFooter__transition">
-            <div class="TlenovoFooter__transitionOverlay"></div>
-            <!-- Animated wave line -->
-            <svg class="TlenovoFooter__transitionWave" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                <path 
-                    class="TlenovoFooter__transitionWavePath" 
-                    d="M0,30 Q300,50 600,30 T1200,30"
-                />
-            </svg>
-        </div>
-
         <!-- Decorative Background Shapes -->
         <div class="TlenovoFooter__background">
             <div class="TlenovoFooter__shape TlenovoFooter__shape--1"></div>
@@ -27,20 +15,19 @@
                     <div class="TlenovoFooter__cardIcon">
                         <q-icon name="place" size="28px" />
                     </div>
-                    <div class="TlenovoFooter__cardContent">
+                    <div class="TlenovoFooter__cardContent" @click.prevent="onLocationClickHandler">
                         <h3 class="TlenovoFooter__cardTitle">Lokalizacja</h3>
                         <p class="TlenovoFooter__cardText">
-                            ul. Przykładowa 123<br>
-                            00-000 Warszawa
+                            ul. Ratuszowa 6<br>
+                            58-304 Wałbrzych
                         </p>
-                        <a 
+                        <p 
                             href="#" 
                             class="TlenovoFooter__cardLink"
-                            @click.prevent="onLocationClick"
                         >
                             <span>Zobacz na mapie</span>
                             <q-icon name="arrow_forward" size="16px" />
-                        </a>
+                        </p>
                     </div>
                 </div>
 
@@ -112,7 +99,7 @@
 <script setup>
 import { computed } from 'vue';
 
-const emit = defineEmits(['onLocation']);
+const emit = defineEmits(['onLocationClick']);
 
 const currentYear = computed(() => new Date().getFullYear());
 
@@ -121,8 +108,8 @@ const socialLinks = {
     facebook: 'https://facebook.com/tlenujemy'
 };
 
-function onLocationClick() {
-    emit('onLocation');
+function onLocationClickHandler() {
+    emit('onLocationClick');
 }
 </script>
 
@@ -150,25 +137,6 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
     }
     50% {
         transform: translateY(-10px) rotate(2deg);
-    }
-}
-
-@keyframes particleFloat {
-    0%, 100% {
-        transform: translateY(0) translateX(0) scale(1);
-        opacity: 0.6;
-    }
-    25% {
-        transform: translateY(-20px) translateX(10px) scale(1.1);
-        opacity: 0.8;
-    }
-    50% {
-        transform: translateY(-10px) translateX(-5px) scale(0.9);
-        opacity: 0.5;
-    }
-    75% {
-        transform: translateY(-25px) translateX(5px) scale(1.05);
-        opacity: 0.7;
     }
 }
 
@@ -207,146 +175,108 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         color.adjust($primary, $lightness: -5%) 0%,
         color.adjust($primary, $lightness: -10%) 100%
     );
-    padding: 3rem 1.5rem 1rem;
-    padding-top: 0;
     overflow: hidden;
     z-index: 3;
-    margin-top: -7rem;
+    padding: 4rem 1rem 0.75rem 1rem;
+    margin-top: -3rem;
+    clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
 
-    // Gradient Transition Section
+    // Gradient Transition Section with Blur Effect
     &__transition {
         position: relative;
-        height: 120px;
+        height: 150px;
         width: 100%;
         overflow: hidden;
         margin-bottom: 2rem;
     }
 
+    // Base layer - transparent
+    &__transitionBase {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 1;
+    }
+
+    // Blur layer - transparent with subtle blur effect
+    &__transitionBlur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background: transparent;
+    }
+
+    // Gradient layer - transparent
     &__transitionGradient {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(
-            175deg,
-            $primary 0%,
-            color.adjust($primary, $lightness: -3%) 30%,
-            color.adjust($primary, $lightness: -5%) 60%,
-            color.adjust($primary, $lightness: -8%) 100%
-        );
+        z-index: 3;
+        background: transparent;
         
+        // Shimmer effect
         &::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            left: -50%;
+            width: 200%;
             height: 100%;
             background: linear-gradient(
                 90deg,
                 transparent 0%,
-                rgba($accent, 0.08) 25%,
-                rgba($accent, 0.12) 50%,
-                rgba($accent, 0.08) 75%,
+                rgba($accent, 0.03) 20%,
+                rgba($accent, 0.06) 50%,
+                rgba($accent, 0.03) 80%,
                 transparent 100%
             );
-            background-size: 200% 100%;
-            animation: shimmerGlow 4s ease-in-out infinite;
+            animation: shimmerGlow 8s ease-in-out infinite;
         }
     }
 
-    &__transitionOverlay {
+    // Glow effect - subtle
+    &__transitionGlow {
         position: absolute;
-        top: 0;
+        top: 30%;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 70%;
+        z-index: 4;
         background: radial-gradient(
-            ellipse 80% 50% at 50% 0%,
-            rgba($white, 0.03) 0%,
+            ellipse 120% 60% at 50% 20%,
+            rgba($accent, 0.08) 0%,
+            rgba($accent, 0.04) 40%,
             transparent 70%
         );
+        filter: blur(25px);
         pointer-events: none;
-    }
-
-    &__particles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-    }
-
-    &__particle {
-        position: absolute;
-        border-radius: 50%;
-        background: radial-gradient(
-            circle,
-            rgba($accent, 0.8) 0%,
-            rgba($accent, 0.4) 50%,
-            transparent 100%
-        );
-        filter: blur(1px);
-
-        &--1 {
-            width: 8px;
-            height: 8px;
-            top: 20%;
-            left: 15%;
-            animation: particleFloat 6s ease-in-out infinite;
-        }
-
-        &--2 {
-            width: 6px;
-            height: 6px;
-            top: 40%;
-            left: 35%;
-            animation: particleFloat 8s ease-in-out infinite 0.5s;
-        }
-
-        &--3 {
-            width: 10px;
-            height: 10px;
-            top: 30%;
-            left: 60%;
-            animation: particleFloat 7s ease-in-out infinite 1s;
-        }
-
-        &--4 {
-            width: 5px;
-            height: 5px;
-            top: 50%;
-            left: 80%;
-            animation: particleFloat 9s ease-in-out infinite 1.5s;
-        }
-
-        &--5 {
-            width: 7px;
-            height: 7px;
-            top: 60%;
-            left: 45%;
-            animation: particleFloat 6.5s ease-in-out infinite 2s;
-        }
     }
 
     &__transitionWave {
         position: absolute;
-        bottom: 0;
+        bottom: 15px;
         left: 0;
         width: 100%;
-        height: 60px;
-        z-index: 2;
+        height: 40px;
+        z-index: 5;
+        opacity: 0.5;
     }
 
     &__transitionWavePath {
         fill: none;
-        stroke: rgba($accent, 0.3);
-        stroke-width: 2;
+        stroke: rgba($accent, 0.35);
+        stroke-width: 1.5;
         stroke-linecap: round;
-        animation: waveFlow 8s ease-in-out infinite;
-        filter: drop-shadow(0 0 8px rgba($accent, 0.4));
+        animation: waveFlow 12s ease-in-out infinite;
+        filter: drop-shadow(0 0 8px rgba($accent, 0.25));
     }
 
     // Background Shapes
@@ -587,19 +517,13 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 // Responsive Design
 @media (max-width: 768px) {
     .TlenovoFooter {
-        padding: 2.5rem 1rem 1rem;
-        padding-top: 0;
-        margin-top: -5rem;
-
         &__transition {
-            height: 100px;
+            height: 120px;
             margin-bottom: 1.5rem;
         }
 
-        &__particle {
-            &--1, &--3, &--5 {
-                display: none;
-            }
+        &__transitionGlow {
+            filter: blur(15px);
         }
 
         &__topSection {
@@ -644,18 +568,11 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         &__copyright {
             text-align: center;
         }
-
-        &__waveContainer {
-            height: 50px;
-        }
     }
 }
 
 @media (max-width: 480px) {
     .TlenovoFooter {
-        padding: 2rem 0.75rem 0.75rem;
-        padding-top: 0;
-        margin-top: -4rem;
 
         &__transition {
             height: 80px;
@@ -663,7 +580,16 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         &__transitionWave {
-            height: 40px;
+            height: 30px;
+            bottom: 10px;
+        }
+
+        &__transitionGlow {
+            filter: blur(12px);
+        }
+
+        &__transitionBlur::after {
+            filter: blur(18px);
         }
 
         &__card {
@@ -707,10 +633,6 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 
         &__copyright p {
             font-size: 0.8rem;
-        }
-
-        &__waveContainer {
-            height: 40px;
         }
 
         &__shape {

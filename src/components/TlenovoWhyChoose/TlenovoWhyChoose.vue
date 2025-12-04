@@ -188,6 +188,7 @@ const benefits = ref([
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
         margin-bottom: 5rem;
+        padding: 0 .5rem;
         animation: fadeInUp 0.8s ease-out 0.4s both;
     }
     

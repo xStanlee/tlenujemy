@@ -66,7 +66,7 @@
             <!-- CTA Section -->
             <TlenovoCTASection />
             <!-- Footer -->
-            <TlenovoFooter class="MainView__footer" @on-location="onLocationClickHandler"/>
+            <TlenovoFooter class="MainView__footer" @on-location-click="onLocationClickHandler"/>
         </section>
     </q-page-container>
 </template>
@@ -94,7 +94,7 @@ defineProps({
     isFormVisible: Boolean
 })
 
-const emit = defineEmits(['redirect', 'formToggle', 'benefitClick']);
+const emit = defineEmits(['redirect', 'formToggle', 'benefitClick', 'locationClick']);
 
 const $q = useQuasar();
 const useSnackbar = useSnackbarStore();
@@ -113,6 +113,10 @@ onMounted(() => {
   };
   img.src = 'https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png';
 });
+
+function onLocationClickHandler() {
+    emit('locationClick');
+}
 
 async function onSubmitHandler(payload) {
     await handleDatastore(payload);
@@ -268,7 +272,7 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
     }
 
-        &__heroContent {
+    &__heroContent {
         position: absolute;
         right: 10%;
         top: 45%;
@@ -362,7 +366,7 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 0.8rem 1.2rem;
+        padding: 1rem;
         background: rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(10px);
         border-radius: 15px;

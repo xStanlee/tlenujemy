@@ -46,9 +46,6 @@
           <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
         </transition>
         
-        <!-- Footer -->
-        <TlenovoFooter class="MainLayout__footer" @on-location="onLocationClickHandler"/>
-        
         <!-- Snackbar -->
         <TlenovoSnackbar />
     </q-layout>
@@ -160,19 +157,10 @@ const isActionBtnPhoneVisible = computed(() => {
   return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value <= ACTION_BTN_PHONE_ACTIVATION_OFFSET;
 });
 
-  // const isFooterVisible = computed(() => {
-  //   return !isFormVisible.value && isMobile.value && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value];
-  // });
-
 // Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
 const isActionBtnVisibleDesktop = computed(() => {
   return !isFormVisible.value && tab.value === 'tab1' && offsetTop.value <= FOOTER_ACTIVATION_OFFSET[tab.value];
 });
-
-// const isFooterVisibleDesktop = computed(() => {
-//   return  (!isFormVisible.value && tab.value === 'tab1' && offsetTop.value > FOOTER_ACTIVATION_OFFSET[tab.value]) ||
-//           (!isFormVisible.value && tab.value !== 'tab1');
-// });
 
 function onMobileNext() {
   const tabs = tabConfigs.map(t => t.name);
@@ -300,12 +288,12 @@ function onBenefitClickHandler(benefitId) {
   }, 2000);
 }
 
-function onLogoClickHandler() {
-  tab.value = 'tab1';
-}
-
 function onLocationClickHandler() {
   tab.value = 'tab4';
+}
+
+function onLogoClickHandler() {
+  tab.value = 'tab1';
 }
 
 function onFormToggleHandler(isToggled) {
@@ -338,7 +326,8 @@ const tabConfigs = reactive([
     events: { 
       redirect: onRedirectHandler,
       formToggle: onFormToggleHandler,
-      benefitClick: onBenefitClickHandler
+      benefitClick: onBenefitClickHandler,
+      locationClick: onLocationClickHandler
     }
   },
   {

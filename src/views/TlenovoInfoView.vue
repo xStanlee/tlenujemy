@@ -188,7 +188,7 @@ $font: 'Inter';
     font-family: $font;
     background-color: $primary;
     max-width: 100%;
-    padding: 1rem;
+    padding: 3rem 1rem 3rem 1rem !important;
     min-height: calc(730px - 80px);
     overflow-x: hidden;
 
@@ -285,7 +285,7 @@ $font: 'Inter';
         position: relative;
         z-index: 2;
         max-width: 1200px;
-        margin: 0 auto 7rem auto;
+        margin: 0 auto 2rem auto;
         animation: slideInLeft 0.6s ease-out 0.4s both;
     }
     

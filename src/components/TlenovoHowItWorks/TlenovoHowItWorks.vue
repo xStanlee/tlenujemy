@@ -119,7 +119,7 @@ const steps = ref([
     &__container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 1em;
         position: relative;
         z-index: 2;
     }

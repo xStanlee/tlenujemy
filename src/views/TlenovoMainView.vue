@@ -66,7 +66,7 @@
             <!-- CTA Section -->
             <TlenovoCTASection />
             <!-- Footer -->
-            <TlenovoFooter class="MainView__footer" @on-location-click="onLocationClickHandler"/>
+            <TlenovoFooter class="MainView__footer" @on-location-click="onLocationClickHandler" @on-regulations-click="onRegulationsClickHandler" @on-contraindications-click="onContraindicationsClickHandler" />
         </section>
     </q-page-container>
 </template>
@@ -116,6 +116,14 @@ onMounted(() => {
 
 function onLocationClickHandler() {
     emit('locationClick');
+}
+
+function onRegulationsClickHandler() {
+    emit('regulationsClick');
+}
+
+function onContraindicationsClickHandler() {
+    emit('contraindicationsClick');
 }
 
 async function onSubmitHandler(payload) {

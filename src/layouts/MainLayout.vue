@@ -292,6 +292,14 @@ function onLocationClickHandler() {
   tab.value = 'tab4';
 }
 
+function onRegulationsClickHandler() {
+  tab.value = 'tab3';
+}
+
+function onContraindicationsClickHandler() {
+  tab.value = 'tab3';
+}
+
 function onLogoClickHandler() {
   tab.value = 'tab1';
 }
@@ -327,7 +335,9 @@ const tabConfigs = reactive([
       redirect: onRedirectHandler,
       formToggle: onFormToggleHandler,
       benefitClick: onBenefitClickHandler,
-      locationClick: onLocationClickHandler
+      locationClick: onLocationClickHandler,
+      regulationsClick: onRegulationsClickHandler,
+      contraindicationsClick: onContraindicationsClickHandler
     }
   },
   {

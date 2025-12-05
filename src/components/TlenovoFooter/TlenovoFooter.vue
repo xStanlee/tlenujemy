@@ -69,20 +69,20 @@
             <!-- Bottom Section - Links & Copyright -->
             <div class="TlenovoFooter__bottomSection">
                 <div class="TlenovoFooter__links">
-                    <router-link 
-                        to="/regulamin" 
+                    <div
                         class="TlenovoFooter__link"
-                    >
+                        @click="onRegulationsClickHandler"
+                    >  
                         <q-icon name="description" size="18px" />
                         <span>Regulamin</span>
-                    </router-link>
-                    <router-link 
-                        to="/przeciwwskazania" 
+                    </div>
+                    <div
                         class="TlenovoFooter__link"
+                        @click="onContraindicationsClickHandler"
                     >
                         <q-icon name="warning_amber" size="18px" />
                         <span>Przeciwwskazania</span>
-                    </router-link>
+                    </div>
                 </div>
 
                 <div class="TlenovoFooter__copyright">
@@ -99,17 +99,26 @@
 <script setup>
 import { computed } from 'vue';
 
-const emit = defineEmits(['onLocationClick']);
+const emit = defineEmits(['onLocationClick', 'onRegulationsClick', 'onContraindicationsClick']);
 
 const currentYear = computed(() => new Date().getFullYear());
 
 const socialLinks = {
-    instagram: 'https://instagram.com/tlenujemy',
-    facebook: 'https://facebook.com/tlenujemy'
+    // update with your social media links
+    instagram: 'https://instagram.com/',
+    facebook: 'https://facebook.com/'
 };
 
 function onLocationClickHandler() {
     emit('onLocationClick');
+}
+
+function onRegulationsClickHandler() {
+    emit('onRegulationsClick');
+}
+
+function onContraindicationsClickHandler() {
+    emit('onContraindicationsClick');
 }
 </script>
 

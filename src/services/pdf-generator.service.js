@@ -123,6 +123,7 @@ class PdfGeneratorService {
             /* 9 linia */"Massa tincidunt dui ut ornare lectus sit amet est placerat.",
             /* 10 linia */"Viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor.",
             /* 11 linia */"Amet consectetur adipiscing elit pellentesque habitant morbi tristique.",
+            /* 12 linia */"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         ];
     }
 
@@ -258,8 +259,11 @@ class PdfGeneratorService {
     #addNumberedList(doc) {
         const listItems = this.#generateLoremIpsumList();
         const banner = this.#getBannerDimensions();
-        const startY = banner.contentStartY + 30; // Po headerze
-        const lineHeight = 10;
+        // Padding poniżej linii headera taki sam jak między bannerem a headerem
+        const headerLineY = banner.contentStartY + 20; // Pozycja linii pod headerem
+        const paddingBelowLine = banner.bottomPadding + 12; // Taki sam jak między bannerem a headerem
+        const startY = headerLineY + paddingBelowLine;
+        const lineHeight = 12;
         const maxWidth = this.#pageSize.width - this.#margins.left - this.#margins.right - 15;
         
         doc.setFont("helvetica", "normal");
@@ -293,6 +297,30 @@ class PdfGeneratorService {
     }
 
     /**
+     * Dodaje stopkę z informacją copyright na dole strony
+     * @private
+     * @param {jsPDF} doc
+     */
+    #addCopyright(doc) {
+        const currentYear = new Date().getFullYear();
+        const copyrightText = `Terapia tlenem hiperbarycznym. Tlenovo © ${currentYear}r.`;
+        
+        // Pozycja na dole strony
+        const footerY = this.#pageSize.height - 10;
+        
+        // Ustaw styl tekstu
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.setTextColor(128, 128, 128); // Szary kolor
+        
+        // Wyśrodkuj tekst
+        const textWidth = doc.getTextWidth(copyrightText);
+        const centerX = (this.#pageSize.width - textWidth) / 2;
+        
+        doc.text(copyrightText, centerX, footerY);
+    }
+
+    /**
      * Generuje dokument PDF z regulaminem
      * @public
      * @param {Object} options - Opcje generowania
@@ -314,6 +342,7 @@ class PdfGeneratorService {
         this.#addLogoBanner(doc);
         this.#addHeader(doc);
         this.#addNumberedList(doc);
+        this.#addCopyright(doc);
         
         if (download) {
             doc.save(filename);
@@ -347,6 +376,7 @@ class PdfGeneratorService {
         this.#addLogoBanner(doc);
         this.#addHeader(doc);
         this.#addNumberedList(doc);
+        this.#addCopyright(doc);
         
         return doc.output("datauristring");
     }

@@ -220,7 +220,7 @@ $font: 'Inter';
 
         &--footer {
             width: 100%;
-            height: 12vh;
+            height: 5vh;
             bottom: 0;
             left: 0;
             background-color: $accent;

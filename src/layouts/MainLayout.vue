@@ -116,6 +116,9 @@
 import { useQuasar } from 'quasar';
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 
+// Composables
+import { usePdfGenerator } from 'src/composables/usePdfGenerator';
+
 // Components
 import PhoneEmulator from 'src/components/PhoneEmulator/PhoneEmulator.vue';
 import TlenovoBookBtn from 'src/components/TlenovoBookBtn/TlenovoBookBtn.vue';
@@ -129,6 +132,8 @@ import TlenovoMainView from 'src/views/TlenovoMainView.vue';
 import TlenovoOfferView from 'src/views/TlenovoOfferView.vue';
 
 const $q = useQuasar();
+const { openRegulaminInNewTab } = usePdfGenerator();
+
 const isMobile = computed(() => $q.screen.lt.md);
 const offsetTop = ref(0);
 const isFormVisible = ref(false);
@@ -252,6 +257,10 @@ onUnmounted(() => {
   removeSwipeListeners();
 });
 
+async function onRegulationsClickHandler() {
+  await openRegulaminInNewTab();
+}
+
 function onRedirectHandler() {
   tab.value = 'tab2';
 }
@@ -290,10 +299,6 @@ function onBenefitClickHandler(benefitId) {
 
 function onLocationClickHandler() {
   tab.value = 'tab4';
-}
-
-function onRegulationsClickHandler() {
-  tab.value = 'tab3';
 }
 
 function onContraindicationsClickHandler() {

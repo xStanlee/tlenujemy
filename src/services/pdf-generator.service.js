@@ -32,12 +32,22 @@ class PdfGeneratorService {
         bottom: 20,
     };
     
-    /** @type {Object} - Konfiguracja logo */
-    #logoConfig = {
-        width: 40,
-        height: 15,
-        x: 20,
-        y: 15,
+    /** @type {Object} - Kolory z projektu */
+    #colors = {
+        primary: "#003e5a",
+        secondary: "#A1C6EA",
+        accent: "#F2F4F6",
+        white: "#FFFFFF",
+    };
+    
+    /** @type {Object} - Konfiguracja bannera z logo */
+    #bannerConfig = {
+        /** Wysokość bannera jako % wysokości strony */
+        heightPercent: 0.15,
+        /** Padding lewy/prawy jako % szerokości strony */
+        horizontalPaddingPercent: 0.25,
+        /** Padding dolny jako % wysokości strony */
+        bottomPaddingPercent: 0.025,
     };
 
     constructor() {
@@ -92,7 +102,7 @@ class PdfGeneratorService {
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const year = date.getFullYear();
         
-        return `${day}/${month}/${year}`;
+        return `${day}/${month}/${year} r.`;
     }
 
     /**
@@ -102,34 +112,99 @@ class PdfGeneratorService {
      */
     #generateLoremIpsumList() {
         return [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse.",
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
-            "Nulla facilisi morbi tempus iaculis urna id volutpat lacus.",
-            "Pellentesque habitant morbi tristique senectus et netus et malesuada.",
-            "Fames ac turpis egestas sed tempus urna et pharetra pharetra.",
-            "Massa tincidunt dui ut ornare lectus sit amet est placerat.",
-            "Viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor.",
-            "Amet consectetur adipiscing elit pellentesque habitant morbi tristique.",
+            /* 1 linia */"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            /* 2 linia */"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            /* 3 linia */"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+            /* 4 linia */"Duis aute irure dolor in reprehenderit in voluptate velit esse.",
+            /* 5 linia */"Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
+            /* 6 linia */"Nulla facilisi morbi tempus iaculis urna id volutpat lacus.",
+            /* 7 linia */"Pellentesque habitant morbi tristique senectus et netus et malesuada.",
+            /* 8 linia */"Fames ac turpis egestas sed tempus urna et pharetra pharetra.",
+            /* 9 linia */"Massa tincidunt dui ut ornare lectus sit amet est placerat.",
+            /* 10 linia */"Viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor.",
+            /* 11 linia */"Amet consectetur adipiscing elit pellentesque habitant morbi tristique.",
         ];
     }
 
     /**
-     * Dodaje logo do dokumentu PDF
+     * Konwertuje kolor HEX na RGB
+     * @private
+     * @param {string} hex
+     * @returns {{r: number, g: number, b: number}}
+     */
+    #hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16),
+        } : { r: 0, g: 0, b: 0 };
+    }
+
+    /**
+     * Oblicza wymiary bannera
+     * @private
+     * @returns {Object}
+     */
+    #getBannerDimensions() {
+        const bannerHeight = this.#pageSize.height * this.#bannerConfig.heightPercent;
+        const horizontalPadding = this.#pageSize.width * this.#bannerConfig.horizontalPaddingPercent;
+        const bottomPadding = this.#pageSize.height * this.#bannerConfig.bottomPaddingPercent;
+        
+        return {
+            x: 0,
+            y: 0,
+            width: this.#pageSize.width,
+            height: bannerHeight,
+            logoAreaX: horizontalPadding,
+            logoAreaWidth: this.#pageSize.width - (horizontalPadding * 2),
+            bottomPadding: bottomPadding,
+            contentStartY: bannerHeight + bottomPadding,
+        };
+    }
+
+    /**
+     * Dodaje banner z logo na górze strony
      * @private
      * @param {jsPDF} doc
      */
-    #addLogo(doc) {
+    #addLogoBanner(doc) {
+        const banner = this.#getBannerDimensions();
+        const primaryColor = this.#hexToRgb(this.#colors.primary);
+        
+        // Rysuj tło bannera
+        doc.setFillColor(primaryColor.r, primaryColor.g, primaryColor.b);
+        doc.rect(banner.x, banner.y, banner.width, banner.height, "F");
+        
+        // Dodaj logo wyśrodkowane w bannerze
         if (this.#isLogoLoaded && this.#logoBase64) {
+            // Oblicz wymiary logo zachowując proporcje
+            const logoMaxHeight = banner.height;
+            const logoMaxWidth = banner.logoAreaWidth * 0.5; // 50% szerokości dostępnej
+            
+            // Proporcje oryginalnego logo
+            const logoAspectRatio = 1;
+            
+            let logoWidth = logoMaxWidth;
+            let logoHeight = logoWidth / logoAspectRatio;
+            
+            // Jeśli wysokość przekracza max, skaluj
+            if (logoHeight > logoMaxHeight) {
+                logoHeight = logoMaxHeight;
+                logoWidth = logoHeight * logoAspectRatio;
+            }
+            
+            // Wyśrodkuj logo
+            const logoX = (this.#pageSize.width - logoWidth) / 2;
+            const logoY = (banner.height - logoHeight) / 2;
+            
             doc.addImage(
                 this.#logoBase64,
                 "PNG",
-                this.#logoConfig.x,
-                this.#logoConfig.y,
-                this.#logoConfig.width,
-                this.#logoConfig.height
+                logoX,
+                logoY,
+                logoWidth,
+                logoHeight
             );
         }
     }
@@ -140,12 +215,14 @@ class PdfGeneratorService {
      * @param {jsPDF} doc
      */
     #addHeader(doc) {
-        const headerY = 20;
+        const banner = this.#getBannerDimensions();
+        const headerY = banner.contentStartY + 10;
         const currentDate = this.#formatDate(new Date());
         
         // Tytuł "Regulamin" - wyśrodkowany
         doc.setFont("helvetica", "bold");
         doc.setFontSize(18);
+        doc.setTextColor(0, 0, 0);
         
         const title = "Regulamin";
         const titleWidth = doc.getTextWidth(title);
@@ -180,7 +257,8 @@ class PdfGeneratorService {
      */
     #addNumberedList(doc) {
         const listItems = this.#generateLoremIpsumList();
-        const startY = 50;
+        const banner = this.#getBannerDimensions();
+        const startY = banner.contentStartY + 30; // Po headerze
         const lineHeight = 10;
         const maxWidth = this.#pageSize.width - this.#margins.left - this.#margins.right - 15;
         
@@ -233,7 +311,7 @@ class PdfGeneratorService {
         const doc = new jsPDF(this.#pdfConfig);
         
         // Dodaj elementy dokumentu
-        this.#addLogo(doc);
+        this.#addLogoBanner(doc);
         this.#addHeader(doc);
         this.#addNumberedList(doc);
         
@@ -266,7 +344,7 @@ class PdfGeneratorService {
         
         const doc = new jsPDF(this.#pdfConfig);
         
-        this.#addLogo(doc);
+        this.#addLogoBanner(doc);
         this.#addHeader(doc);
         this.#addNumberedList(doc);
         

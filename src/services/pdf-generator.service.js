@@ -106,24 +106,192 @@ class PdfGeneratorService {
     }
 
     /**
-     * Generuje zawartość Lorem Ipsum dla listy
+     * Generuje strukturę regulaminu w formacie sekcji
      * @private
-     * @returns {string[]}
+     * @returns {Object[]}
      */
-    #generateLoremIpsumList() {
+    #generateRegulaminContent() {
         return [
-            /* 1 linia */"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            /* 2 linia */"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            /* 3 linia */"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-            /* 4 linia */"Duis aute irure dolor in reprehenderit in voluptate velit esse.",
-            /* 5 linia */"Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
-            /* 6 linia */"Nulla facilisi morbi tempus iaculis urna id volutpat lacus.",
-            /* 7 linia */"Pellentesque habitant morbi tristique senectus et netus et malesuada.",
-            /* 8 linia */"Fames ac turpis egestas sed tempus urna et pharetra pharetra.",
-            /* 9 linia */"Massa tincidunt dui ut ornare lectus sit amet est placerat.",
-            /* 10 linia */"Viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor.",
-            /* 11 linia */"Amet consectetur adipiscing elit pellentesque habitant morbi tristique.",
-            /* 12 linia */"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            {
+                type: "section",
+                number: "1",
+                title: "POSTANOWIENIA OGÓLNE",
+                content: [
+                    {
+                        type: "paragraph",
+                        text: "Niniejszy regulamin określa zasady korzystania z usług tlenoterapii hiperbarycznej świadczonych przez naszą firmę. Pacjent, podpisując dokumenty przed zabiegiem, zobowiązuje się do zapoznania się z niniejszym regulaminem i jego pełnego przestrzegania."
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "2",
+                title: "WYMAGANIA I WARUNKI DOSTĘPU",
+                content: [
+                    {
+                        type: "paragraph",
+                        text: "Korzystanie z komory hiperbarycznej dopuszczone jest dla osób, które:"
+                    },
+                    {
+                        type: "list",
+                        items: [
+                            "Ukończyły 18 lat (osoby niepełnoletnie pod opieką rodzica/opiekuna)",
+                            "Przeszły przesiewową konsultację medyczną",
+                            "Nie posiadają przeciwwskazań medycznych",
+                            "Wyraziły świadomą zgodę na przeprowadzenie zabiegu"
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "3",
+                title: "PRZYGOTOWANIE DO ZABIEGU",
+                content: [
+                    {
+                        type: "paragraph",
+                        text: "Klient zobowiązany jest do:"
+                    },
+                    {
+                        type: "list",
+                        items: [
+                            "Przybycia 15 minut przed zaplanowaną godziną zabiegu",
+                            "Zdjęcia metali i urządzeń elektronicznych (zegarki, biżuteria, aparaty słuchowe, implanty)",
+                            "Zapoznania się z instrukcją obsługi i sygnalizacji zagrożeń",
+                            "Poinformowania kadry o wszelkich zmianach stanu zdrowia od ostatniego zabiegu",
+                            "Unikania spożycia alkoholu na 24 godziny przed zabiegiem"
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "4",
+                title: "PRZECIWWSKAZANIA I OGRANICZENIA",
+                content: [
+                    {
+                        type: "paragraph",
+                        text: "Zabieg jest przeciwwskazany dla osób z:"
+                    },
+                    {
+                        type: "list",
+                        items: [
+                            "Atakami paniki i klaustrofobią",
+                            "Nieskontrolowaną cukrzycą",
+                            "Nieuleczonym rakiem płuc",
+                            "Gorączką powyżej 38,5°C",
+                            "Infekcjami górnych dróg oddechowych",
+                            "Stosowaniem leków niedopuszczonych do użytku podczas zabiegu"
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "5",
+                title: "ZASADY BEZPIECZEŃSTWA PODCZAS ZABIEGU",
+                content: [
+                    {
+                        type: "list",
+                        items: [
+                            "Pacjent zobowiązany jest do pełnego stosowania się do poleceń personelu medycznego",
+                            "Zabronione jest opuszczanie komory bez zgody obsługującego personelu",
+                            "Klient powinien regularnie wyrównywać ciśnienie w uszach oraz powiadamiać o wszelkich objawach dyskomfortu",
+                            "W przypadku złego samopoczucia należy natychmiast wykorzystać system alarmowania",
+                            "Całkowity zakaz palenia, otwartego ognia oraz materiałów łatwopalnych w promieniu 10 metrów od komory"
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "6",
+                title: "OBOWIĄZKI PACJENTA",
+                content: [
+                    {
+                        type: "paragraph",
+                        text: "Pacjent zobowiązany jest do:"
+                    },
+                    {
+                        type: "list",
+                        items: [
+                            "Składania przed każdym zabiegiem aktualnych informacji o stanie zdrowia",
+                            "Przestrzegania instrukcji personelu",
+                            "Niezajmowania się w komorze żadnymi pracami (praca na laptopie, czytanie, długie rozmowy)",
+                            "Utrzymania czystości w komorze",
+                            "Niezapraszania osób nieuprawnionych do wejścia do pomieszczenia zabiegu"
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "7",
+                title: "ODPOWIEDZIALNOŚĆ I ZRZECZENIE SIĘ ODPOWIEDZIALNOŚCI",
+                content: [
+                    {
+                        type: "paragraph",
+                        text: "Firma nie ponosi odpowiedzialności za:"
+                    },
+                    {
+                        type: "list",
+                        items: [
+                            "Skutki niezastosowania się do zaleceń personelu",
+                            "Powikłania wynikające z ukrytych przeciwwskazań medycznych",
+                            "Szkody powstałe na skutek nieprawidłowego stosowania zabiegu bez upoważnienia firmy",
+                            "Zagubienie lub uszkodzenie przedmiotów wartościowych pozostawionych w komorze"
+                        ]
+                    },
+                    {
+                        type: "paragraph",
+                        text: "Pacjent oświadcza, że zabiegi wykonuje dobrowolnie i na własne ryzyko, będąc świadom potencjalnych skutków ubocznych."
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "8",
+                title: "OPŁATY I WARUNKI FINANSOWE",
+                content: [
+                    {
+                        type: "list",
+                        items: [
+                            "Opłata za jeden zabieg wynosi zgodnie z aktualnym cennikiem",
+                            "Wszystkie opłaty muszą być uregulowane przed lub w dniu zabiegu",
+                            "Firma oferuje pakiety rabatowe przy zakupie minimum 5 zabiegów",
+                            "Rezerwacja zabiegu wymaga uiszczenia zaliczki w wysokości 50% ceny",
+                            "Osoby korzystające regularnie mogą otrzymać rabat lojalnościowy"
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "9",
+                title: "ANULOWANIE I REZYGNACJA Z ZABIEGU",
+                content: [
+                    {
+                        type: "list",
+                        items: [
+                            "Anulowanie zabiegu powinno nastąpić najpóźniej 24 godziny przed planowaną datą",
+                            "Anulowanie bez zawiadomienia powoduje utratę zaliczki",
+                            "Rezygnacja z zabiegu z przyczyn medycznych wymaga oświadczenia lekarza",
+                            "W przypadku choroby zakaźnej, klient zobowiązany jest do poinformowania firmy przed przyjściem"
+                        ]
+                    }
+                ]
+            },
+            {
+                type: "section",
+                number: "10",
+                title: "POSTANOWIENIA KOŃCOWE",
+                content: [
+                    {
+                        type: "paragraph",
+                        text: "Każdy pacjent otrzymuje kopię niniejszego regulaminu oraz karty pacjenta do wypełnienia. Wszelkie zmiany w regulaminie będą komunikowane z co najmniej 7-dniowym wyprzedzeniem. Kontynuacja korzystania z usług po zmianach regulaminu stanowi akceptację nowych warunków. W sprawach nieuregulowanych w niniejszym regulaminie obowiązuje prawo polskie i przepisy GDPR."
+                    }
+                ]
+            }
         ];
     }
 
@@ -220,79 +388,189 @@ class PdfGeneratorService {
         const headerY = banner.contentStartY + 10;
         const currentDate = this.#formatDate(new Date());
         
-        // Tytuł "Regulamin" - wyśrodkowany
+        // Tytuł "Regulamin" - wyśrodkowany w trzech liniach
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(18);
+        doc.setFontSize(14);
         doc.setTextColor(0, 0, 0);
         
-        const title = "Regulamin";
-        const titleWidth = doc.getTextWidth(title);
-        const centerX = this.#pageSize.width / 2 - titleWidth / 2;
+        const centerX = this.#pageSize.width / 2;
+        const lineSpacing = 6;
         
-        doc.text(title, centerX, headerY);
+        // Linia 1: REGULAMIN KORZYSTANIA
+        doc.text("REGULAMIN KORZYSTANIA", centerX, headerY, { align: 'center' });
+        
+        // Linia 2: Z
+        doc.text("Z", centerX, headerY + lineSpacing, { align: 'center' });
+        
+        // Linia 3: KOMORY HIPERBARYCZNEJ
+        doc.text("KOMORY HIPERBARYCZNEJ", centerX, headerY + (lineSpacing * 2), { align: 'center' });
         
         // Data - po prawej stronie
+        const dateY = headerY + (lineSpacing * 2);
         doc.setFont("helvetica", "normal");
-        doc.setFontSize(12);
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
         
         const dateWidth = doc.getTextWidth(currentDate);
         const dateX = this.#pageSize.width - this.#margins.right - dateWidth;
         
-        doc.text(currentDate, dateX, headerY);
+        doc.text(currentDate, dateX, dateY);
         
         // Linia pod nagłówkiem
+        const lineY = dateY + 5;
         doc.setDrawColor(200, 200, 200);
         doc.setLineWidth(0.5);
         doc.line(
             this.#margins.left,
-            headerY + 10,
+            lineY,
             this.#pageSize.width - this.#margins.right,
-            headerY + 10
+            lineY
         );
     }
 
     /**
-     * Dodaje listę numerowaną z treścią
+     * Dodaje sformatowaną treść regulaminu
      * @private
      * @param {jsPDF} doc
      */
-    #addNumberedList(doc) {
-        const listItems = this.#generateLoremIpsumList();
+    #addRegulaminContent(doc) {
+        const content = this.#generateRegulaminContent();
         const banner = this.#getBannerDimensions();
-        // Padding poniżej linii headera taki sam jak między bannerem a headerem
-        const headerLineY = banner.contentStartY + 20; // Pozycja linii pod headerem
-        const paddingBelowLine = banner.bottomPadding + 12; // Taki sam jak między bannerem a headerem
-        const startY = headerLineY + paddingBelowLine;
-        const lineHeight = 12;
-        const maxWidth = this.#pageSize.width - this.#margins.left - this.#margins.right - 15;
         
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(11);
+        // Konfiguracja layoutu
+        const layout = {
+            headerLineY: banner.contentStartY + 25,
+            paddingBelowLine: banner.bottomPadding + 12,
+            sectionTitleSize: 10,
+            paragraphSize: 9,
+            listItemSize: 9,
+            lineHeightMultiplier: 1.5,
+            sectionSpacing: 8,
+            paragraphSpacing: 3,
+            listItemSpacing: 2,
+            listIndent: 6,
+            bulletIndent: 2,
+        };
         
-        let currentY = startY;
+        // Poprawne obliczenie szerokości z uwzględnieniem marginesów
+        const maxWidth = this.#pageSize.width - this.#margins.left - this.#margins.right;
+        let currentY = layout.headerLineY + layout.paddingBelowLine;
         
-        listItems.forEach((item, index) => {
-            // Numer punktu
-            doc.setFont("helvetica", "bold");
-            doc.text(`${index}.`, this.#margins.left, currentY);
-            
-            // Treść punktu
-            doc.setFont("helvetica", "normal");
-            
-            // Dzielenie tekstu na linie jeśli jest za długi
-            const lines = doc.splitTextToSize(item, maxWidth);
-            
-            lines.forEach((line, lineIndex) => {
-                doc.text(line, this.#margins.left + 15, currentY + lineIndex * 5);
-            });
-            
-            currentY += lineHeight + (lines.length - 1) * 5;
-            
-            // Sprawdzenie czy nie przekroczono strony
-            if (currentY > this.#pageSize.height - this.#margins.bottom) {
+        const primaryColor = this.#hexToRgb(this.#colors.primary);
+        
+        /**
+         * Sprawdza i dodaje nową stronę jeśli potrzeba
+         * @param {number} neededSpace
+         */
+        const checkPageBreak = (neededSpace) => {
+            if (currentY + neededSpace > this.#pageSize.height - this.#margins.bottom - 15) {
                 doc.addPage();
                 currentY = this.#margins.top;
+                return true;
             }
+            return false;
+        };
+        
+        /**
+         * Renderuje nagłówek sekcji
+         * @param {string} number
+         * @param {string} title
+         */
+        const renderSectionHeader = (number, title) => {
+            checkPageBreak(20);
+            
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(layout.sectionTitleSize);
+            doc.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
+            
+            const headerText = `${number}. ${title}`;
+            const headerLines = doc.splitTextToSize(headerText, maxWidth);
+            
+            headerLines.forEach((line) => {
+                doc.text(line, this.#margins.left, currentY);
+                currentY += layout.sectionTitleSize * 0.4;
+            });
+            
+            currentY += layout.paragraphSpacing;
+        };
+        
+        /**
+         * Renderuje paragraf tekstu
+         * @param {string} text
+         */
+        const renderParagraph = (text) => {
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(layout.paragraphSize);
+            doc.setTextColor(50, 50, 50);
+            
+            const lines = doc.splitTextToSize(text, maxWidth);
+            const lineHeight = layout.paragraphSize * layout.lineHeightMultiplier * 0.35;
+            
+            lines.forEach((line) => {
+                checkPageBreak(lineHeight);
+                doc.text(line, this.#margins.left, currentY);
+                currentY += lineHeight;
+            });
+            
+            currentY += layout.paragraphSpacing;
+        };
+        
+        /**
+         * Renderuje listę punktowaną
+         * @param {string[]} items
+         */
+        const renderList = (items) => {
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(layout.listItemSize);
+            doc.setTextColor(50, 50, 50);
+            
+            const lineHeight = layout.listItemSize * layout.lineHeightMultiplier * 0.35;
+            const bulletX = this.#margins.left + layout.bulletIndent;
+            const textX = this.#margins.left + layout.listIndent;
+            // Szerokość tekstu listy = całkowita szerokość - wcięcie listy
+            const textMaxWidth = maxWidth - layout.listIndent;
+            
+            items.forEach((item) => {
+                const lines = doc.splitTextToSize(item, textMaxWidth);
+                
+                // Sprawdź czy cały element zmieści się na stronie
+                const itemHeight = lines.length * lineHeight + layout.listItemSpacing;
+                checkPageBreak(itemHeight);
+                
+                // Bullet point (okrągły punkt)
+                doc.setFillColor(primaryColor.r, primaryColor.g, primaryColor.b);
+                doc.circle(bulletX, currentY - 1.2, 0.6, "F");
+                
+                // Tekst elementu listy
+                doc.setTextColor(50, 50, 50);
+                lines.forEach((line, lineIndex) => {
+                    doc.text(line, textX, currentY + lineIndex * lineHeight);
+                });
+                
+                currentY += lines.length * lineHeight + layout.listItemSpacing;
+            });
+            
+            currentY += layout.paragraphSpacing;
+        };
+        
+        // Renderuj wszystkie sekcje
+        content.forEach((section, sectionIndex) => {
+            // Dodaj odstęp między sekcjami (oprócz pierwszej)
+            if (sectionIndex > 0) {
+                currentY += layout.sectionSpacing;
+            }
+            
+            // Nagłówek sekcji
+            renderSectionHeader(section.number, section.title);
+            
+            // Zawartość sekcji
+            section.content.forEach((block) => {
+                if (block.type === "paragraph") {
+                    renderParagraph(block.text);
+                } else if (block.type === "list") {
+                    renderList(block.items);
+                }
+            });
         });
     }
 
@@ -341,7 +619,7 @@ class PdfGeneratorService {
         // Dodaj elementy dokumentu
         this.#addLogoBanner(doc);
         this.#addHeader(doc);
-        this.#addNumberedList(doc);
+        this.#addRegulaminContent(doc);
         this.#addCopyright(doc);
         
         if (download) {
@@ -375,7 +653,7 @@ class PdfGeneratorService {
         
         this.#addLogoBanner(doc);
         this.#addHeader(doc);
-        this.#addNumberedList(doc);
+        this.#addRegulaminContent(doc);
         this.#addCopyright(doc);
         
         return doc.output("datauristring");

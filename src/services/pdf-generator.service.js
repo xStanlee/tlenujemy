@@ -119,7 +119,7 @@ class PdfGeneratorService {
                 content: [
                     {
                         type: "paragraph",
-                        text: "Niniejszy regulamin określa zasady korzystania z usług tlenoterapii hiperbarycznej świadczonych przez naszą firmę. Pacjent, podpisując dokumenty przed zabiegiem, zobowiązuje się do zapoznania się z niniejszym regulaminem i jego pełnego przestrzegania."
+                        text: " Korzystanie Niniejszy regulamin określa zasady korzystania z usług tlenoterapii"
                     }
                 ]
             },
@@ -392,6 +392,7 @@ class PdfGeneratorService {
         doc.setFont("helvetica", "bold");
         doc.setFontSize(14);
         doc.setTextColor(0, 0, 0);
+        doc.setCharSpace(0); // Reset letter-spacing dla spójności
         
         const centerX = this.#pageSize.width / 2;
         const lineSpacing = 6;
@@ -410,6 +411,7 @@ class PdfGeneratorService {
         doc.setFont("helvetica", "normal");
         doc.setFontSize(10);
         doc.setTextColor(100, 100, 100);
+        doc.setCharSpace(0); // Reset letter-spacing
         
         const dateWidth = doc.getTextWidth(currentDate);
         const dateX = this.#pageSize.width - this.#margins.right - dateWidth;
@@ -437,26 +439,55 @@ class PdfGeneratorService {
         const content = this.#generateRegulaminContent();
         const banner = this.#getBannerDimensions();
         
+        // Reset letter-spacing na początku dla spójności
+        doc.setCharSpace(0);
+        
+        // Wspólna konfiguracja stylu tekstu (paragraph i list)
+        const textStyle = {
+            fontFamily: "helvetica",
+            fontWeight: "normal",
+            fontSize: 10,
+            textColor: { r: 50, g: 50, b: 50 },
+            lineHeightMultiplier: 0.4, // Wspólny mnożnik dla paragraph i list
+            charSpace: 0,
+        };
+        
         // Konfiguracja layoutu
         const layout = {
             headerLineY: banner.contentStartY + 25,
             paddingBelowLine: banner.bottomPadding + 12,
-            sectionTitleSize: 10,
-            paragraphSize: 9,
-            listItemSize: 9,
-            lineHeightMultiplier: 1.5,
-            sectionSpacing: 8,
+            sectionTitleSize: 12,
+            sectionSpacing: 10,
             paragraphSpacing: 3,
             listItemSpacing: 2,
-            listIndent: 6,
+            listIndent: 5,
             bulletIndent: 2,
         };
         
         // Poprawne obliczenie szerokości z uwzględnieniem marginesów
-        const maxWidth = this.#pageSize.width - this.#margins.left - this.#margins.right;
+        const _fixedSpacing = 100; 
+        const maxWidth = this.#pageSize.width - _fixedSpacing;
         let currentY = layout.headerLineY + layout.paddingBelowLine;
         
         const primaryColor = this.#hexToRgb(this.#colors.primary);
+        
+        /**
+         * Ustawia wspólny styl tekstu dla paragraph i list
+         */
+        const applyTextStyle = () => {
+            doc.setFont(textStyle.fontFamily, textStyle.fontWeight);
+            doc.setFontSize(textStyle.fontSize);
+            doc.setTextColor(textStyle.textColor.r, textStyle.textColor.g, textStyle.textColor.b);
+            doc.setCharSpace(textStyle.charSpace);
+        };
+        
+        /**
+         * Oblicza wysokość linii na podstawie wspólnego stylu
+         * @returns {number}
+         */
+        const getLineHeight = () => {
+            return textStyle.fontSize * textStyle.lineHeightMultiplier;
+        };
         
         /**
          * Sprawdza i dodaje nową stronę jeśli potrzeba
@@ -477,11 +508,13 @@ class PdfGeneratorService {
          * @param {string} title
          */
         const renderSectionHeader = (number, title) => {
-            checkPageBreak(20);
+            checkPageBreak(10);
             
-            doc.setFont("helvetica", "bold");
+            // Spójne ustawienia stylu dla nagłówków
+            doc.setFont(textStyle.fontFamily, "bold");
             doc.setFontSize(layout.sectionTitleSize);
             doc.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
+            doc.setCharSpace(textStyle.charSpace);
             
             const headerText = `${number}. ${title}`;
             const headerLines = doc.splitTextToSize(headerText, maxWidth);
@@ -499,12 +532,11 @@ class PdfGeneratorService {
          * @param {string} text
          */
         const renderParagraph = (text) => {
-            doc.setFont("helvetica", "normal");
-            doc.setFontSize(layout.paragraphSize);
-            doc.setTextColor(50, 50, 50);
+            // Zastosuj wspólny styl tekstu
+            applyTextStyle();
             
             const lines = doc.splitTextToSize(text, maxWidth);
-            const lineHeight = layout.paragraphSize * layout.lineHeightMultiplier * 0.35;
+            const lineHeight = getLineHeight();
             
             lines.forEach((line) => {
                 checkPageBreak(lineHeight);
@@ -520,17 +552,19 @@ class PdfGeneratorService {
          * @param {string[]} items
          */
         const renderList = (items) => {
-            doc.setFont("helvetica", "normal");
-            doc.setFontSize(layout.listItemSize);
-            doc.setTextColor(50, 50, 50);
+            // Zastosuj wspólny styl tekstu (identyczny jak paragraph)
+            applyTextStyle();
             
-            const lineHeight = layout.listItemSize * layout.lineHeightMultiplier * 0.35;
+            const lineHeight = getLineHeight();
             const bulletX = this.#margins.left + layout.bulletIndent;
             const textX = this.#margins.left + layout.listIndent;
             // Szerokość tekstu listy = całkowita szerokość - wcięcie listy
             const textMaxWidth = maxWidth - layout.listIndent;
             
             items.forEach((item) => {
+                // Ponownie zastosuj styl (może być zmieniony przez bullet)
+                applyTextStyle();
+                
                 const lines = doc.splitTextToSize(item, textMaxWidth);
                 
                 // Sprawdź czy cały element zmieści się na stronie
@@ -541,8 +575,9 @@ class PdfGeneratorService {
                 doc.setFillColor(primaryColor.r, primaryColor.g, primaryColor.b);
                 doc.circle(bulletX, currentY - 1.2, 0.6, "F");
                 
-                // Tekst elementu listy
-                doc.setTextColor(50, 50, 50);
+                // Przywróć styl tekstu po rysowaniu bullet
+                applyTextStyle();
+                
                 lines.forEach((line, lineIndex) => {
                     doc.text(line, textX, currentY + lineIndex * lineHeight);
                 });
@@ -586,10 +621,11 @@ class PdfGeneratorService {
         // Pozycja na dole strony
         const footerY = this.#pageSize.height - 10;
         
-        // Ustaw styl tekstu
+        // Ustaw styl tekstu - spójne ustawienia
         doc.setFont("helvetica", "normal");
         doc.setFontSize(9);
         doc.setTextColor(128, 128, 128); // Szary kolor
+        doc.setCharSpace(0); // Reset letter-spacing
         
         // Wyśrodkuj tekst
         const textWidth = doc.getTextWidth(copyrightText);
@@ -615,6 +651,9 @@ class PdfGeneratorService {
         }
         
         const doc = new jsPDF(this.#pdfConfig);
+        
+        // Ustaw domyślny letter-spacing dla całego dokumentu
+        doc.setCharSpace(0);
         
         // Dodaj elementy dokumentu
         this.#addLogoBanner(doc);
@@ -650,6 +689,9 @@ class PdfGeneratorService {
         }
         
         const doc = new jsPDF(this.#pdfConfig);
+        
+        // Ustaw domyślny letter-spacing
+        doc.setCharSpace(0);
         
         this.#addLogoBanner(doc);
         this.#addHeader(doc);

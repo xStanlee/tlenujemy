@@ -470,10 +470,6 @@ class PdfGeneratorService {
                     {
                         type: "paragraph",
                         text: "13.2. Kopię polisy ubezpieczeniowej Pacjent może uzyskać na życzenie."
-                    },
-                    {
-                        type: "paragraph",
-                        text: "13.3. Limit odpowiedzialności Usługodawcy w ramach ubezpieczenia wynosi maksymalnie 100 000 PLN na jedno zdarzenie."
                     }
                 ]
             },
@@ -728,11 +724,16 @@ class PdfGeneratorService {
             doc.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
             doc.setCharSpace(textStyle.charSpace);
             
+            // Header zajmuje 80% szerokości strony, wyśrodkowany z 10% marginesem po obu stronach
+            const headerWidthPercent = 0.8;
+            const headerWidth = this.#pageSize.width * headerWidthPercent;
+            const headerLeftMargin = this.#pageSize.width * 0.1; // 10% margines z lewej
+            
             const headerText = `${number}. ${title}`;
-            const headerLines = doc.splitTextToSize(headerText, maxWidth);
+            const headerLines = doc.splitTextToSize(headerText, headerWidth);
             
             headerLines.forEach((line) => {
-                doc.text(line, this.#margins.left, currentY);
+                doc.text(line, headerLeftMargin, currentY);
                 currentY += layout.sectionTitleSize * 0.4;
             });
             
@@ -747,12 +748,17 @@ class PdfGeneratorService {
             // Zastosuj wspólny styl tekstu
             applyTextStyle();
             
-            const lines = doc.splitTextToSize(text, maxWidth);
+            // Paragraph zajmuje 80% szerokości strony, wyśrodkowany z 10% marginesem po obu stronach
+            const paragraphWidthPercent = 0.8;
+            const paragraphWidth = this.#pageSize.width * paragraphWidthPercent;
+            const paragraphLeftMargin = this.#pageSize.width * 0.1; // 10% margines z lewej
+            
+            const lines = doc.splitTextToSize(text, paragraphWidth);
             const lineHeight = getLineHeight();
             
             lines.forEach((line) => {
                 checkPageBreak(lineHeight);
-                doc.text(line, this.#margins.left, currentY);
+                doc.text(line, paragraphLeftMargin, currentY);
                 currentY += lineHeight;
             });
             

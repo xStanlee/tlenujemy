@@ -1,13 +1,7 @@
 <template>
     <div class="TlenovoForm">
-        <q-btn
-            class="TlenovoForm__closeBtn"
-            flat
-            icon="close"
-            @click="onCancelClickHandler"
-            aria-label="Close"
-            size="lg"
-        />
+        <q-btn class="TlenovoForm__closeBtn" flat icon="close" @click="onCancelClickHandler" aria-label="Close"
+            size="lg" />
 
         <h4 v-if="showHeader" class="TlenovoForm__formHeader">Rezerwacja terminu</h4>
 
@@ -17,153 +11,79 @@
             <!-- Date/Time Selection Step -->
             <div class="TlenovoForm__step">
                 <!-- Date Picker -->
-                <q-date
-                    v-if="firstStep"
-                    v-model="date"
-                    class="TlenovoForm__datePicker"
-                    name="Data"
-                    subtitle="Wybierz dzień"
-                    :locale="localeDate"
-                    color="secondary"
-                    dark
-                    bordered
-                    flat
-                />
+                <q-date v-if="firstStep" v-model="date" class="TlenovoForm__datePicker" name="Data"
+                    subtitle="Wybierz dzień" :locale="localeDate" color="secondary" dark bordered flat />
 
                 <!-- Time Picker -->
-                <q-time
-                    v-if="secondStep"
-                    v-model="time"
-                    class="TlenovoForm__timePicker"
-                    name="Godzina"
-                    subtitle="Wybierz godzinę"
-                    :locale="localeDate"
-                    color="secondary"
-                    dark
-                    bordered
-                    format24h
-                    :hour-options="hourOptions"
-                    :minute-options="minuteOptions"
-                />
+                <q-time v-if="secondStep" v-model="time" class="TlenovoForm__timePicker" name="Godzina"
+                    subtitle="Wybierz godzinę" :locale="localeDate" color="secondary" dark bordered format24h
+                    :hour-options="hourOptions" :minute-options="minuteOptions" />
 
                 <!-- Contact Info Step -->
-                <q-card
-                    v-if="finalStep"
-                    flat
-                    bordered
-                    dark
-                    class="TlenovoForm__successInfo"
-                >
+                <q-card v-if="finalStep" flat bordered dark class="TlenovoForm__successInfo">
                     <q-card-section :class="{ 'TlenovoForm__successInfoText': isSubmitted }">
                         <span class="TlenovoForm__header">Uzupełnij dane kontaktowe</span>
                     </q-card-section>
 
                     <q-card-section :class="{ 'TlenovoForm__successInfoText': isSubmitted }">
-                        <q-input
-                            v-model="name"
-                            name="Imie"
-                            class="TlenovoForm__input"
-                            outlined
-                            label-color="primary"
-                            bg-color="white"
-                            label="Imię"
-                            autofocus
-                            clearable
-                            clear-icon="clear"
-                            :maxlength="20"
-                        />
-                        <q-input
-                            :model-value="phone"
-                            name="Telefon"
-                            class="TlenovoForm__input"
-                            outlined
-                            label-color="primary"
-                            bg-color="white"
-                            label="Numer telefonu"
-                            prefix="(+48) "
-                            clearable
-                            clear-icon="clear"
-                            :maxlength="11"
-                            @update:model-value="onPhoneInputChangeHandler"
-                        />
-                        Twoja rezerwacja jest już prawie gotowa. Wystarczy, że wypełnisz powyższe dane i klikniesz przycisk "Rezerwuj".
+                        <q-input v-model="name" name="Imie" class="TlenovoForm__input" outlined label-color="primary"
+                            bg-color="white" label="Imię" autofocus clearable clear-icon="clear" :maxlength="20" />
+                        <q-input :model-value="phone" name="Telefon" class="TlenovoForm__input" outlined
+                            label-color="primary" bg-color="white" label="Numer telefonu" prefix="(+48) " clearable
+                            clear-icon="clear" :maxlength="11" @update:model-value="onPhoneInputChangeHandler" />
+                        Twoja rezerwacja jest już prawie gotowa. Wystarczy, że wypełnisz powyższe dane i klikniesz
+                        przycisk "Rezerwuj".
                     </q-card-section>
 
                     <q-separator dark inset />
 
                     <q-card-section :class="{ 'TlenovoForm__successInfoText': isSubmitted }">
-                        Upewnij się, że zapoznałeś się z regulaminem i przeciwwskazaniami dot. hiperbarii, które znajdziesz
+                        Upewnij się, że zapoznałeś się z regulaminem i przeciwwskazaniami dot. hiperbarii, które
+                        znajdziesz
                         <span @click="onRedirectHandler" class="TlenovoForm__successInfoSpan">tutaj.</span>
                     </q-card-section>
 
-                    <q-spinner-facebook
-                        v-if="isSubmitted"
-                        class="TlenovoForm__successInfoSpinner"
-                        color="white"
-                        size="4em"
-                    />
+                    <q-spinner-facebook v-if="isSubmitted" class="TlenovoForm__successInfoSpinner" color="white"
+                        size="4em" />
                 </q-card>
             </div>
 
             <!-- Stepper Navigation -->
-            <q-stepper
-                v-model="step"
-                class="TlenovoForm__actionsStepper"
-                ref="stepper"
-                color="secondary"
-                dark
-                flat
-                bordered
-                animated
-                contracted
-            >
+            <q-stepper v-model="step" class="TlenovoForm__actionsStepper" ref="stepper" color="secondary" dark flat
+                bordered animated contracted>
                 <!-- Step 1: Date Selection -->
-                <q-step
-                    :name="1"
-                    icon="place"
-                    title="Wybierz dzień"
-                    active-color="secondary"
-                    active-icon="event"
-                    done-color="positive"
-                    :done="step > 1"
-                >
+                <q-step :name="1" icon="place" title="Wybierz dzień" active-color="secondary" active-icon="event"
+                    done-color="positive" :done="step > 1">
                     Wybierz dogodny termin wizyty.
                     <q-stepper-navigation>
-                        <q-btn :disable="isNextDisabled" @click="onNextStepButtonHandler" color="secondary" label="Dalej" />
-                        <q-btn v-if="step > 1" flat color="secondary" @click="onPrevStepButtonHandler" label="Cofnij" class="q-ml-sm" />
+                        <q-btn :disable="isNextDisabled" @click="onNextStepButtonHandler" color="secondary"
+                            label="Dalej" />
+                        <q-btn v-if="step > 1" flat color="secondary" @click="onPrevStepButtonHandler" label="Cofnij"
+                            class="q-ml-sm" />
                     </q-stepper-navigation>
                 </q-step>
 
                 <!-- Step 2: Time Selection -->
-                <q-step
-                    :name="2"
-                    icon="access_time"
-                    active-icon="access_time"
-                    title="Wybierz godzinę"
-                    active-color="secondary"
-                    done-color="positive"
-                    :done="step > 2"
-                >
+                <q-step :name="2" icon="access_time" active-icon="access_time" title="Wybierz godzinę"
+                    active-color="secondary" done-color="positive" :done="step > 2">
                     Wybierz godzinę zabiegu.
                     <q-stepper-navigation>
-                        <q-btn :disable="isNextDisabled" @click="onNextStepButtonHandler" color="secondary" label="Zatwierdź" />
-                        <q-btn v-if="step > 1" flat color="secondary" @click="onPrevStepButtonHandler" label="Cofnij" class="q-ml-sm" />
+                        <q-btn :disable="isNextDisabled" @click="onNextStepButtonHandler" color="secondary"
+                            label="Zatwierdź" />
+                        <q-btn v-if="step > 1" flat color="secondary" @click="onPrevStepButtonHandler" label="Cofnij"
+                            class="q-ml-sm" />
                     </q-stepper-navigation>
                 </q-step>
 
                 <!-- Step 3: Confirmation -->
-                <q-step
-                    :name="3"
-                    title="Zatwierdź rezerwację"
-                    active-color="secondary"
-                    icon="beenhere"
-                    active-icon="beenhere"
-                    done-color="positive"
-                >
+                <q-step :name="3" title="Zatwierdź rezerwację" active-color="secondary" icon="beenhere"
+                    active-icon="beenhere" done-color="positive">
                     Potwierdź swoją rezerwację.
                     <q-stepper-navigation>
-                        <q-btn :disable="isNextDisabled" @click="onReserveButtonHandler" color="secondary" label="Rezerwuj" />
-                        <q-btn v-if="step > 1" flat color="secondary" @click="onPrevStepButtonHandler" label="Cofnij" class="q-ml-sm" />
+                        <q-btn :disable="isNextDisabled" @click="onReserveButtonHandler" color="secondary"
+                            label="Rezerwuj" />
+                        <q-btn v-if="step > 1" flat color="secondary" @click="onPrevStepButtonHandler" label="Cofnij"
+                            class="q-ml-sm" />
                     </q-stepper-navigation>
                 </q-step>
             </q-stepper>
@@ -241,6 +161,11 @@ function clearForm() {
     step.value = 1;
 }
 
+// Expose methods to parent component
+defineExpose({
+    clearForm
+});
+
 function onCancelClickHandler() {
     clearForm();
     emit('cancel');
@@ -250,20 +175,21 @@ function onReserveButtonHandler() {
     isSubmitted.value = true;
 
     setTimeout(() => {
-        emit('submit', { 
+        emit('submit', {
             date: date.value,
-            time: time.value, 
+            time: time.value,
             name: name.value,
             phone: phone.value.trim()
         });
-        clearForm();
+        // Form is now cleared by parent component after async actions complete
+        isSubmitted.value = false;
     }, 2000);
 }
 
 function onPhoneInputChangeHandler(payload) {
     // Remove any existing spaces
     const digitsOnly = payload.replace(/\s/g, '');
-    
+
     // Format with spaces after every 3 digits
     let formattedPhone = '';
     for (let i = 0; i < digitsOnly.length && i < 9; i++) {
@@ -272,7 +198,7 @@ function onPhoneInputChangeHandler(payload) {
         }
         formattedPhone += digitsOnly[i];
     }
-    
+
     phone.value = formattedPhone;
 }
 
@@ -310,7 +236,9 @@ function onRedirectHandler() {
     }
 
     &__closeBtn {
-        margin-left: auto;
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
         color: $white;
         z-index: 7;
     }
@@ -336,15 +264,20 @@ function onRedirectHandler() {
     &__step {
         display: flex;
         justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 0 0.5rem;
         z-index: 6;
     }
 
     &__timePicker {
-        margin-bottom: 1.5rem;
+        margin: 0 auto 1rem auto;
+        max-width: 290px;
     }
 
     &__datePicker {
-        margin-bottom: 1.5rem;
+        margin: 0 auto 1rem auto;
+        max-width: 290px;
     }
 
     &__input {
@@ -358,8 +291,8 @@ function onRedirectHandler() {
 
     &__successInfo {
         position: relative;
-        margin: 0 1.5rem 1.5rem 1.5rem;
-        padding: 1.5rem;
+        margin: 0 0.75rem 1rem 0.75rem;
+        padding: 1rem;
     }
 
     &__successInfoText {
@@ -375,7 +308,7 @@ function onRedirectHandler() {
         -webkit-text-fill-color: transparent;
         text-decoration: underline;
         cursor: pointer;
-        
+
         &:visited {
             background: linear-gradient(45deg, $secondary, lighten($secondary, 20%));
             background-clip: text;
@@ -383,7 +316,7 @@ function onRedirectHandler() {
             color: transparent;
             -webkit-text-fill-color: transparent;
         }
-        
+
         &:hover {
             background: linear-gradient(45deg, $primary, lighten($primary, 15%));
             background-clip: text;
@@ -404,11 +337,16 @@ function onRedirectHandler() {
     &__body {
         position: absolute;
         bottom: 0;
+        left: 0;
+        right: 0;
         width: 100%;
+        max-height: calc(100% - 50px);
+        overflow-y: auto;
         z-index: 6;
     }
 
     &__actionsStepper {
+
         // Overwrite Quasar styles
         :deep(.q-stepper__step-inner) {
             font-size: 20px;

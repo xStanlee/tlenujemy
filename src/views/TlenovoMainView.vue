@@ -2,22 +2,16 @@
     <q-page-container class="MainView">
         <!-- Form -->
         <Transition name="FormTransition">
-            <TlenovoForm 
-                v-if="isFormVisible"
-                class="MainView__form" 
-                @cancel="onCancelClickHandler" 
-                @submit="onSubmitHandler"
-                @redirect="onRedirectHandler"
-            />
+            <TlenovoForm ref="formRef" v-if="isFormVisible" class="MainView__form" @cancel="onCancelClickHandler"
+                @submit="onSubmitHandler" @redirect="onRedirectHandler" />
         </Transition>
-            
+
         <!-- Initial Section -->
-        <section 
-            :class="{
-                'MainView__sectionInitial': true,
-                'MainView__sectionInitial--blur': isFormVisible
-            }"
-        >
+        <section :class="{
+            'MainView__sectionInitial': true,
+            'MainView__sectionInitial--blur': isFormVisible,
+            'loaded': backgroundLoaded
+        }">
             <div class="MainView__heroContent">
                 <h2 class="MainView__heroTitle">
                     Odkryj Moc<br>
@@ -43,7 +37,7 @@
             </div>
             <TlenovoFireflies :isMobile="isMobile" />
         </section>
-        
+
         <!-- Header Section -->
         <header class="MainView__header">
             <h1>Komora Hiperbaryczna</h1>
@@ -53,10 +47,7 @@
         </header>
 
         <!-- Main info Section -->
-        <section 
-            class="MainView__sectionMain" 
-            :class="{ 'MainView__sectionMain--blur': isFormVisible }"
-        >
+        <section class="MainView__sectionMain" :class="{ 'MainView__sectionMain--blur': isFormVisible }">
             <!-- Czym jest tlenoterapia -->
             <TlenovoWhatIs @benefitClick="onBenefitClick" />
             <!-- Jak działa tlenoterapia -->
@@ -66,7 +57,9 @@
             <!-- CTA Section -->
             <TlenovoCTASection />
             <!-- Footer -->
-            <TlenovoFooter class="MainView__footer" @on-location-click="onLocationClickHandler" @on-regulations-click="onRegulationsClickHandler" @on-contraindications-click="onContraindicationsClickHandler" />
+            <TlenovoFooter class="MainView__footer" @on-location-click="onLocationClickHandler"
+                @on-regulations-click="onRegulationsClickHandler"
+                @on-contraindications-click="onContraindicationsClickHandler" />
         </section>
     </q-page-container>
 </template>
@@ -103,15 +96,15 @@ const isMobile = computed(() => $q.screen.lt.md);
 
 // Lazy loading for background image
 const backgroundLoaded = ref(false);
+const formRef = ref(null);
 
 onMounted(() => {
-  // Lazy load background image
-  const img = new Image();
-  img.onload = () => {
-    backgroundLoaded.value = true;
-    document.querySelector('.MainView__sectionInitial')?.classList.add('loaded');
-  };
-  img.src = 'https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png';
+    // Lazy load background image
+    const img = new Image();
+    img.onload = () => {
+        backgroundLoaded.value = true;
+    };
+    img.src = 'https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png';
 });
 
 function onLocationClickHandler() {
@@ -127,23 +120,40 @@ function onContraindicationsClickHandler() {
 }
 
 async function onSubmitHandler(payload) {
-    await handleDatastore(payload);
+    // 1. Save data and send notification
+    const success = await handleDatastore(payload);
     await handleNotification(payload);
+
+    // 2. Close modal first
     onCancelClickHandler();
+
+    // 3. Show snackbar after modal animation completes (300ms)
+    setTimeout(() => {
+        if (success) {
+            useSnackbar.showSnackbar('Wizyta została pomyślnie umówiona. Zadzwonimy aby potwierdzić.', {
+                color: 'positive',
+                timeout: 4500,
+            });
+        } else {
+            useSnackbar.showSnackbar('Wystąpił błąd podczas umawiania wizyty. Spróbuj ponownie.', {
+                color: 'negative',
+                timeout: 6000,
+            });
+        }
+
+        // 4. Clear form after snackbar is shown
+        if (formRef.value) {
+            formRef.value.clearForm();
+        }
+    }, 300);
 }
 
 async function handleDatastore(payload) {
     try {
         await appointmentService.addAppointment(payload);
-        useSnackbar.showSnackbar('Wizyta została pomyślnie umówiona. Zadzwonimy aby potwierdzić.', {
-            color: 'positive',
-            timeout: 4500,
-        });
+        return true;
     } catch {
-        useSnackbar.showSnackbar('Wystąpił błąd podczas umawiania wizyty. Spróbuj ponownie.', {
-            color: 'negative',
-            timeout: 6000,
-        });
+        return false;
     }
 }
 
@@ -171,9 +181,9 @@ function onCancelClickHandler() {
 
 function onBenefitClick(benefitId) {
     if (!isMobile.value) {
-       return;
+        return;
     }
-    
+
     emit('benefitClick', benefitId);
 }
 </script>
@@ -194,6 +204,7 @@ $slide-easing: ease-out;
         transform: translate3d(0, 100%, 0);
         opacity: 0;
     }
+
     to {
         transform: translate3d(0, 0, 0);
         opacity: 1;
@@ -205,6 +216,7 @@ $slide-easing: ease-out;
         opacity: 0;
         transform: translate3d(0, 50px, 0);
     }
+
     to {
         opacity: 1;
         transform: translate3d(0, 0, 0);
@@ -240,7 +252,7 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         z-index: 6;
     }
 
-        &__sectionInitial {
+    &__sectionInitial {
         position: relative;
         width: 100%;
         z-index: 1;
@@ -257,7 +269,7 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             opacity: 0.8;
             filter: blur(5px);
         }
-        
+
         &::before {
             content: '';
             position: absolute;
@@ -265,8 +277,8 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)), 
-                        url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png');
+            background: linear-gradient(to bottom right, rgba($primary, 0.57), rgba($primary, 0.23)),
+                url('https://aha-hyperbarics.com/wp-content/uploads/2023/05/AHA-Hyperbarics-Breath-1920x782.png');
             background-size: cover;
             background-position: 65% 20%;
             background-repeat: no-repeat;
@@ -274,7 +286,7 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             transition: opacity 0.3s ease;
             z-index: -1;
         }
-        
+
         &.loaded::before {
             opacity: 1;
         }
@@ -296,7 +308,7 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         font-size: 12px;
         padding: 0.4rem 0.8rem;
         // margin-bottom: 1.5rem;
-        
+
         span {
             display: inline-block;
             background: rgba(255, 255, 255, 0.15);

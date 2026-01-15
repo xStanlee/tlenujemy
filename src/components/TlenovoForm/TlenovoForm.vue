@@ -12,12 +12,13 @@
             <div class="TlenovoForm__step">
                 <!-- Date Picker -->
                 <q-date v-if="firstStep" v-model="date" class="TlenovoForm__datePicker" name="Data"
-                    subtitle="Wybierz dzień" :locale="localeDate" color="secondary" dark bordered flat />
+                    subtitle="Wybierz dzień" :locale="localeDate" color="secondary" dark bordered flat
+                    :options="dateOptions" />
 
                 <!-- Time Picker -->
                 <q-time v-if="secondStep" v-model="time" class="TlenovoForm__timePicker" name="Godzina"
                     subtitle="Wybierz godzinę" :locale="localeDate" color="secondary" dark bordered format24h
-                    :hour-options="hourOptions" :minute-options="minuteOptions" />
+                    :hour-options="filteredHourOptions" :minute-options="filteredMinuteOptions" />
 
                 <!-- Contact Info Step -->
                 <q-card v-if="finalStep" flat bordered dark class="TlenovoForm__successInfo">
@@ -93,7 +94,7 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { hourOptions, localeDate, minuteOptions } from './TlenovoForm.date.js';
+import { hourOptions as baseHourOptions, minuteOptions as baseMinuteOptions, localeDate } from './TlenovoForm.date.js';
 
 // Props definition
 defineProps({
@@ -149,6 +150,85 @@ const isNextDisabled = computed(() => {
     }
     return false;
 });
+
+// Check if selected date is today
+function isSelectedDateToday() {
+    if (!date.value) return false;
+    const today = new Date();
+    const [year, month, day] = date.value.split('/').map(Number);
+    return (
+        today.getFullYear() === year &&
+        today.getMonth() + 1 === month &&
+        today.getDate() === day
+    );
+}
+
+// Get minimum allowed time (current time + 30 minutes)
+function getMinAllowedTime() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 30);
+    return {
+        hour: now.getHours(),
+        minute: now.getMinutes()
+    };
+}
+
+// Filtered hour options - only show hours from current+30min onwards if date is today
+const filteredHourOptions = computed(() => {
+    if (!isSelectedDateToday()) {
+        return baseHourOptions;
+    }
+
+    const minTime = getMinAllowedTime();
+    return baseHourOptions.filter(hour => hour >= minTime.hour);
+});
+
+// Filtered minute options - filter based on selected hour if date is today
+const filteredMinuteOptions = computed(() => {
+    if (!isSelectedDateToday()) {
+        return baseMinuteOptions;
+    }
+
+    const minTime = getMinAllowedTime();
+
+    // Parse currently selected hour from time value (format: HH:mm)
+    // Default to min hour when no hour is selected yet (conservative filtering)
+    let selectedHour = minTime.hour;
+    if (time.value) {
+        const [hourStr] = time.value.split(':');
+        selectedHour = parseInt(hourStr, 10);
+    }
+
+    // If selected hour is greater than min hour, all minutes are available
+    if (selectedHour > minTime.hour) {
+        return baseMinuteOptions;
+    }
+
+    // If selected hour is the min hour (or less/not set), filter minutes to >= minTime.minute
+    return baseMinuteOptions.filter(minute => minute >= minTime.minute);
+});
+
+// Date options filter - show dates from today, or from tomorrow if current time >= 20:00
+function dateOptions(dateString) {
+    const now = new Date();
+    const currentHour = now.getHours();
+
+    // Determine minimum selectable date
+    const minDate = new Date(now);
+    minDate.setHours(0, 0, 0, 0); // Reset to start of day
+
+    // If current hour is 20:00 or later, minimum date is tomorrow
+    if (currentHour >= 20) {
+        minDate.setDate(minDate.getDate() + 1);
+    }
+
+    // Parse the date string from QDate format (YYYY/MM/DD)
+    const [year, month, day] = dateString.split('/').map(Number);
+    const checkDate = new Date(year, month - 1, day);
+    checkDate.setHours(0, 0, 0, 0);
+
+    return checkDate >= minDate;
+}
 
 // Methods
 function clearForm() {

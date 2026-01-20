@@ -35,6 +35,14 @@
         <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
       </transition>
 
+      <!-- Chatbot Button -->
+      <transition name="chatbotBtnTransition" appear>
+        <TlenovoChatbotBtn v-if="!isChatOpen" @click="isChatOpen = true" />
+      </transition>
+
+      <!-- Chatbot Dialog -->
+      <TlenovoChatbot v-model="isChatOpen" />
+
       <!-- Snackbar -->
       <TlenovoSnackbar />
     </q-layout>
@@ -80,6 +88,14 @@
       <TlenovoPhoneAnchor v-if="isActionBtnPhoneVisible" />
     </transition>
 
+    <!-- Chatbot Button -->
+    <transition name="chatbotBtnTransition" appear>
+      <TlenovoChatbotBtn v-if="isAIChatBtnVisible" @click="isChatOpen = true" />
+    </transition>
+
+    <!-- Chatbot Dialog -->
+    <TlenovoChatbot v-model="isChatOpen" />
+
     <!-- Snackbar -->
     <TlenovoSnackbar />
   </q-layout>
@@ -95,6 +111,8 @@ import { usePdfGenerator } from 'src/composables/usePdfGenerator';
 // Components
 import PhoneEmulator from 'src/components/PhoneEmulator/PhoneEmulator.vue';
 import TlenovoBookBtn from 'src/components/TlenovoBookBtn/TlenovoBookBtn.vue';
+import TlenovoChatbot from 'src/components/TlenovoChatbot/TlenovoChatbot.vue';
+import TlenovoChatbotBtn from 'src/components/TlenovoChatbotBtn/TlenovoChatbotBtn.vue';
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
 import TlenovoPhoneAnchor from 'src/components/TlenovoPhoneBtn/TlenovoPhoneAnchor.vue';
 import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
@@ -110,6 +128,7 @@ const { openRegulaminInNewTab } = usePdfGenerator();
 const isMobile = computed(() => $q.screen.lt.md);
 const offsetTop = ref(0);
 const isFormVisible = ref(false);
+const isChatOpen = ref(false);
 const tab = ref('tab1');
 const targetBenefit = ref(null);
 
@@ -138,6 +157,11 @@ const isActionBtnPhoneVisible = computed(() => {
 // Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
 const isActionBtnVisibleDesktop = computed(() => {
   return !isFormVisible.value && tab.value === 'tab1' && offsetTop.value <= FOOTER_ACTIVATION_OFFSET[tab.value];
+});
+
+// Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
+const isAIChatBtnVisible = computed(() => {
+  return !isChatOpen.value && (offsetTop.value >= ACTION_BTN_ACTIVATION_OFFSET + 200 && offsetTop.value <= FOOTER_ACTIVATION_OFFSET.tab1);
 });
 
 function onMobileNext() {
@@ -521,6 +545,31 @@ const tabConfigs = reactive([
   &-leave-to {
     opacity: 0;
     transform: translate3d(0, 100px, 0);
+  }
+
+  &-enter-to,
+  &-leave-from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.chatbotBtnTransition {
+
+  &-enter-active,
+  &-leave-active {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    will-change: transform, opacity;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translate3d(40px, 0, 0);
+  }
+
+  &-leave-to {
+    opacity: 0;
+    transform: translate3d(40px, 0, 0);
   }
 
   &-enter-to,

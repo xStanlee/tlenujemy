@@ -325,10 +325,14 @@ async function onSendMessage() {
 // Responsywność dla mniejszych ekranów
 @media (max-width: 560px) {
     .TlenovoChatbot {
-        width: calc(100vw - 52px);
-        right: 10px;
-        bottom: 26px;
-        height: calc(100vh - 140px);
+        left: 50%;
+        top: 55%;
+        right: auto;
+        bottom: auto;
+        transform: translate(-50%, -50%);
+
+        width: 90vw;
+        height: 85vh;
         max-height: none;
     }
 }

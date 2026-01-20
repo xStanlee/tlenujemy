@@ -332,7 +332,7 @@ async function onSendMessage() {
         transform: translate(-50%, -50%);
 
         width: 90vw;
-        height: 85vh;
+        height: 75vh;
         max-height: none;
     }
 }

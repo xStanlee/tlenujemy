@@ -3,113 +3,86 @@
   <PhoneEmulator v-if="!isMobile">
     <q-layout view="hHr lpR fFf" class="MainLayout MainLayout--desktop-emulated">
       <q-header class="MainLayout__header" elevated>
-          <q-toolbar class="MainLayout__toolbar">
-            <!-- Links mobile (zawsze używamy mobile UI w emulatorze) -->
-            <q-btn class="MainLayout__headerBtnPrev" v-if="tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
-            <q-space v-if="tab !== 'tab1'" />
-            <TlenovoLogo @click="onLogoClickHandler" class="MainLayout__toolbarLogo" :isMobile="true"/>
-            <q-space v-if="tab !== 'tab4'" />
-            <q-btn class="MainLayout__headerBtnNext" v-if="tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
-          </q-toolbar>
-        </q-header>
-        
-        <!-- Views -->
-        <q-tab-panels 
-          ref="tabPanelsDesktop"
-          class="MainLayout__pageContainer MainLayout__pageContainer--desktop" 
-          v-model="tab" 
-          animated 
-          @update:model-value="onTabUpdateHandler"
-        >
-          <q-tab-panel
-            v-for="tabConfig in tabConfigs"
-            :key="tabConfig.name"
-            class="MainLayout__pageSection"
-            :name="tabConfig.name"
-          >
-            <q-scroll-observer @scroll="onLayoutScroll" />
-            <component
-              :is="tabConfig.component"
-              v-bind="tabConfig.props"
-              v-on="tabConfig.events"
-            />
-          </q-tab-panel>
-        </q-tab-panels>
+        <q-toolbar class="MainLayout__toolbar">
+          <!-- Links mobile (zawsze używamy mobile UI w emulatorze) -->
+          <q-btn class="MainLayout__headerBtnPrev" v-if="tab !== 'tab1'" fab dense round icon="chevron_left" size="xl"
+            padding="12px" @click="onMobilePrev" />
+          <q-space v-if="tab !== 'tab1'" />
+          <TlenovoLogo @click="onLogoClickHandler" class="MainLayout__toolbarLogo" :isMobile="true" />
+          <q-space v-if="tab !== 'tab4'" />
+          <q-btn class="MainLayout__headerBtnNext" v-if="tab !== 'tab4'" fab dense round icon="chevron_right" size="xl"
+            padding="12px" @click="onMobileNext" />
+        </q-toolbar>
+      </q-header>
 
-        <!-- Booked Button -->
-        <transition name="bookBtnTransition" appear>
-          <TlenovoBookBtn v-if="isActionBtnVisibleDesktop" @book="onBookClickHandler" />
-        </transition>
+      <!-- Views -->
+      <q-tab-panels ref="tabPanelsDesktop" class="MainLayout__pageContainer MainLayout__pageContainer--desktop"
+        v-model="tab" animated @update:model-value="onTabUpdateHandler">
+        <q-tab-panel v-for="tabConfig in tabConfigs" :key="tabConfig.name" class="MainLayout__pageSection"
+          :name="tabConfig.name">
+          <q-scroll-observer @scroll="onLayoutScroll" />
+          <component :is="tabConfig.component" v-bind="tabConfig.props" v-on="tabConfig.events" />
+        </q-tab-panel>
+      </q-tab-panels>
 
-        <!-- Telephone Anchor -->
-        <transition name="telephoneBtnTransition" appear>
-          <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
-        </transition>
-        
-        <!-- Snackbar -->
-        <TlenovoSnackbar />
+      <!-- Booked Button -->
+      <transition name="bookBtnTransition" appear>
+        <TlenovoBookBtn v-if="isActionBtnVisibleDesktop" @book="onBookClickHandler" />
+      </transition>
+
+      <!-- Telephone Anchor -->
+      <transition name="telephoneBtnTransition" appear>
+        <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
+      </transition>
+
+      <!-- Snackbar -->
+      <TlenovoSnackbar />
     </q-layout>
   </PhoneEmulator>
 
   <!-- Mobile view (oryginalne zachowanie) -->
   <q-layout v-else view="hHr lpR fFf" class="MainLayout">
     <q-header class="MainLayout__header" elevated>
-        <q-toolbar class="MainLayout__toolbar">
-          <!-- Links mobile -->
-          <q-btn class="MainLayout__headerBtnPrev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left" size="xl" padding="12px" @click="onMobilePrev" />
-          <q-space v-if="isMobile && tab !== 'tab1'" />
-          <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="isMobile"/>
-          <q-space v-if="(isMobile && tab !== 'tab4') || !isMobile" />
-          <q-btn class="MainLayout__headerBtnNext" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right" size="xl" padding="12px" @click="onMobileNext" />
+      <q-toolbar class="MainLayout__toolbar">
+        <!-- Links mobile -->
+        <q-btn class="MainLayout__headerBtnPrev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left"
+          size="xl" padding="12px" @click="onMobilePrev" />
+        <q-space v-if="isMobile && tab !== 'tab1'" />
+        <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="isMobile" />
+        <q-space v-if="(isMobile && tab !== 'tab4') || !isMobile" />
+        <q-btn class="MainLayout__headerBtnNext" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right"
+          size="xl" padding="12px" @click="onMobileNext" />
 
-          <!-- Links desktop -->
-          <q-tabs v-if="!isMobile" class="MainLayout__toolbarTabs" v-model="tab">
-            <q-tab
-              v-for="tabConfig in tabConfigs"
-              :key="tabConfig.name"
-              class="MainLayout__toolbarTab"
-              :name="tabConfig.name"
-              :label="tabConfig.label"
-            />
-          </q-tabs>
-        </q-toolbar>
-      </q-header>
-      
-      <!-- Views -->
-      <q-tab-panels 
-        ref="tabPanelsMobile"
-        class="MainLayout__pageContainer" 
-        v-model="tab" 
-        animated
-      >
-        <q-tab-panel
-          v-for="tabConfig in tabConfigs"
-          :key="tabConfig.name"
-          class="MainLayout__pageSection"
-          :name="tabConfig.name"
-        >
-          <q-scroll-observer @scroll="onLayoutScroll" />
-          <component
-            :is="tabConfig.component"
-            v-bind="tabConfig.props"
-            v-on="tabConfig.events"
-          />
-        </q-tab-panel>
-      </q-tab-panels>
+        <!-- Links desktop -->
+        <q-tabs v-if="!isMobile" class="MainLayout__toolbarTabs" v-model="tab">
+          <q-tab v-for="tabConfig in tabConfigs" :key="tabConfig.name" class="MainLayout__toolbarTab"
+            :name="tabConfig.name" :label="tabConfig.label" />
+        </q-tabs>
+      </q-toolbar>
+    </q-header>
 
-      <!-- Booked Button -->
-      <transition name="bookBtnTransition" appear>
-        <TlenovoBookBtn v-if="isActionBtnOrderVisible" @book="onBookClickHandler" />
-      </transition>
+    <!-- Views -->
+    <q-tab-panels ref="tabPanelsMobile" class="MainLayout__pageContainer" v-model="tab" animated>
+      <q-tab-panel v-for="tabConfig in tabConfigs" :key="tabConfig.name" class="MainLayout__pageSection"
+        :name="tabConfig.name">
+        <q-scroll-observer @scroll="onLayoutScroll" />
+        <component :is="tabConfig.component" v-bind="tabConfig.props" v-on="tabConfig.events" />
+      </q-tab-panel>
+    </q-tab-panels>
 
-      <!-- Telephone Anchor -->
-      <transition name="telephoneBtnTransition" appear>
-        <TlenovoPhoneAnchor v-if="isActionBtnPhoneVisible" />
-      </transition>
-      
-      <!-- Snackbar -->
-      <TlenovoSnackbar />
-</q-layout>
+    <!-- Booked Button -->
+    <transition name="bookBtnTransition" appear>
+      <TlenovoBookBtn v-if="isActionBtnOrderVisible" @book="onBookClickHandler" />
+    </transition>
+
+    <!-- Telephone Anchor -->
+    <transition name="telephoneBtnTransition" appear>
+      <TlenovoPhoneAnchor v-if="isActionBtnPhoneVisible" />
+    </transition>
+
+    <!-- Snackbar -->
+    <TlenovoSnackbar />
+  </q-layout>
 </template>
 
 <script setup>
@@ -203,7 +176,7 @@ function handleTouchEnd(e) {
 function handleSwipeGesture() {
   const deltaX = touchEndX - touchStartX;
   const deltaY = touchEndY - touchStartY;
-  
+
   // Check if horizontal swipe is stronger than vertical
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
     // Check if swipe distance is sufficient
@@ -222,12 +195,12 @@ function handleSwipeGesture() {
 function setupSwipeListeners() {
   const desktopEl = tabPanelsDesktop.value?.$el;
   const mobileEl = tabPanelsMobile.value?.$el;
-  
+
   if (desktopEl) {
     desktopEl.addEventListener('touchstart', handleTouchStart, { passive: true });
     desktopEl.addEventListener('touchend', handleTouchEnd, { passive: true });
   }
-  
+
   if (mobileEl) {
     mobileEl.addEventListener('touchstart', handleTouchStart, { passive: true });
     mobileEl.addEventListener('touchend', handleTouchEnd, { passive: true });
@@ -237,12 +210,12 @@ function setupSwipeListeners() {
 function removeSwipeListeners() {
   const desktopEl = tabPanelsDesktop.value?.$el;
   const mobileEl = tabPanelsMobile.value?.$el;
-  
+
   if (desktopEl) {
     desktopEl.removeEventListener('touchstart', handleTouchStart);
     desktopEl.removeEventListener('touchend', handleTouchEnd);
   }
-  
+
   if (mobileEl) {
     mobileEl.removeEventListener('touchstart', handleTouchStart);
     mobileEl.removeEventListener('touchend', handleTouchEnd);
@@ -268,7 +241,7 @@ function onRedirectHandler() {
 function onBenefitClickHandler(benefitId) {
   // Navigate to info tab
   tab.value = 'tab2';
-  
+
   // Set targetBenefit based on benefitId
   switch (benefitId) {
     case 'wzrost-energii':
@@ -290,7 +263,7 @@ function onBenefitClickHandler(benefitId) {
       targetBenefit.value = 'wzrost-vo2max';
       break;
   }
-    
+
   // Reset after scrolling
   setTimeout(() => {
     // targetBenefit.value = null;
@@ -336,7 +309,7 @@ const tabConfigs = reactive([
         return isFormVisible.value;
       }
     },
-    events: { 
+    events: {
       redirect: onRedirectHandler,
       formToggle: onFormToggleHandler,
       benefitClick: onBenefitClickHandler,
@@ -384,12 +357,12 @@ const tabConfigs = reactive([
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    
+
     .MainLayout__pageContainer {
       width: 100%;
       height: 100%;
       z-index: 2;
-      
+
       &--desktop {
         overflow-x: hidden;
       }
@@ -418,7 +391,7 @@ const tabConfigs = reactive([
       // height: 160px;
       // background-color: transparent;
       // z-index: 2;
-      
+
       // W emulatorze telefonu stosujemy style jak dla mobile 768px
       // height: 140px;
     }
@@ -430,7 +403,7 @@ const tabConfigs = reactive([
     top: 0;
     z-index: 100 !important;
   }
-  
+
   &__headerBtnPrev {
     margin-left: 12px;
     border: 1px solid $white;
@@ -483,6 +456,7 @@ const tabConfigs = reactive([
 
 // Optimized book button transition styles
 .bookBtnTransition {
+
   &-enter-active,
   &-leave-active {
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -507,6 +481,7 @@ const tabConfigs = reactive([
 }
 
 .telephoneBtnTransition {
+
   &-enter-active,
   &-leave-active {
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -531,6 +506,7 @@ const tabConfigs = reactive([
 }
 
 .footerTransition {
+
   &-enter-active,
   &-leave-active {
     transition: transform 0.4s ease, opacity 0.4s ease;

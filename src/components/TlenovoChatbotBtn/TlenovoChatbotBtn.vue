@@ -41,7 +41,7 @@ function onClickHandler() {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    z-index: 1000;
+    z-index: 5;
 
     display: flex;
     align-items: center;

@@ -24,9 +24,8 @@
                     'TlenovoChatbot__message--user': msg.role === 'user',
                     'TlenovoChatbot__message--bot': msg.role === 'bot'
                 }">
-                    <div class="TlenovoChatbot__messageContent">
-                        {{ msg.text }}
-                    </div>
+                    <div class="TlenovoChatbot__messageContent"
+                        v-html="msg.role === 'bot' ? formatMessage(msg.text) : msg.text"></div>
                 </div>
 
                 <!-- Loading indicator -->
@@ -53,6 +52,59 @@
 import { chatbotService } from 'src/services/chatbot.service.js'
 import { nextTick, ref, watch } from 'vue'
 
+/**
+ * Formatuje tekst odpowiedzi bota z obsługą:
+ * - **tekst** -> pogrubiony tekst z akcentem
+ * - (tekst w nawiasach) -> italic
+ * - 1. 2. 3. itd. -> numerowane podpunkty (secondary, bold, nowa linia)
+ */
+function formatMessage(text) {
+    if (!text) return ''
+
+    let formatted = text
+
+    // Escape HTML aby zapobiec XSS
+    formatted = formatted
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+
+    // 1. Formatowanie **tekst** -> pogrubiony z akcentem
+    formatted = formatted.replace(
+        /\*\*([^*]+)\*\*/g,
+        '<span class="formatted-bold">$1</span>'
+    )
+
+    // 2. Formatowanie (tekst w nawiasach) -> italic
+    // Unikamy zagnieżdżonych nawiasów - dopasowujemy tylko proste przypadki
+    formatted = formatted.replace(
+        /\(([^()]+)\)/g,
+        '<span class="formatted-parentheses">($1)</span>'
+    )
+
+    // 3. Formatowanie numerowanych podpunktów (1., 2., itd.) -> nowa linia + secondary + bold
+    // Obsługuje też punkty z gwiazdką jak *   tekst
+    formatted = formatted.replace(
+        /(?:^|\n)\s*(\d+\.\s+)/g,
+        '<br><span class="formatted-numbered-item">$1</span>'
+    )
+
+    // Formatowanie podpunktów z gwiazdką (*   tekst)
+    formatted = formatted.replace(
+        /(?:^|\n)\s*(\*\s+)/g,
+        '<br><span class="formatted-bullet-item">• </span>'
+    )
+
+    // Usuń początkowe <br> jeśli istnieje
+    formatted = formatted.replace(/^<br>/, '')
+
+    // Zamień podwójne nowe linie na pojedynczy break dla czytelności
+    formatted = formatted.replace(/\n\n/g, '<br><br>')
+    formatted = formatted.replace(/\n/g, '<br>')
+
+    return formatted
+}
+
 defineProps({
     modelValue: {
         type: Boolean,
@@ -60,7 +112,7 @@ defineProps({
     }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'bookRequest'])
 
 const inputMessage = ref('')
 const messages = ref([])
@@ -81,6 +133,39 @@ function scrollToBottom() {
 
 function onCloseHandler() {
     emit('update:modelValue', false)
+}
+
+// Numer telefonu recepcji
+const RECEPTION_PHONE_NUMBER = '+48733096056'
+const ACTION_CALL_MARKER = '###ACTION_CALL###'
+const ACTION_BOOK_MARKER = '###ACTION_BOOK###'
+
+/**
+ * Inicjuje połączenie telefoniczne
+ */
+function initiatePhoneCall() {
+    window.location.href = `tel:${RECEPTION_PHONE_NUMBER}`
+}
+
+/**
+ * Sprawdza odpowiedź pod kątem znaczników akcji
+ * Zwraca oczyszczony tekst i flagi dla poszczególnych akcji
+ */
+function processResponseForActions(responseText) {
+    const shouldCall = responseText.includes(ACTION_CALL_MARKER)
+    const shouldBook = responseText.includes(ACTION_BOOK_MARKER)
+
+    // Usuń oba znaczniki z tekstu
+    const cleanedText = responseText
+        .replace(ACTION_CALL_MARKER, '')
+        .replace(ACTION_BOOK_MARKER, '')
+        .trim()
+
+    return {
+        text: cleanedText,
+        shouldCall,
+        shouldBook
+    }
 }
 
 async function onSendMessage() {
@@ -108,10 +193,32 @@ async function onSendMessage() {
     isLoading.value = false
 
     if (response.success) {
+        // Sprawdź czy odpowiedź zawiera znaczniki akcji
+        const { text, shouldCall, shouldBook } = processResponseForActions(response.answer)
+
         messages.value.push({
             role: 'bot',
-            text: response.answer
+            text: text
         })
+
+        // Obsługa akcji CALL - połączenie telefoniczne
+        if (shouldCall) {
+            setTimeout(() => {
+                initiatePhoneCall()
+            }, 1000)
+        }
+
+        // Obsługa akcji BOOK - otwarcie formularza rezerwacji
+        if (shouldBook) {
+            // Daj użytkownikowi czas na przeczytanie wiadomości
+            setTimeout(() => {
+                // Emituj zdarzenie do rodzica (MainLayout) aby:
+                // 1. Zamknąć chatbota
+                // 2. Przełączyć na tab1 jeśli potrzeba
+                // 3. Otworzyć formularz rezerwacji
+                emit('bookRequest')
+            }, 1500)
+        }
     } else {
         messages.value.push({
             role: 'bot',
@@ -242,8 +349,38 @@ async function onSendMessage() {
         padding: 12px 16px;
 
         font-size: 14px;
-        line-height: 1.4;
+        line-height: 1.5;
         word-wrap: break-word;
+
+        // Style dla sformatowanego tekstu
+        :deep(.formatted-bold) {
+            font-weight: 700;
+            color: $secondary;
+            background: linear-gradient(120deg, rgba($secondary, 0.15) 0%, rgba($secondary, 0.05) 100%);
+            padding: 1px 6px;
+            border-radius: 4px;
+            border-left: 2px solid $secondary;
+        }
+
+        :deep(.formatted-parentheses) {
+            font-style: italic;
+            color: rgba($white, 0.85);
+        }
+
+        :deep(.formatted-numbered-item) {
+            display: inline-block;
+            font-weight: 700;
+            color: $secondary;
+            margin-top: 8px;
+        }
+
+        :deep(.formatted-bullet-item) {
+            display: inline-block;
+            font-weight: 600;
+            color: $secondary;
+            margin-top: 4px;
+            margin-right: 4px;
+        }
     }
 
     &__loading {

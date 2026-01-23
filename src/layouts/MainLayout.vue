@@ -41,7 +41,7 @@
       </transition>
 
       <!-- Chatbot Dialog -->
-      <TlenovoChatbot v-model="isChatOpen" />
+      <TlenovoChatbot v-model="isChatOpen" @book-request="onChatbotBookRequest" />
 
       <!-- Snackbar -->
       <TlenovoSnackbar />
@@ -94,7 +94,7 @@
     </transition>
 
     <!-- Chatbot Dialog -->
-    <TlenovoChatbot v-model="isChatOpen" />
+    <TlenovoChatbot v-model="isChatOpen" @book-request="onChatbotBookRequest" />
 
     <!-- Snackbar -->
     <TlenovoSnackbar />
@@ -161,7 +161,7 @@ const isActionBtnVisibleDesktop = computed(() => {
 
 // Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
 const isAIChatBtnVisible = computed(() => {
-  return !isChatOpen.value && (offsetTop.value >= ACTION_BTN_ACTIVATION_OFFSET + 200 && offsetTop.value <= FOOTER_ACTIVATION_OFFSET.tab1);
+  return !isChatOpen.value && !isFormVisible.value && (offsetTop.value >= ACTION_BTN_ACTIVATION_OFFSET + 200 && offsetTop.value <= FOOTER_ACTIVATION_OFFSET.tab1);
 });
 
 function onMobileNext() {
@@ -308,6 +308,28 @@ function onLogoClickHandler() {
 
 function onFormToggleHandler(isToggled) {
   isFormVisible.value = isToggled;
+}
+
+/**
+ * Obsługa żądania rezerwacji z chatbota
+ * Sekwencja: zamknij chat -> przełącz na tab1 jeśli potrzeba -> otwórz formularz
+ */
+async function onChatbotBookRequest() {
+  // 1. Zamknij chatbota
+  isChatOpen.value = false
+
+  // 2. Poczekaj na animację zamknięcia chatbota (300ms)
+  await new Promise(resolve => setTimeout(resolve, 350))
+
+  // 3. Jeśli jesteśmy na innym tabie niż tab1, przełącz
+  if (tab.value !== 'tab1') {
+    tab.value = 'tab1'
+    // Poczekaj na animację przełączenia taba
+    await new Promise(resolve => setTimeout(resolve, 400))
+  }
+
+  // 4. Otwórz formularz rezerwacji
+  isFormVisible.value = true
 }
 
 function onBookClickHandler() {

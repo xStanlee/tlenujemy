@@ -1,52 +1,54 @@
 <template>
-  <!-- Desktop view z emulatorem telefonu -->
-  <PhoneEmulator v-if="!isMobile">
-    <q-layout view="hHr lpR fFf" class="MainLayout MainLayout--desktop-emulated">
-      <q-header class="MainLayout__header" elevated>
-        <q-toolbar class="MainLayout__toolbar">
-          <!-- Links mobile (zawsze używamy mobile UI w emulatorze) -->
-          <q-btn class="MainLayout__headerBtnPrev" v-if="tab !== 'tab1'" fab dense round icon="chevron_left" size="xl"
-            padding="12px" @click="onMobilePrev" />
-          <q-space v-if="tab !== 'tab1'" />
-          <TlenovoLogo @click="onLogoClickHandler" class="MainLayout__toolbarLogo" :isMobile="true" />
-          <q-space v-if="tab !== 'tab4'" />
-          <q-btn class="MainLayout__headerBtnNext" v-if="tab !== 'tab4'" fab dense round icon="chevron_right" size="xl"
-            padding="12px" @click="onMobileNext" />
-        </q-toolbar>
-      </q-header>
+  <!-- Desktop: PhoneEmulator (oryginalne zachowanie) + chatbot na poziomie viewport -->
+  <template v-if="!isMobile">
+    <PhoneEmulator>
+      <q-layout view="hHr lpR fFf" class="MainLayout MainLayout--desktop-emulated">
+        <q-header class="MainLayout__header" elevated>
+          <q-toolbar class="MainLayout__toolbar">
+            <!-- Links mobile (zawsze używamy mobile UI w emulatorze) -->
+            <q-btn class="MainLayout__headerBtnPrev" v-if="tab !== 'tab1'" fab dense round icon="chevron_left" size="xl"
+              padding="12px" @click="onMobilePrev" />
+            <q-space v-if="tab !== 'tab1'" />
+            <TlenovoLogo @click="onLogoClickHandler" class="MainLayout__toolbarLogo" :isMobile="true" />
+            <q-space v-if="tab !== 'tab4'" />
+            <q-btn class="MainLayout__headerBtnNext" v-if="tab !== 'tab4'" fab dense round icon="chevron_right" size="xl"
+              padding="12px" @click="onMobileNext" />
+          </q-toolbar>
+        </q-header>
 
-      <!-- Views -->
-      <q-tab-panels ref="tabPanelsDesktop" class="MainLayout__pageContainer MainLayout__pageContainer--desktop"
-        v-model="tab" animated @update:model-value="onTabUpdateHandler">
-        <q-tab-panel v-for="tabConfig in tabConfigs" :key="tabConfig.name" class="MainLayout__pageSection"
-          :name="tabConfig.name">
-          <q-scroll-observer @scroll="onLayoutScroll" />
-          <component :is="tabConfig.component" v-bind="tabConfig.props" v-on="tabConfig.events" />
-        </q-tab-panel>
-      </q-tab-panels>
+        <!-- Views -->
+        <q-tab-panels ref="tabPanelsDesktop" class="MainLayout__pageContainer MainLayout__pageContainer--desktop"
+          v-model="tab" animated @update:model-value="onTabUpdateHandler">
+          <q-tab-panel v-for="tabConfig in tabConfigs" :key="tabConfig.name" class="MainLayout__pageSection"
+            :name="tabConfig.name">
+            <q-scroll-observer @scroll="onLayoutScroll" />
+            <component :is="tabConfig.component" v-bind="tabConfig.props" v-on="tabConfig.events" />
+          </q-tab-panel>
+        </q-tab-panels>
 
-      <!-- Booked Button -->
-      <transition name="bookBtnTransition" appear>
-        <TlenovoBookBtn v-if="isActionBtnVisibleDesktop" @book="onBookClickHandler" />
-      </transition>
+        <!-- Booked Button -->
+        <transition name="bookBtnTransition" appear>
+          <TlenovoBookBtn v-if="isActionBtnVisibleDesktop" @book="onBookClickHandler" />
+        </transition>
 
-      <!-- Telephone Anchor -->
-      <transition name="telephoneBtnTransition" appear>
-        <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
-      </transition>
+        <!-- Telephone Anchor -->
+        <transition name="telephoneBtnTransition" appear>
+          <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
+        </transition>
 
-      <!-- Chatbot Button -->
-      <transition name="chatbotBtnTransition" appear>
-        <TlenovoChatbotBtn v-if="!isChatOpen" @click="isChatOpen = true" />
-      </transition>
+        <!-- Snackbar -->
+        <TlenovoSnackbar />
+      </q-layout>
+    </PhoneEmulator>
 
-      <!-- Chatbot Dialog -->
-      <TlenovoChatbot v-model="isChatOpen" @book-request="onChatbotBookRequest" />
+    <!-- Chatbot Button – fixed to real viewport, above PhoneEmulator -->
+    <transition name="chatbotBtnTransition" appear>
+      <TlenovoChatbotBtn v-if="!isChatOpen" @click="isChatOpen = true" />
+    </transition>
 
-      <!-- Snackbar -->
-      <TlenovoSnackbar />
-    </q-layout>
-  </PhoneEmulator>
+    <!-- Chatbot Window – fixed to real viewport, bottom-right corner -->
+    <TlenovoChatbot v-model="isChatOpen" @book-request="onChatbotBookRequest" />
+  </template>
 
   <!-- Mobile view (oryginalne zachowanie) -->
   <q-layout v-else view="hHr lpR fFf" class="MainLayout">
@@ -429,18 +431,6 @@ const tabConfigs = reactive([
       padding-bottom: 160px;
       overflow-x: hidden;
     }
-
-    .MainLayout__footer {
-      // bottom: 0;
-      // left: 0;
-      // width: 100%;
-      // height: 160px;
-      // background-color: transparent;
-      // z-index: 2;
-
-      // W emulatorze telefonu stosujemy style jak dla mobile 768px
-      // height: 140px;
-    }
   }
 
   &__header {
@@ -453,11 +443,19 @@ const tabConfigs = reactive([
   &__headerBtnPrev {
     margin-left: 12px;
     border: 1px solid $white;
+
+    @media (min-width: 769px) and (max-width: 1023px) {
+      margin-left: 24px;
+    }
   }
 
   &__headerBtnNext {
     margin-right: 12px;
     border: 1px solid $white;
+
+    @media (min-width: 769px) and (max-width: 1023px) {
+      margin-right: 24px;
+    }
   }
 
   &__toolbar {

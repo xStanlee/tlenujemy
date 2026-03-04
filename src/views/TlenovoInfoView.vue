@@ -302,5 +302,36 @@ $font: 'Inter';
     &__col {
         width: 100%;
     }
+
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        & {
+            padding: 3rem 2.5rem 3rem 2.5rem !important;
+        }
+
+        &__header {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        &__headerTagline {
+            font-size: 1.05rem;
+        }
+
+        &__row {
+            flex-direction: row;
+            align-items: stretch;
+
+            &--full {
+                flex-direction: column;
+            }
+        }
+
+        &__col {
+            flex: 1;
+            min-width: 0;
+        }
+    }
 }
 </style>

@@ -246,5 +246,30 @@ const benefits = ref([
         color: $primary;
         margin: 0;
     }
+
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        &__container {
+            padding: 0 2rem;
+        }
+
+        &__title {
+            font-size: 2rem;
+        }
+
+        &__intro {
+            font-size: 1.15rem;
+        }
+
+        &__benefits {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            padding: 0;
+        }
+
+        &__benefit {
+            padding: 1.5rem;
+        }
+    }
 }
 </style> 

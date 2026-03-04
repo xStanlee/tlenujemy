@@ -234,5 +234,34 @@ $font: 'Inter';
             );
         }
     }
+
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        & {
+            padding: 3rem 2.5rem 3rem 2.5rem !important;
+        }
+
+        &__header {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        &__content {
+            max-width: 900px;
+        }
+
+        &__contentItem {
+            padding: 2rem;
+        }
+
+        &__contentItemTitle {
+            font-size: 1.4rem;
+        }
+
+        &__contentItemListElement {
+            padding: 0.7rem 1.2rem;
+        }
+    }
 }
 </style>

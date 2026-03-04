@@ -526,5 +526,47 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             font-size: 1rem;
         }
     }
+
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        &__sectionInitial {
+            height: 750px;
+        }
+
+        &__heroContent {
+            right: 10%;
+            width: 80%;
+            text-align: center;
+        }
+
+        &__heroTitle {
+            font-size: 2.8rem;
+        }
+
+        &__header {
+            width: 80%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 55px auto 0;
+            text-align: center;
+
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        &__headerTagline {
+            font-size: 1.2rem;
+        }
+
+        &__headerBenefits {
+            gap: 0.9rem;
+        }
+
+        &__benefitItem {
+            padding: 0.75rem 1.1rem;
+            font-size: 0.95rem;
+        }
+    }
 }
 </style>

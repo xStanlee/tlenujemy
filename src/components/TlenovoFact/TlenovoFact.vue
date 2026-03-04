@@ -169,5 +169,22 @@ $font: 'Inter';
       letter-spacing: 1px;
       transition: all 0.5s ease;
     }
+
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        & {
+            min-width: 0;
+            width: 100%;
+        }
+
+        &__cardContent {
+            max-width: 100%;
+        }
+
+        &__textContent {
+            font-size: 1rem;
+            line-height: 1.75rem;
+        }
+    }
 }
 </style>

@@ -392,40 +392,52 @@ const stats = ref([
         letter-spacing: 1px;
     }
     
-    // Tablet responsiveness
-    // @media (min-width: 640px) {
-    //     padding: 80px 0;
-        
-    //     &__container {
-    //         padding: 0 2rem;
-    //     }
-        
-    //     &__card {
-    //         padding: 3rem 2.5rem;
-    //     }
-        
-    //     &__title {
-    //         font-size: 2.2rem;
-    //     }
-        
-    //     &__subtitle {
-    //         font-size: 1.1rem;
-    //     }
-        
-    //     &__features {
-    //         gap: 1.2rem;
-    //     }
-        
-    //     &__feature {
-    //         flex-direction: row;
-    //         align-items: center;
-    //     }
-        
-    //     &__contact {
-    //         max-width: 400px;
-    //         margin: 0 auto;
-    //     }
-    // }
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        & {
+            padding: 80px 0 120px 0;
+        }
+
+        &__container {
+            padding: 0 2.5rem;
+        }
+
+        &__card {
+            padding: 3rem 2.5rem;
+        }
+
+        &__title {
+            font-size: 2.2rem;
+        }
+
+        &__subtitle {
+            font-size: 1.1rem;
+        }
+
+        &__features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        &__stats {
+            padding: 2rem 1rem;
+        }
+
+        &__statNumber {
+            font-size: 2.5rem;
+        }
+
+        &__contact {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        &__contactNumber {
+            font-size: 1.4rem;
+        }
+    }
 }
 
 @keyframes shimmer {

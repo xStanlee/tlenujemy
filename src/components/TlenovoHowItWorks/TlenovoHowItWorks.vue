@@ -285,5 +285,37 @@ const steps = ref([
         background-clip: text;
         font-weight: 600;
     }
+
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        &__container {
+            padding: 0 2.5rem;
+        }
+
+        &__title {
+            font-size: 2rem;
+        }
+
+        &__header {
+            margin-bottom: 3rem;
+        }
+
+        &__steps {
+            gap: 2rem;
+        }
+
+        &__stepTitle {
+            font-size: 1.25rem;
+        }
+
+        &__stepDescription {
+            font-size: 1rem;
+        }
+
+        &__conclusion {
+            padding: 2rem;
+            margin-bottom: 6rem;
+        }
+    }
 }
 </style> 

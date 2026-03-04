@@ -250,5 +250,30 @@ function onBenefitClick(benefitId) {
             font-size: 1rem;
         }
     }
+
+    // Tablet Responsiveness (769px – 1023px)
+    @media (min-width: 769px) and (max-width: 1023px) {
+        &__container {
+            padding: 0 2.5rem;
+        }
+
+        &__title {
+            font-size: 2rem;
+        }
+
+        &__content {
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        &__benefits {
+            margin-bottom: 3rem;
+        }
+
+        &__description p {
+            font-size: 1.05rem;
+        }
+    }
 }
 </style> 

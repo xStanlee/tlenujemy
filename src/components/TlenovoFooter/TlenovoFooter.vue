@@ -523,6 +523,29 @@ $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
     }
 }
 
+// Tablet Responsiveness (769px – 1023px)
+@media (min-width: 769px) and (max-width: 1023px) {
+    .TlenovoFooter {
+        padding: 4rem 2rem 1rem 2rem;
+
+        &__topSection {
+            gap: 2rem;
+        }
+
+        &__card {
+            padding: 1.75rem;
+        }
+
+        &__socialLinks {
+            gap: 0.75rem;
+        }
+
+        &__bottomSection {
+            gap: 1rem;
+        }
+    }
+}
+
 // Responsive Design
 @media (max-width: 768px) {
     .TlenovoFooter {

@@ -459,6 +459,14 @@ async function onSendMessage() {
     }
 }
 
+// Większe ekrany desktop
+@media (min-width: 1024px) {
+    .TlenovoChatbot {
+        height: 60vh;
+        max-height: 60vh;
+    }
+}
+
 // Responsywność dla mniejszych ekranów
 @media (max-width: 560px) {
     .TlenovoChatbot {

@@ -1,0 +1,1 @@
+import{u as e}from"./index-CWlYWOW6.js";import{t}from"./log.serivce-88FgXZXJ.js";import{t as n}from"./wrappers-Dfvzj6n2.js";var r=n(({app:n})=>{let r=e();n.use(r),t.info(`Pinia initialized.`)});export{r as default};

@@ -1,0 +1,21 @@
+name = "tlenovo-notify"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://xstanlee.github.io"
+# Na czas testów lokalnych (quasar dev) – po wdrożeniu można ustawić na "false"
+ALLOW_LOCALHOST = "true"
+
+# Maks. 5 rezerwacji na minutę z jednego adresu IP (ochrona przed spamem)
+[[ratelimits]]
+name = "RESERVATION_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 5
+  period = 60
+
+# Sekrety (NIE wpisuj ich tutaj) – ustaw poleceniami:
+#   npx wrangler secret put TELEGRAM_BOT_TOKEN
+#   npx wrangler secret put TELEGRAM_CHAT_IDS

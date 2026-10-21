@@ -1,45 +1,8 @@
 <template>
-  <!-- Desktop: PhoneEmulator (oryginalne zachowanie) + chatbot na poziomie viewport -->
-  <template v-if="!isMobile">
-    <PhoneEmulator>
-      <q-layout view="hHr lpR fFf" class="MainLayout MainLayout--desktop-emulated">
-        <q-header class="MainLayout__header" elevated>
-          <q-toolbar class="MainLayout__toolbar">
-            <!-- Links mobile (zawsze używamy mobile UI w emulatorze) -->
-            <q-btn class="MainLayout__headerBtnPrev" v-if="tab !== 'tab1'" fab dense round icon="chevron_left" size="xl"
-              padding="12px" @click="onMobilePrev" />
-            <q-space v-if="tab !== 'tab1'" />
-            <TlenovoLogo @click="onLogoClickHandler" class="MainLayout__toolbarLogo" :isMobile="true" />
-            <q-space v-if="tab !== 'tab4'" />
-            <q-btn class="MainLayout__headerBtnNext" v-if="tab !== 'tab4'" fab dense round icon="chevron_right" size="xl"
-              padding="12px" @click="onMobileNext" />
-          </q-toolbar>
-        </q-header>
-
-        <!-- Views -->
-        <q-tab-panels ref="tabPanelsDesktop" class="MainLayout__pageContainer MainLayout__pageContainer--desktop"
-          v-model="tab" animated @update:model-value="onTabUpdateHandler">
-          <q-tab-panel v-for="tabConfig in tabConfigs" :key="tabConfig.name" class="MainLayout__pageSection"
-            :name="tabConfig.name">
-            <q-scroll-observer @scroll="onLayoutScroll" />
-            <component :is="tabConfig.component" v-bind="tabConfig.props" v-on="tabConfig.events" />
-          </q-tab-panel>
-        </q-tab-panels>
-
-        <!-- Booked Button -->
-        <transition name="bookBtnTransition" appear>
-          <TlenovoBookBtn v-if="isActionBtnVisibleDesktop" @book="onBookClickHandler" />
-        </transition>
-
-        <!-- Telephone Anchor -->
-        <transition name="telephoneBtnTransition" appear>
-          <TlenovoPhoneAnchor v-if="isActionBtnVisibleDesktop" />
-        </transition>
-
-        <!-- Snackbar -->
-        <TlenovoSnackbar />
-      </q-layout>
-    </PhoneEmulator>
+  <!-- Desktop: PhoneEmulator wyświetla widok mobilny w iframe (identyczny jak na smartfonie),
+       chatbot na poziomie prawdziwego viewportu -->
+  <template v-if="isDesktopShell">
+    <PhoneEmulator ref="phoneEmulatorRef" :src="getEmbeddedAppUrl()" />
 
     <!-- Chatbot Button – fixed to real viewport, above PhoneEmulator -->
     <transition name="chatbotBtnTransition" appear>
@@ -47,10 +10,10 @@
     </transition>
 
     <!-- Chatbot Window – fixed to real viewport, bottom-right corner -->
-    <TlenovoChatbot v-model="isChatOpen" @book-request="onChatbotBookRequest" />
+    <TlenovoChatbot v-model="isChatOpen" @book-request="onDesktopChatbotBookRequest" />
   </template>
 
-  <!-- Mobile view (oryginalne zachowanie) -->
+  <!-- Mobile view (smartfon, tablet oraz ekran PhoneEmulator na desktopie) -->
   <q-layout v-else view="hHr lpR fFf" class="MainLayout">
     <q-header class="MainLayout__header" elevated>
       <q-toolbar class="MainLayout__toolbar">
@@ -58,7 +21,7 @@
         <q-btn class="MainLayout__headerBtnPrev" v-if="isMobile && tab !== 'tab1'" fab dense round icon="chevron_left"
           size="xl" padding="12px" @click="onMobilePrev" />
         <q-space v-if="isMobile && tab !== 'tab1'" />
-        <TlenovoLogo class="MainLayout__toolbarLogo" :isMobile="isMobile" />
+        <TlenovoLogo @click="onLogoClickHandler" class="MainLayout__toolbarLogo" :isMobile="isMobile" />
         <q-space v-if="(isMobile && tab !== 'tab4') || !isMobile" />
         <q-btn class="MainLayout__headerBtnNext" v-if="isMobile && tab !== 'tab4'" fab dense round icon="chevron_right"
           size="xl" padding="12px" @click="onMobileNext" />
@@ -90,13 +53,16 @@
       <TlenovoPhoneAnchor v-if="isActionBtnPhoneVisible" />
     </transition>
 
-    <!-- Chatbot Button -->
-    <transition name="chatbotBtnTransition" appear>
-      <TlenovoChatbotBtn v-if="isAIChatBtnVisible" @click="isChatOpen = true" />
-    </transition>
+    <!-- Chatbot (w trybie osadzonym chatbot jest renderowany przez stronę desktopową, poza telefonem) -->
+    <template v-if="!isEmbedded">
+      <!-- Chatbot Button -->
+      <transition name="chatbotBtnTransition" appear>
+        <TlenovoChatbotBtn v-if="isAIChatBtnVisible" @click="isChatOpen = true" />
+      </transition>
 
-    <!-- Chatbot Dialog -->
-    <TlenovoChatbot v-model="isChatOpen" @book-request="onChatbotBookRequest" />
+      <!-- Chatbot Dialog -->
+      <TlenovoChatbot v-model="isChatOpen" @book-request="onChatbotBookRequest" />
+    </template>
 
     <!-- Snackbar -->
     <TlenovoSnackbar />
@@ -108,6 +74,8 @@ import { useQuasar } from 'quasar';
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 
 // Composables
+import { useDragScroll } from 'src/composables/useDragScroll';
+import { EMBEDDED_MESSAGES, useEmbeddedMode } from 'src/composables/useEmbeddedMode';
 import { usePdfGenerator } from 'src/composables/usePdfGenerator';
 
 // Components
@@ -127,16 +95,26 @@ import TlenovoOfferView from 'src/views/TlenovoOfferView.vue';
 const $q = useQuasar();
 const { openRegulaminInNewTab } = usePdfGenerator();
 
+const { isEmbedded, getEmbeddedAppUrl, sendToFrame, onParentMessage } = useEmbeddedMode();
+
 const isMobile = computed(() => $q.screen.lt.md);
+// Strona desktopowa = tylko emulator telefonu + chatbot; aplikacja działa w iframe emulatora
+const isDesktopShell = computed(() => !isMobile.value && !isEmbedded);
+const phoneEmulatorRef = ref(null);
 const offsetTop = ref(0);
 const isFormVisible = ref(false);
 const isChatOpen = ref(false);
 const tab = ref('tab1');
 const targetBenefit = ref(null);
 
-// Refs for swipe functionality
-const tabPanelsDesktop = ref(null);
+// Ref for swipe functionality
 const tabPanelsMobile = ref(null);
+
+// W emulatorze telefon obsługiwany jest myszą – symulacja przewijania palcem
+useDragScroll(isEmbedded);
+
+// Prośba o rezerwację z chatbota strony desktopowej (poza telefonem)
+onParentMessage(EMBEDDED_MESSAGES.BOOK_REQUEST, openBookingForm);
 
 const ACTION_BTN_ACTIVATION_OFFSET = 500;
 const ACTION_BTN_PHONE_ACTIVATION_OFFSET = 2100;
@@ -156,12 +134,6 @@ const isActionBtnPhoneVisible = computed(() => {
   return !isFormVisible.value && isMobile.value && tab.value === 'tab1' && offsetTop.value <= ACTION_BTN_PHONE_ACTIVATION_OFFSET;
 });
 
-// Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
-const isActionBtnVisibleDesktop = computed(() => {
-  return !isFormVisible.value && tab.value === 'tab1' && offsetTop.value <= FOOTER_ACTIVATION_OFFSET[tab.value];
-});
-
-// Logika dla desktop (emulator telefonu - zachowuje się jak mobile)
 const isAIChatBtnVisible = computed(() => {
   return !isChatOpen.value && !isFormVisible.value && (offsetTop.value >= ACTION_BTN_ACTIVATION_OFFSET + 200 && offsetTop.value <= FOOTER_ACTIVATION_OFFSET.tab1);
 });
@@ -219,13 +191,7 @@ function handleSwipeGesture() {
 }
 
 function setupSwipeListeners() {
-  const desktopEl = tabPanelsDesktop.value?.$el;
   const mobileEl = tabPanelsMobile.value?.$el;
-
-  if (desktopEl) {
-    desktopEl.addEventListener('touchstart', handleTouchStart, { passive: true });
-    desktopEl.addEventListener('touchend', handleTouchEnd, { passive: true });
-  }
 
   if (mobileEl) {
     mobileEl.addEventListener('touchstart', handleTouchStart, { passive: true });
@@ -234,13 +200,7 @@ function setupSwipeListeners() {
 }
 
 function removeSwipeListeners() {
-  const desktopEl = tabPanelsDesktop.value?.$el;
   const mobileEl = tabPanelsMobile.value?.$el;
-
-  if (desktopEl) {
-    desktopEl.removeEventListener('touchstart', handleTouchStart);
-    desktopEl.removeEventListener('touchend', handleTouchEnd);
-  }
 
   if (mobileEl) {
     mobileEl.removeEventListener('touchstart', handleTouchStart);
@@ -317,20 +277,34 @@ function onFormToggleHandler(isToggled) {
  * Sekwencja: zamknij chat -> przełącz na tab1 jeśli potrzeba -> otwórz formularz
  */
 async function onChatbotBookRequest() {
-  // 1. Zamknij chatbota
+  await closeChatbot()
+  await openBookingForm()
+}
+
+/**
+ * Obsługa żądania rezerwacji z chatbota na desktopie (chatbot poza telefonem)
+ * Sekwencja: zamknij chat -> przekaż żądanie do aplikacji w iframe emulatora
+ */
+async function onDesktopChatbotBookRequest() {
+  await closeChatbot()
+  sendToFrame(phoneEmulatorRef.value?.frame, EMBEDDED_MESSAGES.BOOK_REQUEST)
+}
+
+async function closeChatbot() {
   isChatOpen.value = false
 
-  // 2. Poczekaj na animację zamknięcia chatbota (300ms)
+  // Poczekaj na animację zamknięcia chatbota (300ms)
   await new Promise(resolve => setTimeout(resolve, 350))
+}
 
-  // 3. Jeśli jesteśmy na innym tabie niż tab1, przełącz
+async function openBookingForm() {
+  // Jeśli jesteśmy na innym tabie niż tab1, przełącz
   if (tab.value !== 'tab1') {
     tab.value = 'tab1'
     // Poczekaj na animację przełączenia taba
     await new Promise(resolve => setTimeout(resolve, 400))
   }
 
-  // 4. Otwórz formularz rezerwacji
   isFormVisible.value = true
 }
 
@@ -341,10 +315,6 @@ function onBookClickHandler() {
 function onLayoutScroll(payload) {
   const { position: { top } } = payload;
   offsetTop.value = top
-}
-
-function onTabUpdateHandler(payload) {
-  console.log('🔄 Tab updated:', payload);
 }
 
 const tabConfigs = reactive([
@@ -399,39 +369,6 @@ const tabConfigs = reactive([
 
 .MainLayout {
   position: relative;
-
-  // Style dla wersji emulowanej w telefonie (desktop)
-  &--desktop-emulated {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-
-    .MainLayout__pageContainer {
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-
-      &--desktop {
-        overflow-x: hidden;
-      }
-    }
-
-    .MainLayout__header {
-      height: 80px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .MainLayout__pageSection {
-      width: 100%;
-      height: 100%;
-      padding: 0px;
-      // Dodajemy padding na dole żeby footer nie zakrywał contentu
-      padding-bottom: 160px;
-      overflow-x: hidden;
-    }
-  }
 
   &__header {
     height: 80px;

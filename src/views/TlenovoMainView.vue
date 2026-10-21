@@ -1,10 +1,12 @@
 <template>
     <q-page-container class="MainView">
-        <!-- Form -->
-        <Transition name="FormTransition">
-            <TlenovoForm ref="formRef" v-if="isFormVisible" class="MainView__form" @cancel="onCancelClickHandler"
-                @submit="onSubmitHandler" @redirect="onRedirectHandler" />
-        </Transition>
+        <!-- Form – przeniesiony ponad całą stronę (także nad q-header) -->
+        <Teleport to="body">
+            <Transition name="FormTransition">
+                <TlenovoForm ref="formRef" v-if="isFormVisible" @cancel="onCancelClickHandler"
+                    @submit="onSubmitHandler" @redirect="onFormRedirectHandler" />
+            </Transition>
+        </Teleport>
 
         <!-- Initial Section -->
         <section :class="{
@@ -158,20 +160,13 @@ async function handleDatastore(payload) {
 }
 
 async function handleNotification(payload) {
-    const reservationMessage = generateMessage(payload);
-    await notificationService.sendReservationNotification(reservationMessage);
+    const { name, phone, date, time } = payload;
+    await notificationService.sendReservationNotification({ name, phone, date, time });
 }
 
-function generateMessage(payload) {
-    return `
-        Imię: ${payload.name}
-        Telefon: ${payload.phone}
-        Data wizyty: ${payload.date}
-        Godzina wizyty: ${payload.time}
-    `;
-}
-
-function onRedirectHandler() {
+function onFormRedirectHandler() {
+    // Zamknij formularz przed przejściem do innej zakładki
+    onCancelClickHandler();
     emit('redirect');
 }
 
@@ -192,24 +187,9 @@ function onBenefitClick(benefitId) {
 @use 'sass:color';
 @import 'src/css/quasar.variables.scss';
 
-// Variables
-$slide-duration: 0.25s;
-$slide-easing: ease-out;
-
 // Extract to separate file
 // Removed unused slideInLeft animation
-
-@keyframes slideInBottom {
-    from {
-        transform: translate3d(0, 100%, 0);
-        opacity: 0;
-    }
-
-    to {
-        transform: translate3d(0, 0, 0);
-        opacity: 1;
-    }
-}
+// Animacja FormTransition (formularz rezerwacji) zdefiniowana w TlenovoForm.vue
 
 @keyframes fadeInUp {
     from {
@@ -228,29 +208,12 @@ $slide-easing: ease-out;
 // Using system fonts instead of external font for better performance
 $font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
 
-.FormTransition-enter-active {
-    animation: slideInBottom $slide-duration $slide-easing;
-}
-
-.FormTransition-leave-active {
-    animation: slideInBottom $slide-duration $slide-easing reverse;
-}
-
 .MainView {
     position: relative;
     font-family: $font;
     background-color: $primary;
     max-width: 100%;
     padding-top: 0 !important;
-
-    &__form {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: calc(100% - 80px);
-        z-index: 6;
-    }
 
     &__sectionInitial {
         position: relative;

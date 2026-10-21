@@ -1,6 +1,7 @@
 import { Loading } from 'quasar';
 import { boot } from 'quasar/wrappers';
 import TlenovoCustomLoader from 'src/components/TlenovoCustomLoader.vue';
+import { isEmbedded } from 'src/composables/useEmbeddedMode';
 
 // Promise, które rozwiąże się po pełnym załadowaniu strony
 function waitForWindowLoad() {
@@ -41,11 +42,18 @@ async function waitForCssAndFonts() {
   }
 
   // Czekaj na wszystko naraz
-  await Promise.all([...linkPromises, fontsReady, waitForWindowLoad(), initialTimeout()]);
+  // W iframe emulatora loader był już pokazany przez stronę desktopową – bez sztucznego opóźnienia
+  const minimumDelay = isEmbedded ? Promise.resolve() : initialTimeout();
+  await Promise.all([...linkPromises, fontsReady, waitForWindowLoad(), minimumDelay]);
   await afterPaintFrames();
 }
 
 export default boot(async () => {
+  // Tryb osadzony (iframe w PhoneEmulator) – style jak na telefonie, patrz app.scss
+  if (isEmbedded) {
+    document.documentElement.classList.add('TlenovoEmbedded');
+  }
+
   Loading.show({
     spinner: TlenovoCustomLoader,
     spinnerSize: 140,

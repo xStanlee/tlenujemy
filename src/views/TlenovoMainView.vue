@@ -54,6 +54,8 @@
             <TlenovoWhatIs @benefitClick="onBenefitClick" />
             <!-- Jak działa tlenoterapia -->
             <TlenovoHowItWorks />
+            <!-- Wideo o komorze hiperbarycznej -->
+            <TlenovoVideo />
             <!-- Dlaczego warto wybrać tlenoterapię -->
             <TlenovoWhyChoose />
             <!-- CTA Section -->
@@ -82,6 +84,7 @@ import TlenovoFireflies from 'src/components/TlenovoFireflies/TlenovoFireflies.v
 import TlenovoFooter from 'src/components/TlenovoFooter/TlenovoFooter.vue';
 import TlenovoForm from 'src/components/TlenovoForm/TlenovoForm.vue';
 import TlenovoHowItWorks from 'src/components/TlenovoHowItWorks/TlenovoHowItWorks.vue';
+import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
 import TlenovoWhatIs from 'src/components/TlenovoWhatIs/TlenovoWhatIs.vue';
 import TlenovoWhyChoose from 'src/components/TlenovoWhyChoose/TlenovoWhyChoose.vue';
 

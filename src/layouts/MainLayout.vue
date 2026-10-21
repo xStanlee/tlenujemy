@@ -2,7 +2,11 @@
   <!-- Desktop: PhoneEmulator wyświetla widok mobilny w iframe (identyczny jak na smartfonie),
        chatbot na poziomie prawdziwego viewportu -->
   <template v-if="isDesktopShell">
-    <PhoneEmulator ref="phoneEmulatorRef" :src="getEmbeddedAppUrl()" />
+    <PhoneEmulator ref="phoneEmulatorRef" :src="getEmbeddedAppUrl()">
+      <template #video>
+        <TlenovoVideo title="" />
+      </template>
+    </PhoneEmulator>
 
     <!-- Chatbot Button – fixed to real viewport, above PhoneEmulator -->
     <transition name="chatbotBtnTransition" appear>
@@ -86,6 +90,7 @@ import TlenovoChatbotBtn from 'src/components/TlenovoChatbotBtn/TlenovoChatbotBt
 import TlenovoLogo from 'src/components/TlenovoLogo/TlenovoLogo.vue';
 import TlenovoPhoneAnchor from 'src/components/TlenovoPhoneBtn/TlenovoPhoneAnchor.vue';
 import TlenovoSnackbar from 'src/components/TlenovoSnackbar/TlenovoSnackbar.vue';
+import TlenovoVideo from 'src/components/TlenovoVideo/TlenovoVideo.vue';
 // Views
 import TlenovoContraView from 'src/views/TlenovoContraView.vue';
 import TlenovoInfoView from 'src/views/TlenovoInfoView.vue';
@@ -119,7 +124,7 @@ onParentMessage(EMBEDDED_MESSAGES.BOOK_REQUEST, openBookingForm);
 const ACTION_BTN_ACTIVATION_OFFSET = 500;
 const ACTION_BTN_PHONE_ACTIVATION_OFFSET = 2100;
 const FOOTER_ACTIVATION_OFFSET = {
-  tab1: 5850,
+  tab1: 6200, // +~350px po dodaniu sekcji TlenovoVideo
   tab2: 3200,
   tab3: 750,
   // tab4: Infinity dla ostatniej strony

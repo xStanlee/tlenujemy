@@ -69,19 +69,17 @@ export default defineConfig((/* ctx */) => {
             output: {
               // Ensure proper initialization order
               inlineDynamicImports: false,
-              preserveModules: false
+              preserveModules: false,
+              // Vite 8 minifies with Oxc (esbuild is no longer bundled) - strip console/debugger here
+              minify: {
+                compress: {
+                  dropConsole: true,
+                  dropDebugger: true
+                }
+              }
             }
           },
-          chunkSizeWarningLimit: 1000,
-          // Use esbuild instead of terser for more stable minification
-          minify: 'esbuild',
-          // Conservative esbuild settings
-          esbuildOptions: {
-            drop: ['console', 'debugger'],
-            keepNames: true, // Preserve function names to avoid conflicts
-            legalComments: 'none',
-            target: 'es2020' // Ensure compatibility
-          }
+          chunkSizeWarningLimit: 1000
         }
         
         // Preload optimization

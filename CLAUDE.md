@@ -17,7 +17,7 @@ npm run format       # prettier write
 npm run deploy       # build + publish dist/spa to gh-pages
 ```
 
-There are no tests (`npm test` is a no-op). ESLint also runs during `quasar build` via `vite-plugin-checker`, but not in dev. The production build strips `console`/`debugger` (esbuild `drop`).
+There are no tests (`npm test` is a no-op). ESLint also runs during `quasar build` via `vite-plugin-checker`, but not in dev. The production build strips `console`/`debugger` (Oxc minifier `dropConsole`/`dropDebugger` in `quasar.config.js` — Vite 8 no longer bundles esbuild, so don't use `minify: 'esbuild'`).
 
 ## Architecture
 
